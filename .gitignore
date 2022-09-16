@@ -1,0 +1,9 @@
+.vscode
+exe.sh
+*.txt
+main.c
+*.DSYM
+*.sh
+*.out
+*.dSYM
+*.o
