@@ -3,109 +3,113 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyuki <jaehyuki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: seojin <seojin@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 20:38:24 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/07/15 21:47:11 by jaehyuki         ###   ########.fr       */
+/*   Created: 2022/04/26 15:36:47 by minsukan          #+#    #+#             */
+/*   Updated: 2022/09/19 16:20:56 by seojin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include<stdlib.h>
 
-static int	len_str_c(char const *s, char c, int *i)
+int	ft_charset(char a, char *charset)
 {
-	int	j;
-
-	j = 0;
-	if (s[*i] == c)
-		while (s[*i] == c)
-			i[0]++;
-	while (s[*i + j] != c && s[*i + j])
-		j++;
-	return (j);
+	while (*charset)
+	{
+		if (a == *charset)
+			return (1);
+		charset++;
+	}
+	return (0);
 }
 
-static int	count_strs(char const *s, char c)
+int	ft_count(char *str, char *charset)
 {
-	int	cnt;
-	int	i;
+	int		i;
+	int		check;
+	int		count;
 
-	cnt = 0;
 	i = 0;
-	while (s[i])
+	check = 1;
+	count = 0;
+	while (str[i])
 	{
-		if (s[i] == c)
+		if (ft_charset(str[i], charset) == 1)
 		{
-			while (s[i] == c)
-				i++;
+			check = 1;
 		}
 		else
 		{
-			cnt++;
-			while (s[i] != c && s[i])
-				i++;
+			if (check == 1)
+				count++;
+			check = 0;
 		}
-	}
-	return (cnt);
-}
-
-static unsigned int	split_strlcpy(char *dst,
-						const char *src,
-						size_t dstsize,
-						char c)
-{
-	unsigned int	len_src;
-	unsigned int	i;
-
-	i = 0;
-	while (src[i] && src[i] != c)
-		i++;
-	len_src = i;
-	i = 0;
-	while (i + 1 < dstsize && src[i] && src[i] != c)
-	{
-		dst[i] = src[i];
 		i++;
 	}
-	if (dstsize != 0)
-		dst[i] = '\0';
-	return (len_src);
+	return (count);
 }
 
-static char	**free_all(int i, char **rv)
+char	*ft_strcpy(char *save, char *str, int s, int e)
 {
-	i--;
-	while (i >= 0)
-	{
-		free(rv[i]);
-		rv[i] = NULL;
-		i--;
-	}
-	free(rv);
-	rv = NULL;
-	return (NULL);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**rv;
 	int		i;
-	int		j;
 
-	if (!s)
-		return (NULL);
-	rv = (char **)malloc(sizeof(char *) * (count_strs(s, c) + 1));
-	if (!rv)
-		return (NULL);
 	i = 0;
-	j = 0;
-	while (j < count_strs(s, c))
+	while (s < e)
 	{
-		rv[j] = (char *)malloc(len_str_c(s, c, &i) * sizeof(char) + 1);
-		if (!rv[j])
-			return (free_all(j, rv));
-		i += split_strlcpy(&rv[j++][0], &s[i], len_str_c(s, c, &i) + 1, c);
+		save[i] = str[s];
+		i++;
+		s++;
 	}
-	rv[j] = 0;
-	return (rv);
+	save[i] = 0;
+	return (save);
+}
+
+char	**ft_putstr2(char **save, char *str, char *charset, int count)
+{
+	int		i;
+	int		s;
+	int		e;
+
+	i = 0;
+	s = 0;
+	e = 0;
+	while (i < count)
+	{
+		while (ft_charset(str[s], charset) == 1)
+			s++;
+		e = s;
+		if (str[s] == 0)
+			break ;
+		while (ft_charset(str[e], charset) != 1 && str[e] != 0)
+			e++;
+		save[i] = (char *)malloc(e - s + 1);
+		if (!save[i])
+			return (0);
+		save[i] = ft_strcpy(save[i], str, s, e);
+		i++;
+		s = e;
+	}
+	return (save);
+}
+
+char	**ft_split(char *str, char *charset)
+{
+	int		count;
+	char	**save;
+
+	count = ft_count(str, charset);
+	if (count == 0)
+	{
+		save = (char **)malloc(sizeof(char *));
+		if (save == NULL)
+			return (NULL);
+		save[0] = 0;
+		return (save);
+	}
+	save = (char **)malloc(sizeof(char *) * (count + 1));
+	if (save == NULL)
+		return (NULL);
+	save[count] = NULL;
+	save = ft_putstr2(save, str, charset, count);
+	return (save);
 }

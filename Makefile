@@ -7,7 +7,12 @@ INCLUDE		=	include
 LIBFT		=	libft
 
 SRCS		= 	main.c			\
-				ft_lst_func.c
+				ft_lst_func.c	\
+				parsing_cmd.c	\
+				ft_env_split.c	\
+				replace_space.c	\
+				sub_env.c		\
+				task_error.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 

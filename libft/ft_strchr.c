@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyuki <jaehyuki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 18:06:43 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/07/07 15:41:33 by jaehyuki         ###   ########.fr       */
+/*   Updated: 2022/09/19 18:49:40 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,5 @@ char	*ft_strchr(const char *s, int c)
 	if (c == '\0')
 		return ((char *)s);
 	else
-		return (0);
+		return (NULL);
 }

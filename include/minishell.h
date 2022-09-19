@@ -18,6 +18,8 @@
 # include <readline/history.h>	/* add_history */
 # include <readline/readline.h>	/* readline, rl_on_new_line, rl_replace_line, rl_redisplay */
 
+//# include "symbols.h"
+# include "./symbols.h"
 /* struct definition */
 typedef struct s_envlst
 {
@@ -26,13 +28,29 @@ typedef struct s_envlst
 	struct s_envlst *next;
 }	t_envlst;
 
+typedef struct	s_token
+{
+	int		symbol;
+	char 	*token;
+}	t_token;
+
 t_envlst	*g_envlst;
 
 /*ft_lst_func.c*/
 t_envlst	*ft_lst_new(char *key, char *value);
 void		ft_lst_add_back(t_envlst *new);
 void		printf_lst(void);
+char		**parsing_cmd(char *str);
+char		**ft_env_split(char *env);
 
+void	is_space(char *str);
+char	*double_quote(char *str);
+char	*single_quote(char *str);
+void	replace_white_space(char *str);
+
+void	sub_env(char **temp);
+
+void	allocat_error(void);
 #endif
 
 
