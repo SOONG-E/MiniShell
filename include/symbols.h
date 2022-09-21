@@ -15,4 +15,7 @@
 # define D_OUT_HEREDOC	11
 # define D_FILEPATH		12
 
+# define Q_SINGLE		'\''
+# define Q_DOUBLE		'\"'
+
 #endif

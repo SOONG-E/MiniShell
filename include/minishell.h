@@ -51,28 +51,16 @@ void	replace_white_space(char *str);
 void	sub_env(char **temp);
 
 void	allocat_error(void);
+
+void	ft_split_free(char **str);
+
+/// test
+void	print_env_test(void);
+void	test_print(char **temp);
+void    printf_ls_test(void);
+///
+char	*ft_join(char **str);
+
+char	*get_value_n(char *key, int n);
+void    split_free(char **str);
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#define LBRACE	"("
-#define RBRACE	")"
-#define AND_IF	"&&"
-#define OR_IF 	"||"
-#define PIPE	"|"

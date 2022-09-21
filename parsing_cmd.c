@@ -1,14 +1,6 @@
 #include "./include/minishell.h"
 
-void	test_print(char **temp)
-{
-	int i = 0;
-	while (temp[i])
-	{
-		printf("%s\n", temp[i]);
-		i++;
-	}
-}
+
 
 void	replace_backup(char	**temp)
 {
@@ -36,26 +28,24 @@ void	tokenizing(char	*str)
 	replace_white_space(str);
 	temp = ft_split(str, "\n\t\v\f\r ");
 	replace_backup(temp);
-	test_print(temp); //del
 	sub_env(temp);
-	//free_temp(temp);
 }
 
 int	check_quote(char *str)
 {	
 	while (*str)
 	{
-		if (*str == '\'')
+		if (*str == Q_SINGLE)
 		{
 			str++;
-			str = ft_strchr(str, '\'');
+			str = ft_strchr(str, Q_SINGLE);
 			if (!str)
 				return (0);
 		}
-		else if (*str == '\"')
+		else if (*str == Q_DOUBLE)
 		{
 			str++;
-			str = ft_strchr(str, '\"');
+			str = ft_strchr(str, Q_DOUBLE);
 			if (!str)
 				return (0);
 		}

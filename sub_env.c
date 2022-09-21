@@ -1,97 +1,148 @@
 #include "./include/minishell.h"
 
-char	*get_value_n(char *key, int n)
+int	count_pair(char *str)
 {
-	t_envlst	*temp;
-	
-	temp = g_envlst;
-	while (temp)
-	{
-		if (!ft_strncmp(temp->key, key, n))
-			return (temp->value);
-		temp = temp->next;
+	int	count;
+
+	count = 0;
+	while (*str)
+	{	
+		++count;
+		if (*str == Q_SINGLE)
+		{
+			++str;
+			str = ft_strchr(str, Q_SINGLE);
+		}
+		else if (*str == Q_DOUBLE)
+		{
+			++str;
+			str = ft_strchr(str, Q_DOUBLE);
+		}
+		else
+		{
+			while (*str && *str != Q_DOUBLE && *str != Q_SINGLE)
+				++str;
+			continue ;
+		}
+		++str;
 	}
-	return (0);
+	return (count);
 }
 
-char	*delete_quote(char *str)
+char	*cut_str(char **str)
 {
-	char	*ret;
-	int		idx1;
-	int		idx2;
+	char	*temp;
+	char	quote;
+	int		i;
 
-	if (str[0] != '\'' && str[0] != '\"')
-		return (str);
-	ret = (char *)malloc((ft_strlen(str) - 1) * sizeof(char));
-	if (!ret)
-		allocat_error();
-	idx1 = 0;
-	idx2 = 1;
-	while (idx2 < (int)ft_strlen(str) - 1)
-		ret[idx1++] = str[idx2++];
-	ret[idx1] = 0;
-	free(str);
-	return (ret);
+	quote = '\0';
+	temp = *str;
+	if (*temp == Q_SINGLE || *temp == Q_DOUBLE)
+	{
+		quote = *temp;
+		temp++;
+		if (*temp == quote)
+		{
+			*(str) = temp + 1;
+			return (ft_strdup(""));
+		}
+	}
+	i = 0;
+	while (temp[i + 1] != quote)
+		i++;
+	if (quote == 0)
+		*(str) = &temp[i] + 1;
+	else
+		*(str) = &temp[i] + 2;
+	return (ft_substr(temp, 0, i + 1));
 }
 
-char	*finding_env(char *str)
+int	cut_temp(char **temp, char *str)
 {
 	int		i;
-	char	*ret;
 
 	i = 0;
-	while (ft_isalpha(str[i]) || ft_isdigit(str[i]) || str[i] == '_')
-		++i;
-	if (i == 0)
-		ret = ft_strjoin("$", &str[i]);
-	else if (get_value_n(str, i))
-		ret = ft_strjoin(get_value_n(str, i), &str[i]);
-	else
-		ret = ft_strdup(&str[i]);
-	if(!ret)
-		allocat_error();
-	free(str);
+	if (str[0] == '$')
+	{
+		str++;
+		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
+			i++;
+		*(temp) = ft_strdup(get_value_n(str, i));
+		return (i + 1);
+	}
+	while (str[i] && str[i] != '$')
+		i++;
+	*(temp) = ft_substr(str, 0, i);
+	return (i);
+}
+
+char	*replace_env(char *str)
+{
+	char	*str_backup;
+	char	*ret;
+	char	*temp;
+
+	str_backup = str;
+	ret = (char *)malloc(sizeof(char));
+	while (*str)
+	{
+		str += cut_temp(&temp, str);
+		ret = ft_strjoin_free(ret, temp);
+		free(temp);
+	}
+	free(str_backup);
 	return (ret);
 }
 
-char	*expand_env(char *str)
+char	*parse_quote(char *str)
 {
-	int 	i;
 	char	**temp;
-	char 	*ret;
+	char	*str_backup;
+	int		i;
+	int		num;
 
-	temp = ft_split(str, "$");
-	/////////////////////
-
-	if (!temp)
-		allocat_error();
-	if (str[0] == '$')
-		temp[0] = finding_env(temp[0]);
+	str_backup = str;
+	num = count_pair(str);
+	temp = (char **)malloc((num + 1) * sizeof(char *));
 	i = 0;
-	while (temp[++i])
-		temp[i] = finding_env(temp[i]);
-	i = 0;
-	while (temp[++i])
-		temp[0] = ft_strjoin_free(temp[0], temp[i]);
-	//free
-	ret = temp[0];
-	return (ret); //수정
+	while (i < num)
+	{
+		if (*str == Q_SINGLE)
+			temp[i] = cut_str(&str);
+		else
+		{
+			temp[i] = cut_str(&str);
+			temp[i] = replace_env(temp[i]);//매개변수 temp free 필요!
+		}
+		printf("%s(%d)\n", temp[i], i);
+		i++;
+	}
+	temp[i] = NULL;
+	free(str_backup);
+	return (ft_join(temp));
 }
 
 void	sub_env(char **temp)
-{
+{ 
 	int	i;
 
 	i = -1;
 	while (temp[++i])
 	{
-		if (temp[i][0] == '\'')
-			temp[i] = delete_quote(temp[i]);			//if not single quote
-		else
-		{
-			temp[i] = delete_quote(temp[i]);
-			temp[i] = expand_env(temp[i]);
-		}
-        printf("%sEND\n", temp[i]);		//if single quote
+		temp[i] = parse_quote(temp[i]);//매개변수temp free!! 
+		printf("%s\n", temp[i]);
 	}
+}
+
+char	*ft_join(char **str)
+{
+	char	*ret;
+	int		idx;
+
+	idx = 0;
+	while (str[++idx])
+		str[0] = ft_strjoin_free(str[0], str[idx]);
+	ret = ft_strdup(str[0]);
+	split_free(str);
+	return (ret);
 }

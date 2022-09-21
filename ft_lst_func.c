@@ -28,14 +28,3 @@ t_envlst	*ft_lst_new(char *key, char *value)
 	return (new);
 }
 
-void    printf_lst(void)
-{
-    t_envlst	*temp;
-
-	temp = g_envlst;
-	while (temp)
-	{
-		printf("KEY: %s\nVALUE: %s\n", temp->key, temp->value);
-		temp = temp->next;
-	}
-}

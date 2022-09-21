@@ -12,7 +12,10 @@ SRCS		= 	main.c			\
 				ft_env_split.c	\
 				replace_space.c	\
 				sub_env.c		\
-				task_error.c
+				task_error.c	\
+				test_ft.c		\
+				manage_env.c	\
+				manage_mem.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 
