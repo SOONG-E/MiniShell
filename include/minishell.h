@@ -28,10 +28,18 @@ typedef struct s_envlst
 	struct s_envlst *next;
 }	t_envlst;
 
+typedef struct	s_symbol
+{
+	int		type;
+	char	*str;
+}	t_symbol;
+
 typedef struct	s_token
 {
-	int		symbol;
-	char 	*token;
+	struct s_symbol	symbol;
+	struct s_token	*left;
+	struct s_token	*right;
+	//struct s_token	*parent;
 }	t_token;
 
 t_envlst	*g_envlst;

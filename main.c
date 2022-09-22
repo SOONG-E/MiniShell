@@ -11,6 +11,7 @@ void	parsing_env(char **env)
 	{
 		str = ft_env_split(env[i]);
 		ft_lst_add_back(ft_lst_new(str[0], str[1]));
+		free(str);
 	}
 }
 
@@ -27,6 +28,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = readline("minishell$ ");
+		str = preprocess_str(str);
 		add_history(str);
 		cmd = parsing_cmd(str);
 		free(str);

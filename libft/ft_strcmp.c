@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyuki <jaehyuki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: minsukan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 18:21:56 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/07/08 18:23:37 by jaehyuki         ###   ########.fr       */
+/*   Created: 2022/04/17 01:26:35 by minsukan          #+#    #+#             */
+/*   Updated: 2022/04/20 15:59:03 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-t_list	*ft_lstnew(void *content)
+int	ft_strcmp(char *s1, char *s2)
 {
-	t_list	*rv_lst;
+	int		i;
 
-	rv_lst = (t_list *)malloc(sizeof(t_list));
-	if (!(rv_lst))
-		exit(1);
-	rv_lst -> content = content;
-	rv_lst -> next = 0;
-	return (rv_lst);
+	i = 0;
+	while (1)
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		if (s1[i] == 0 && s2[i] == 0)
+			return (0);
+		i++;
+	}
 }

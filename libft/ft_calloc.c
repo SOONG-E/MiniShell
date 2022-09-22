@@ -19,10 +19,10 @@ void	*ft_calloc(size_t count, size_t size)
 
 	if (count != 0 && size != 0)
 		if (count / size > UINT_MAX / size || size / count > UINT_MAX / size)
-			return (NULL);
+			exit(1);
 	rv = (unsigned char *)malloc(count * size);
 	if (!rv)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (i < count * size)
 		rv[i++] = 0;

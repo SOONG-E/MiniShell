@@ -49,7 +49,7 @@ char	*ft_strtrim(char const *s1, char const *set)
 	len_rv = end - start + 1;
 	rv = (char *)malloc(len_rv * sizeof(char) + 1);
 	if (!rv)
-		return (NULL);
+		exit(1);
 	ft_strlcpy(rv, s1 + start, len_rv + 1);
 	return (rv);
 }
