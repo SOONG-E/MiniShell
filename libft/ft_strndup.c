@@ -18,7 +18,7 @@ char	*ft_strndup(const char *s1, size_t n)
 	unsigned int	i;
 
 	if (!s1)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (s1[i])
 		i++;
@@ -27,7 +27,7 @@ char	*ft_strndup(const char *s1, size_t n)
 	else
 		rv = (char *)malloc(n * sizeof(char) + 1);
 	if (!rv)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (i < n && s1[i])
 	{

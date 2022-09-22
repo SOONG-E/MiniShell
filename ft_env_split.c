@@ -7,7 +7,7 @@ char	**ft_env_split(char *env)
 	char	**splited_env;
 	int		idx;
 
-	splited_env = (char **)malloc(2 * sizeof(char *));
+	splited_env = (char **)malloc(3 * sizeof(char *));
 	if (!splited_env)
 		exit(0);
 	splited_env[0] = (char *)malloc((ft_get_env_len(env) + 1) * sizeof(char));
@@ -25,6 +25,7 @@ char	**ft_env_split(char *env)
 	while (*env)
 		splited_env[1][idx++] = *env++;
 	splited_env[1][idx] = 0;
+	splited_env[2] = NULL;
 	return (splited_env);
 }
 

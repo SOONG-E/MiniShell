@@ -31,6 +31,7 @@ SRCS_1	= ft_strlen.c		\
 		  ft_strdup.c		\
 		  ft_tolower.c		\
 		  ft_toupper.c		\
+		  ft_strcmp.c		\
 		  get_next_line.c	\
 		  get_next_line_utils.c
 			

@@ -37,7 +37,7 @@ void	*ft_calloc_g(size_t count, size_t size)
 			return (NULL);
 	rv = (unsigned char *)malloc(count * size);
 	if (!rv)
-		return (NULL);
+		exit(1);
 	i = 0;
 	while (i < count * size)
 		rv[i++] = 0;

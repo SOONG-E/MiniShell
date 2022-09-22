@@ -1,5 +1,18 @@
 #include "./include/minishell.h"
 
+char	*ft_join(char **str)
+{
+	char	*ret;
+	int		idx;
+
+	idx = 0;
+	while (str[++idx])
+		str[0] = ft_strjoin_free(str[0], str[idx]);
+	ret = ft_strdup(str[0]);
+	split_free(str);
+	return (ret);
+}
+
 int	count_pair(char *str)
 {
 	int	count;
@@ -83,7 +96,9 @@ char	*replace_env(char *str)
 	char	*temp;
 
 	str_backup = str;
-	ret = (char *)malloc(sizeof(char));
+	ret = (char *)ft_calloc(sizeof(char), 1);
+	if(!ret)
+		exit(1);
 	while (*str)
 	{
 		str += cut_temp(&temp, str);
@@ -104,6 +119,8 @@ char	*parse_quote(char *str)
 	str_backup = str;
 	num = count_pair(str);
 	temp = (char **)malloc((num + 1) * sizeof(char *));
+	if (!temp)
+		exit(1);
 	i = 0;
 	while (i < num)
 	{
@@ -112,9 +129,8 @@ char	*parse_quote(char *str)
 		else
 		{
 			temp[i] = cut_str(&str);
-			temp[i] = replace_env(temp[i]);//매개변수 temp free 필요!
+			temp[i] = replace_env(temp[i]);
 		}
-		printf("%s(%d)\n", temp[i], i);
 		i++;
 	}
 	temp[i] = NULL;
@@ -124,25 +140,11 @@ char	*parse_quote(char *str)
 
 void	sub_env(char **temp)
 { 
-	int	i;
+	int		i;
 
 	i = -1;
 	while (temp[++i])
 	{
-		temp[i] = parse_quote(temp[i]);//매개변수temp free!! 
-		printf("%s\n", temp[i]);
-	}
-}
-
-char	*ft_join(char **str)
-{
-	char	*ret;
-	int		idx;
-
-	idx = 0;
-	while (str[++idx])
-		str[0] = ft_strjoin_free(str[0], str[idx]);
-	ret = ft_strdup(str[0]);
-	split_free(str);
-	return (ret);
+		temp[i] = parse_quote(temp[i]);//매개변수temp free!!
+	} 
 }

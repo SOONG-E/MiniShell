@@ -84,7 +84,7 @@ char	**ft_putstr2(char **save, char *str, char *charset, int count)
 			e++;
 		save[i] = (char *)malloc(e - s + 1);
 		if (!save[i])
-			return (0);
+			exit(1);
 		save[i] = ft_strcpy(save[i], str, s, e);
 		i++;
 		s = e;
@@ -102,13 +102,13 @@ char	**ft_split(char *str, char *charset)
 	{
 		save = (char **)malloc(sizeof(char *));
 		if (save == NULL)
-			return (NULL);
+			exit(1);
 		save[0] = 0;
 		return (save);
 	}
 	save = (char **)malloc(sizeof(char *) * (count + 1));
 	if (save == NULL)
-		return (NULL);
+		exit(1);
 	save[count] = NULL;
 	save = ft_putstr2(save, str, charset, count);
 	return (save);
