@@ -49,11 +49,11 @@ t_symbol	*tokenizing(char *str)
 	replace_white_space(str);
 	temp = ft_split(str, "\n\t\v\f\r ");
 	if (!temp)
-		exit(1);
+		allocat_error();
 	replace_backup(temp);
 	sub_env(temp);
-	return (0);
-//	return (symbolizing(temp));
+	//return NULL;
+	return (symbolizing(temp));
 }
 
 char	**parsing_cmd(char *str)
@@ -67,6 +67,7 @@ char	**parsing_cmd(char *str)
 		return (NULL);
 	}
 	symbols = tokenizing(str);//symbols free 필요!
+
 	//tree_root = make_parse_tree(symbols);
 	//return (tree_root);
 	return (NULL);

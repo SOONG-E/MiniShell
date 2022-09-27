@@ -17,7 +17,7 @@ void	parsing_env(char **env)
 
 int main(int ac, char **av, char **env)
 {
-	char    *str;
+	char  	*str;
 	char	**cmd;
 
     (void)av;
@@ -28,7 +28,7 @@ int main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = readline("minishell$ ");
-		str = preprocess_str(str);
+		//str = preprocess_str(str);
 		add_history(str);
 		cmd = parsing_cmd(str);
 		free(str);

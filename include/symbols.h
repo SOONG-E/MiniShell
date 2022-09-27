@@ -20,10 +20,10 @@
 # define OP_OR_IF		-6
 # define OP_LBRACE		-7
 # define OP_RBRACE		-8
-# define OP_IN_RID		-9
-# define OP_OUT_RID		-10
-# define OP_IN_HEREDOC  -11
-# define OP_OUT_HEREDOC	-12
+# define OP_IN_HEREDOC  -9
+# define OP_OUT_HEREDOC	-10
+# define OP_IN_RID		-11
+# define OP_OUT_RID		-12
 
 # define Q_SINGLE		'\''
 # define Q_DOUBLE		'\"'

@@ -56,6 +56,8 @@ char	*double_quote(char *str);
 char	*single_quote(char *str);
 void	replace_white_space(char *str);
 
+t_symbol	*symbolizing(char **temp);
+
 void	sub_env(char **temp);
 
 void	allocat_error(void);
@@ -71,4 +73,16 @@ char	*ft_join(char **str);
 
 char	*get_value_n(char *key, int n);
 void    split_free(char **str);
+
+/* functions for built_in */
+void	ft_cd(char *path);
+void	ft_unset(char *rmvkey);
+void	ft_pwd(void);
+void	ft_export(char *key, char *value);
+void	ft_echo(char *arg, int option);
+void	ft_exit(int n);
+void	ft_env(char *env);
+
+char    *preprocess_str(char *str);
+
 #endif

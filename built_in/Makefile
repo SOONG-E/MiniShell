@@ -3,21 +3,18 @@ NAME		=	minishell
 CC			= 	cc
 CFLAGS		=	-Wall -Werror -Wextra
 
-INCLUDE		=	include
-LIBFT		=	libft
+INCLUDE		=	../include
+LIBFT		=	../libft
 
-SRCS		= 	main.c			\
-				ft_lst_func.c	\
-				parsing_cmd.c	\
-				ft_env_split.c	\
-				replace_space.c	\
-				sub_env.c		\
-				task_error.c	\
-				test_ft.c		\
-				manage_env.c	\
-				manage_mem.c	\
-				symbolizing.c	\
-				preprocess_str.c
+SRCS		= 	main.c\
+				ft_cd.c\
+				ft_echo.c\
+				ft_env.c\
+				ft_exit.c\
+				ft_export.c\
+				ft_pwd.c\
+				ft_unset.c\
+				../ft_lst_func.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 

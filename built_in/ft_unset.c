@@ -3,24 +3,24 @@
 void	ft_unset(char *rmvkey)
 {
 	t_envlst	*tmp;
-	t_envlst	*curr;
 	t_envlst	*next;
 
 	if (!ft_strcmp(g_envlst->key, rmvkey))
 	{
 		next = g_envlst->next;
-		ft_del_lst(g_envlst);
+		free(g_envlst);
 		g_envlst = next;
 	}
 	tmp = g_envlst;
-	while (tmp->next)
+	while (g_envlst->next)
 	{
-		if (!ft_strcmp(tmp->next->key, rmvkey))
+		if (!ft_strcmp(g_envlst->next->key, rmvkey))
 		{
-			next = g_envlst->next;
-			ft_del_lst(g_envlst);
+			next = tmp->next;
+			free(g_envlst);
 			g_envlst = next;
 		}
-		tmp = tmp->next;
+		g_envlst = g_envlst->next;
 	}
+	g_envlst = tmp;
 }
