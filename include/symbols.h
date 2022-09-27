@@ -15,15 +15,15 @@
 # define T_IN_HEREDOC	11
 # define T_OUT_HEREDOC	12
 
-# define OP_PIPE		-4
-# define OP_AND_IF		-5
-# define OP_OR_IF		-6
-# define OP_LBRACE		-7
-# define OP_RBRACE		-8
-# define OP_IN_HEREDOC  -9
-# define OP_OUT_HEREDOC	-10
-# define OP_IN_RID		-11
-# define OP_OUT_RID		-12
+# define OP_PIPE		-40
+# define OP_AND_IF		-50
+# define OP_OR_IF		-60
+# define OP_LBRACE		-70
+# define OP_RBRACE		-80
+# define OP_IN_HEREDOC  -90
+# define OP_OUT_HEREDOC	-100
+# define OP_IN_RID		-110
+# define OP_OUT_RID		-120
 
 # define Q_SINGLE		'\''
 # define Q_DOUBLE		'\"'

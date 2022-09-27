@@ -34,7 +34,7 @@ void	replace_backup(char	**temp)
 		j = 0;
 		while(temp[i][j])
 		{
-			if (temp[i][j] < 0)
+			if (temp[i][j] < 0 && temp[i][j] < -40)
 				temp[i][j] *= -1;
 			j++;
 		}
@@ -45,6 +45,7 @@ void	replace_backup(char	**temp)
 t_symbol	*tokenizing(char *str)
 {
 	char		**temp;
+	t_symbol	*symbols;
 	
 	replace_white_space(str);
 	temp = ft_split(str, "\n\t\v\f\r ");
@@ -52,8 +53,9 @@ t_symbol	*tokenizing(char *str)
 		allocat_error();
 	replace_backup(temp);
 	sub_env(temp);
-	//return NULL;
-	return (symbolizing(temp));
+	symbols = symbolizing(temp);
+	split_free(temp);
+	return (symbols);
 }
 
 char	**parsing_cmd(char *str)
@@ -66,8 +68,9 @@ char	**parsing_cmd(char *str)
 		printf("잘못됨\n");//////////quote에러!!!!
 		return (NULL);
 	}
+	str = preprocess_str(str);
 	symbols = tokenizing(str);//symbols free 필요!
-
+	free_symbol(symbols);
 	//tree_root = make_parse_tree(symbols);
 	//return (tree_root);
 	return (NULL);

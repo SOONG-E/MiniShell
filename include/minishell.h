@@ -73,6 +73,7 @@ char	*ft_join(char **str);
 
 char	*get_value_n(char *key, int n);
 void    split_free(char **str);
+void    free_symbol(t_symbol *symbols);
 
 /* functions for built_in */
 void	ft_cd(char *path);

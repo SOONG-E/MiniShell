@@ -2,6 +2,7 @@ NAME		=	minishell
 
 CC			= 	cc
 CFLAGS		=	-Wall -Werror -Wextra
+# CFLAGS		=
 
 INCLUDE		=	include
 LIBFT		=	libft
@@ -16,8 +17,15 @@ SRCS		= 	main.c			\
 				test_ft.c		\
 				manage_env.c	\
 				manage_mem.c	\
-				symbolizing.c	\
-				preprocess_str.c
+				symbolization.c	\
+				preprocess_str.c\
+				./built_in/ft_cd.c\
+				./built_in/ft_echo.c\
+				./built_in/ft_env.c\
+				./built_in/ft_exit.c\
+				./built_in/ft_export.c\
+				./built_in/ft_pwd.c\
+				./built_in/ft_unset.c
 
 OBJS		=	$(SRCS:%.c=%.o)
 

@@ -38,6 +38,8 @@ char    *combine_str(char *s1, char *s2, char *s3, int *i)
     else
         *i += 1;
     ret = ft_strjoin_free(ft_strjoin_free(s1, s2), s3);
+    if (s1)
+        free(s1);
     if (s2)
         free(s2);
     if (s3)
@@ -48,31 +50,50 @@ char    *combine_str(char *s1, char *s2, char *s3, int *i)
     return (ret);
 }
 
+int ft_skip_double_qoute(char *str)
+{
+    int i;
+    
+    i = 1;
+    while (str[i] != Q_DOUBLE)
+        i++;
+    return (i + 1);
+}
+
+int ft_skip_single_qoute(char *str)
+{
+    int i;
+
+    i = 1;
+    while (str[i] != Q_SINGLE)
+        i++;
+    return (i + 1);
+}
+
 char    *preprocess_str(char *str)
 {
-    char    *ret;
     char    *op;
     int     i;
 
-    ret = ft_strdup(str);
     i = 0;
     while (str[i])
     {
-        if (str[i++] == '\"')
-            i = ft_strichr(&str[i], '\"') + 1;
-        if (str[i++] == '\'')
-            i = ft_strichr(&str[i], '\'') + 1;
+        if (str[i] == Q_DOUBLE)
+            i += ft_skip_double_qoute(&str[i]);
+        if (str[i] == Q_SINGLE)
+            i += ft_skip_single_qoute(&str[i]);
         op = get_op(&str[i]);
         if (op)
         {
             if (op[1] == OP_AND_IF || op[1] == OP_OR_IF
                 || op[1] == OP_IN_HEREDOC || op[1] == OP_OUT_HEREDOC)
-    			ret = combine_str(ft_substr(ret, 0, i), op, ft_strdup(&str[i + 2]), &i);
+    			str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 2]), &i);
             else
-    			ret = combine_str(ft_substr(ret, 0, i), op, ft_strdup(&str[i + 1]), &i);
+    			str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 1]), &i);
+            i += 3;
         }
         else
             i++;
     }
-    return (ret);
+    return (str);
 }

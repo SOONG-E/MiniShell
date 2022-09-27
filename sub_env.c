@@ -80,7 +80,7 @@ int	cut_temp(char **temp, char *str)
 		str++;
 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 			i++;
-		*(temp) = ft_strdup(get_value_n(str, i));
+		*(temp) = get_value_n(str, i);
 		return (i + 1);
 	}
 	while (str[i] && str[i] != '$')
@@ -145,6 +145,6 @@ void	sub_env(char **temp)
 	i = -1;
 	while (temp[++i])
 	{
-		temp[i] = parse_quote(temp[i]);//매개변수temp free!!
+		temp[i] = parse_quote(temp[i]);
 	} 
 }

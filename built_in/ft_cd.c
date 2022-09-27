@@ -2,6 +2,7 @@
 
 static void	ft_update_oldpwd(char *old_pwd);
 static void	ft_update_pwd(char *pwd);
+static void	ft_cd_home(void);
 
 void	ft_cd(char *path)
 {
@@ -9,22 +10,27 @@ void	ft_cd(char *path)
 	char	*cwd;
 	char	*pwd;
 
+	if (!path)
+		ft_cd_home();
 	cwd = getcwd(NULL, 0);
 	pwd = getenv("PWD");
 	if (*path == '~')
 	{
 		rv = chdir("/");
-		rv = chdir("/Users/minsukan/");
-		printf("%s\n", path + 1);
-		if (*(path + 1))
-			rv = chdir(path + 1);
+		rv = chdir("Users/minsukan");
+		if (*(path + 1) == '/' && *(path + 2))
+			rv = chdir(path + 2);
+		else if (*(path + 1) != '/')
+			rv = 1;
+		else if (*(path + 1) == '/' && !*(path + 2))
+			rv = 0;
 	}
 	else
 		rv = chdir(path);
 	if (rv == 0)
 	{
-		ft_update_oldpwd(pwd);
 		ft_update_pwd(pwd);
+		ft_update_oldpwd(pwd);
 		free(cwd);
 	}
 	else
@@ -32,6 +38,23 @@ void	ft_cd(char *path)
 		chdir(cwd);
 		free(cwd);
 		printf("minishell: cd: %s: No such file or directory\n", path);
+	}
+}
+
+static void	ft_cd_home(void)
+{
+	char	*home;
+	char	*pwd;
+
+	pwd = getenv("PWD");
+	home = getenv("HOME");
+	if (!home)
+		printf("minishell: cd: HOME not set");
+	else
+	{
+		chdir(home);
+		ft_update_pwd(pwd);
+		ft_update_oldpwd(pwd);
 	}
 }
 

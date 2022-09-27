@@ -8,7 +8,7 @@ char	*get_value_n(char *key, int n)
 	while (temp)
 	{
 		if (!ft_strncmp(temp->key, key, n))
-			return (temp->value);
+			return (ft_strdup(temp->value));
 		temp = temp->next;
 	}
 	return (ft_strdup(""));
