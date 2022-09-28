@@ -28,4 +28,7 @@
 # define Q_SINGLE		'\''
 # define Q_DOUBLE		'\"'
 
+# define DIRECTORY	4
+# define FILE		8
+
 #endif

@@ -37,16 +37,13 @@ char    *combine_str(char *s1, char *s2, char *s3, int *i)
         *i += 2;
     else
         *i += 1;
-    ret = ft_strjoin_free(ft_strjoin_free(s1, s2), s3);
+    ret = ft_strjoin_free(ft_strjoin(s1, s2), s3);
     if (s1)
         free(s1);
     if (s2)
         free(s2);
     if (s3)
         free(s3);
-    s1 = NULL;
-    s2 = NULL;
-    s3 = NULL;
     return (ret);
 }
 
@@ -73,6 +70,7 @@ int ft_skip_single_qoute(char *str)
 char    *preprocess_str(char *str)
 {
     char    *op;
+	char	*temp;
     int     i;
 
     i = 0;
@@ -85,11 +83,13 @@ char    *preprocess_str(char *str)
         op = get_op(&str[i]);
         if (op)
         {
+			temp = str;
             if (op[1] == OP_AND_IF || op[1] == OP_OR_IF
                 || op[1] == OP_IN_HEREDOC || op[1] == OP_OUT_HEREDOC)
     			str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 2]), &i);
             else
     			str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 1]), &i);
+            free(temp);
             i += 3;
         }
         else

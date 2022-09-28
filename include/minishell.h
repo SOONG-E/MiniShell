@@ -58,16 +58,19 @@ void	replace_white_space(char *str);
 
 t_symbol	*symbolizing(char **temp);
 
+//substitution_env.c
 void	sub_env(char **temp);
 
+//manage_error.c
 void	allocat_error(void);
 
+//manage_split.c
 void	ft_split_free(char **str);
 
 /// test
-void	print_env_test(void);
-void	test_print(char **temp);
-void    printf_ls_test(void);
+//void	print_env_test(void);
+//void	test_print(char **temp);
+//void    printf_ls_test(void);
 ///
 char	*ft_join(char **str);
 
@@ -84,6 +87,20 @@ void	ft_echo(char *arg, int option);
 void	ft_exit(int n);
 void	ft_env(char *env);
 
+//preprocess_str.c
 char    *preprocess_str(char *str);
+
+//substitution_env_utils.c
+int		cut_temp(char **temp, char *str);
+char	*cut_str(char **str);
+int		count_pair(char *str);
+char	*ft_join(char **str);
+
+//check_cmd.c
+char	*get_cmd_path(char *cmd, char *path);
+int		is_cmd(char	*str);
+
+//manage_env
+void	parsing_env(char **env);
 
 #endif

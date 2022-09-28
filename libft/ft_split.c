@@ -83,7 +83,7 @@ char	**ft_putstr2(char **save, char *str, char *charset, int count)
 		while (ft_charset(str[e], charset) != 1 && str[e] != 0)
 			e++;
 		save[i] = (char *)malloc(e - s + 1);
-		if (!save[i])
+		if (!save[i])         
 			exit(1);
 		save[i] = ft_strcpy(save[i], str, s, e);
 		i++;

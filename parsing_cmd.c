@@ -34,7 +34,7 @@ void	replace_backup(char	**temp)
 		j = 0;
 		while(temp[i][j])
 		{
-			if (temp[i][j] < 0 && temp[i][j] < -40)
+			if (temp[i][j] < 0 && temp[i][j] > -40)
 				temp[i][j] *= -1;
 			j++;
 		}
@@ -52,7 +52,9 @@ t_symbol	*tokenizing(char *str)
 	if (!temp)
 		allocat_error();
 	replace_backup(temp);
+	//->리스트 치환
 	sub_env(temp);
+	sub_wildcard();
 	symbols = symbolizing(temp);
 	split_free(temp);
 	return (symbols);
@@ -70,6 +72,7 @@ char	**parsing_cmd(char *str)
 	}
 	str = preprocess_str(str);
 	symbols = tokenizing(str);//symbols free 필요!
+	free(str);
 	free_symbol(symbols);
 	//tree_root = make_parse_tree(symbols);
 	//return (tree_root);

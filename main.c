@@ -1,20 +1,6 @@
 
 #include "./include/minishell.h"
 
-void	parsing_env(char **env)
-{
-    char    	**str;
-	int			i;
-
-	i = -1;
-	while (env[++i])
-	{
-		str = ft_env_split(env[i]);
-		ft_lst_add_back(ft_lst_new(str[0], str[1]));
-		free(str);
-	}
-}
-
 int main(int ac, char **av, char **env)
 {
 	char  	*str;
@@ -30,7 +16,7 @@ int main(int ac, char **av, char **env)
 		str = readline("minishell$ ");
 		add_history(str);
 		cmd = parsing_cmd(str);
-		free(str);
+		//free(str);
 		system("leaks minishell");
 	}
 	return (0);

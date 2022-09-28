@@ -1,6 +1,17 @@
 #include "./include/minishell.h"
 
-static int	ft_get_env_len(char *env);
+static int	ft_get_env_len(char *env)
+{
+	int	len;
+
+	len = 0;
+	while (*env && *env != '=')
+	{
+		env++;
+		len++;
+	}
+	return (len);
+}
 
 char	**ft_env_split(char *env)
 {
@@ -27,17 +38,4 @@ char	**ft_env_split(char *env)
 	splited_env[1][idx] = 0;
 	splited_env[2] = NULL;
 	return (splited_env);
-}
-
-static int	ft_get_env_len(char *env)
-{
-	int	len;
-
-	len = 0;
-	while (*env && *env != '=')
-	{
-		env++;
-		len++;
-	}
-	return (len);
 }

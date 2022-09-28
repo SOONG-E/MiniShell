@@ -13,3 +13,17 @@ char	*get_value_n(char *key, int n)
 	}
 	return (ft_strdup(""));
 }
+
+void	parsing_env(char **env)
+{
+    char    	**str;
+	int			i;
+
+	i = -1;
+	while (env[++i])
+	{
+		str = ft_env_split(env[i]);
+		ft_lst_add_back(ft_lst_new(str[0], str[1]));
+		free(str);
+	}
+}

@@ -10,6 +10,7 @@ char	*ft_join(char **str)
 		str[0] = ft_strjoin_free(str[0], str[idx]);
 	ret = ft_strdup(str[0]);
 	split_free(str);
+	printf("after ft_join = %s\n", ret);
 	return (ret);
 }
 
@@ -87,64 +88,4 @@ int	cut_temp(char **temp, char *str)
 		i++;
 	*(temp) = ft_substr(str, 0, i);
 	return (i);
-}
-
-char	*replace_env(char *str)
-{
-	char	*str_backup;
-	char	*ret;
-	char	*temp;
-
-	str_backup = str;
-	ret = (char *)ft_calloc(sizeof(char), 1);
-	if(!ret)
-		exit(1);
-	while (*str)
-	{
-		str += cut_temp(&temp, str);
-		ret = ft_strjoin_free(ret, temp);
-		free(temp);
-	}
-	free(str_backup);
-	return (ret);
-}
-
-char	*parse_quote(char *str)
-{
-	char	**temp;
-	char	*str_backup;
-	int		i;
-	int		num;
-
-	str_backup = str;
-	num = count_pair(str);
-	temp = (char **)malloc((num + 1) * sizeof(char *));
-	if (!temp)
-		exit(1);
-	i = 0;
-	while (i < num)
-	{
-		if (*str == Q_SINGLE)
-			temp[i] = cut_str(&str);
-		else
-		{
-			temp[i] = cut_str(&str);
-			temp[i] = replace_env(temp[i]);
-		}
-		i++;
-	}
-	temp[i] = NULL;
-	free(str_backup);
-	return (ft_join(temp));
-}
-
-void	sub_env(char **temp)
-{ 
-	int		i;
-
-	i = -1;
-	while (temp[++i])
-	{
-		temp[i] = parse_quote(temp[i]);
-	} 
 }
