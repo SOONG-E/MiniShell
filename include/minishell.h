@@ -20,46 +20,72 @@
 
 //# include "symbols.h"
 # include "./symbols.h"
+
+typedef struct s_envlst	t_envlst;
+typedef struct s_symbol	t_symbol;
+typedef struct s_token	t_token;
+
 /* struct definition */
-typedef struct s_envlst
+struct s_envlst
 {
-	char            *key;
-    char            *value;
-	struct s_envlst *next;
-}	t_envlst;
+	char		*key;
+    char		*value;
+	t_envlst	*next;
+};
 
-typedef struct	s_symbol
+struct	s_symbol
 {
-	int		type;
-	char	*str;
-}	t_symbol;
+	int			idx;
+	int			type;
+	char		*str;
+	t_symbol	*pre;
+	t_symbol	*next;
+};
 
-typedef struct	s_token
+struct	s_token
 {
-	struct s_symbol	symbol;
-	struct s_token	*left;
-	struct s_token	*right;
+	int			type;
+	char		*str;
+	t_token		*left;
+	t_token		*right;
 	//struct s_token	*parent;
-}	t_token;
+};
 
 t_envlst	*g_envlst;
 
-/*ft_lst_func.c*/
-t_envlst	*ft_lst_new(char *key, char *value);
-void		ft_lst_add_back(t_envlst *new);
-void		printf_lst(void);
-char		**parsing_cmd(char *str);
+/*manage_symbol.c*/
+t_symbol	*ft_symbol_new(char	*str);
+
+
+/*manage_envlst.c*/
+t_envlst	*ft_envlst_new(char *key, char *value);
+void		ft_envlst_add_back(t_envlst *new);
+
+/*parsing_line.c*/
+char		**parsing_line(char *str);
+
+/*manage_env.c*/
+void		parsing_env(char **env);
 char		**ft_env_split(char *env);
+char		*get_value_n(char *key, int n);
 
-void	is_space(char *str);
-char	*double_quote(char *str);
-char	*single_quote(char *str);
-void	replace_white_space(char *str);
+/*replace_space.c*/
+void		is_space(char *str);
+char		*double_quote(char *str);
+char		*single_quote(char *str);
+void		replace_white_space(char *str);
 
-t_symbol	*symbolizing(char **temp);
+/*symbolization.c*/
+void	symbolizing(t_symbol *symbol_lst);
 
-//substitution_env.c
+/*expand_env.c*/
 void	sub_env(char **temp);
+
+//expand_env_utils.c
+int		cut_temp(char **temp, char *str);
+char	*cut_str(char **str);
+int		count_pair(char *str);
+char	*ft_join(char **str);
 
 //manage_error.c
 void	allocat_error(void);
@@ -74,7 +100,6 @@ void	ft_split_free(char **str);
 ///
 char	*ft_join(char **str);
 
-char	*get_value_n(char *key, int n);
 void    split_free(char **str);
 void    free_symbol(t_symbol *symbols);
 
@@ -87,20 +112,17 @@ void	ft_echo(char *arg, int option);
 void	ft_exit(int n);
 void	ft_env(char *env);
 
-//preprocess_str.c
-char    *preprocess_str(char *str);
-
-//substitution_env_utils.c
-int		cut_temp(char **temp, char *str);
-char	*cut_str(char **str);
-int		count_pair(char *str);
-char	*ft_join(char **str);
+//preprocess_line.c
+char    **preprocess_line(char *str);
+int		ft_skip_single_qoute(char *str);
 
 //check_cmd.c
 char	*get_cmd_path(char *cmd, char *path);
 int		is_cmd(char	*str);
 
-//manage_env
-void	parsing_env(char **env);
+//manage_symbol.c
+t_symbol	*make_symbol_lst(char **temp);
+void	lst_symbol_add_back(t_symbol **head, t_symbol *new);
+t_symbol	*ft_symbol_new(char	*str);
 
 #endif

@@ -1,6 +1,6 @@
 #include "./include/minishell.h"
 
-void	ft_lst_add_back(t_envlst *new)
+void	ft_envlst_add_back(t_envlst *new)
 {
 	t_envlst	*tmp;
 
@@ -15,7 +15,7 @@ void	ft_lst_add_back(t_envlst *new)
 	}
 }
 
-t_envlst	*ft_lst_new(char *key, char *value)
+t_envlst	*ft_envlst_new(char *key, char *value)
 {
 	t_envlst	*new;
 
@@ -27,4 +27,3 @@ t_envlst	*ft_lst_new(char *key, char *value)
 	new->next = NULL;
 	return (new);
 }
-

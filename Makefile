@@ -8,17 +8,17 @@ INCLUDE		=	include
 LIBFT		=	libft
 
 SRCS		= 	main.c					\
-				ft_lst_func.c			\
-				parsing_cmd.c			\
-				ft_env_split.c			\
+				parsing_line.c			\
 				replace_space.c			\
-				substitution_env.c		\
-				substitution_env_utils.c\
+				expand_env.c			\
+				expand_env_utils.c		\
+				manage_symbol.c			\
+				manage_envlst.c			\
 				manage_error.c			\
 				manage_env.c			\
 				manage_mem.c			\
-				symbolization.c			\
-				preprocess_str.c		\
+				symbolize.c			\
+				preprocess_line.c		\
 				check_cmd.c				\
 				./built_in/ft_cd.c		\
 				./built_in/ft_echo.c	\

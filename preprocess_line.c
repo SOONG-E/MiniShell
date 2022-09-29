@@ -67,7 +67,7 @@ int ft_skip_single_qoute(char *str)
     return (i + 1);
 }
 
-char    *preprocess_str(char *str)
+char    *replace_op(char *str)
 {
     char    *op;
 	char	*temp;
@@ -96,4 +96,18 @@ char    *preprocess_str(char *str)
             i++;
     }
     return (str);
+}
+
+char    **preprocess_line(char *str)
+{
+    char		**temp;
+
+    str = replace_op(str);
+    replace_white_space(str);
+	temp = ft_split(str, "\n\t\v\f\r ");
+	if (!temp)
+		allocat_error();
+	replace_backup(temp);
+    free(str);
+    return (temp);
 }

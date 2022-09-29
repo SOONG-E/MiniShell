@@ -14,5 +14,5 @@ void	ft_export(char *key, char *value)
 		}
 		tmp = tmp->next;
 	}
-	ft_lst_add_back(ft_lst_new(key, value));
+	ft_envlst_add_back(ft_envlst_new(key, value));
 }

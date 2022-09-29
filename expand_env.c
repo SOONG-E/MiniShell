@@ -1,5 +1,93 @@
 #include "./include/minishell.h"
 
+t_symbol	*sub_env(t_symbol *symbol_lst)
+{
+	char	*rv;
+	char	*tmp;
+	int		idx;
+
+	rv = NULL;
+	idx = 0;
+	while (symbol_lst->str[idx])
+	{
+		idx += ft_strichr(&symbol_lst->str[idx], '$');
+		tmp = rv;
+		rv = ft_strndup(symbol_lst->str, idx);
+		if (tmp)
+			free(tmp);
+	}
+
+}
+
+char	*find_env(char *str)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	while (ft_isalnum(str[i]) || str[i] == '_')
+		++i;
+	if (i == 0)
+		ret = ft_strjoin("$", &str[i]);
+	else
+		ret = ft_strjoin_free(get_value_n(str, i), &str[i]);
+	if(!ret)
+		allocat_error();
+	free(str);
+	return (ret);
+}
+
+char	*expand_env_with_quote(char *str)
+{
+	int 	i;
+	char	**temp;
+	char 	*ret;
+
+	temp = ft_split(str, "$");
+	if (!temp)
+		allocat_error();
+	i = 0;
+	while (temp[++i])
+		temp[i] = find_env(temp[i]);
+	i = 0;
+	while (temp[++i])
+		temp[0] = ft_strjoin_free(temp[0], temp[i]);
+	ret = ft_strdup(temp[0]);
+	split_free(temp);
+	return (ret);
+}
+
+void	expand_env(t_symbol *symbol_lst)
+{
+	int	i;
+	
+	while (symbol_lst)
+	{
+		symbol_lst->str = expand_env_qoute_case(symbol_lst->str);	
+		symbol_lst = symbol_lst->next;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 char	*replace_env(char *str)
 {
 	char	*str_backup;
@@ -91,3 +179,4 @@ void	sub_env(char **temp)
 		i++;
 	} 
 }
+*/

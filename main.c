@@ -1,4 +1,3 @@
-
 #include "./include/minishell.h"
 
 int main(int ac, char **av, char **env)
@@ -15,7 +14,7 @@ int main(int ac, char **av, char **env)
 	{
 		str = readline("minishell$ ");
 		add_history(str);
-		cmd = parsing_cmd(str);
+		cmd = parsing_line(str);
 		//free(str);
 		system("leaks minishell");
 	}
