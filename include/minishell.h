@@ -122,7 +122,13 @@ int		is_cmd(char	*str);
 
 //manage_symbol.c
 t_symbol	*make_symbol_lst(char **temp);
-void	lst_symbol_add_back(t_symbol **head, t_symbol *new);
+void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
 t_symbol	*ft_symbol_new(char	*str);
+
+/*expand_env_double_quote.c*/
+char	*expand_env_quote_case(char *str);
+
+/*expand_env.c*/
+void	expand_env(t_symbol *symbol_lst);
 
 #endif

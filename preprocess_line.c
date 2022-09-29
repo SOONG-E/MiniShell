@@ -98,6 +98,25 @@ char    *replace_op(char *str)
     return (str);
 }
 
+static void	replace_backup(char	**temp)
+{
+	int	i;
+	int	j;
+	
+	i = 0;
+	while (temp[i])
+	{
+		j = 0;
+		while(temp[i][j])
+		{
+			if (temp[i][j] < 0 && temp[i][j] > -40)
+				temp[i][j] *= -1;
+			j++;
+		}
+		i++;
+	}
+}
+
 char    **preprocess_line(char *str)
 {
     char		**temp;

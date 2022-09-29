@@ -55,6 +55,7 @@ t_symbol	*find_first_cmd(t_symbol *symbol)
 {
 	t_symbol	*temp;
 
+	temp = symbol;
 	while (temp)
 	{
 		if (temp->str[0] == OP_LBRACE)

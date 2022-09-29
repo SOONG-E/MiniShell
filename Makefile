@@ -12,6 +12,7 @@ SRCS		= 	main.c					\
 				replace_space.c			\
 				expand_env.c			\
 				expand_env_utils.c		\
+				expand_env_double_quote.c		\
 				manage_symbol.c			\
 				manage_envlst.c			\
 				manage_error.c			\
