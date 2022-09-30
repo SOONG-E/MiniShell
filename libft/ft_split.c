@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seojin <seojin@student.42seoul.kr>         +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:36:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/09/19 16:20:56 by seojin           ###   ########.fr       */
+/*   Updated: 2022/09/30 15:15:18 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ char	**ft_putstr2(char **save, char *str, char *charset, int count)
 		while (ft_charset(str[e], charset) != 1 && str[e] != 0)
 			e++;
 		save[i] = (char *)malloc(e - s + 1);
-		if (!save[i])         
+		if (!save[i])
 			exit(1);
 		save[i] = ft_strcpy(save[i], str, s, e);
 		i++;

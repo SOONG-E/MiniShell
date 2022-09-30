@@ -2,14 +2,14 @@
 
 static char	*simple_join_three_str(char *str1, char *str2, char *str3)
 {
-	char *ret;
+	char	*ret;
 
 	ret = ft_strjoin(str1, str2);
 	ret = ft_strjoin_free(ret, str3);
 	free(str1);
 	free(str2);
 	free(str3);
-	return (ret);	
+	return (ret);
 }
 
 static char	*find_env(char *str)
@@ -18,23 +18,27 @@ static char	*find_env(char *str)
 	char	*ret;
 
 	i = 0;
+	if (str[i] == '?')
+	{
+		ret = ft_strjoin(get_value_n("exitcode", 8), &str[++i]); // exitcode 따로 환경변수 만들어야하는지? 일단 set_envlst만들뒀어ㅡㅂ네다
+		free(str);
+		return (str);
+	}
 	while (ft_isalnum(str[i]) || str[i] == '_')
 		++i;
 	if (i == 0)
 		ret = ft_strjoin("$", &str[i]);
 	else
 		ret = ft_strjoin_free(get_value_n(str, i), &str[i]);
-	if(!ret)
-		allocat_error();
 	free(str);
 	return (ret);
 }
 
 static char	*expand_env_in_quote(char *str)
 {
-	int 	i;
+	int		i;
 	char	**temp;
-	char 	*ret;
+	char	*ret;
 
 	temp = ft_split(str, "$");
 	if (!temp)
@@ -61,7 +65,7 @@ static char	*env_split_merge(char *str, int *i)
 {
 	char	**temp;
 	int		j;
-	
+
 	temp = (char **)malloc(3 * sizeof(char *));
 	if (!temp)
 		allocat_error();

@@ -41,6 +41,7 @@ char	**parsing_line(char *str)
 	temp = preprocess_line(str);
 	symbol_lst = make_symbol_lst(temp);
 	expand_env(symbol_lst);// 수정필요! // 환경변수 확장
+	printf("성공!!\n");
 	while (symbol_lst)
 	{
 		printf("%s\n", symbol_lst->str);

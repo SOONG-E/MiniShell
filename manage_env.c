@@ -43,7 +43,7 @@ char	**ft_env_split(char *env)
 char	*get_value_n(char *key, int n)
 {
 	t_envlst	*temp;
-	
+
 	temp = g_envlst;
 	while (temp)
 	{
@@ -56,8 +56,8 @@ char	*get_value_n(char *key, int n)
 
 void	parsing_env(char **env)
 {
-    char    	**str;
-	int			i;
+	char	**str;
+	int		i;
 
 	i = -1;
 	while (env[++i])

@@ -1,24 +1,24 @@
 #include "./include/minishell.h"
 
-void    split_free(char **str)
+void	split_free(char **str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        free(str[i]);
-        i++;
-    }
-    free(str);
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
 }
 
-void    free_symbol(t_symbol *symbols)
+void	free_symbol(t_symbol *symbols)
 {
-    int i;
+	int	i;
 
-    i = -1;
-    while (symbols[++i].str)
-        free(symbols[i].str);
-    free(symbols);
+	i = -1;
+	while (symbols[++i].str)
+		free(symbols[i].str);
+	free(symbols);
 }

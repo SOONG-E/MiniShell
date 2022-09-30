@@ -1,11 +1,11 @@
 #include "./include/minishell.h"
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
-	char  	*str;
+	char	*str;
 	char	**cmd;
 
-    (void)av;
+	(void)av;
 	if (ac != 1)
 		return (0);
 	g_envlst = NULL;

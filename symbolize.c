@@ -1,6 +1,6 @@
 #include "./include/minishell.h"
 
-static int	classify_operator(char *str)
+static int	classify_op(char *str)
 {
 	if (ft_strlen(str) != 1 || str[0] > 0)
 		return (0);
@@ -28,14 +28,14 @@ static int	classify_operator(char *str)
 
 static int	classify_type(t_symbol	*symbol)
 {
-	int op;
+	int	op;
 
-	op = classify_operator(symbol->str);
+	op = classify_op(symbol->str);
 	if (op)
 	{
 		if (op == T_RBRACE)
 			return (op);
-		else if (symbol->next && classify_operator(symbol->next->str) == T_LBRACE)
+		else if (symbol->next && classify_op(symbol->next->str) == T_LBRACE)
 			return (op);
 		else if (symbol->next)
 			symbol->next->type = (T_CMD + (op == T_IN_RID || op == T_OUT_RID));
@@ -43,7 +43,8 @@ static int	classify_type(t_symbol	*symbol)
 	}
 	else if (!ft_strcmp(symbol->str, "-n"))
 	{
-		if (symbol->pre && (symbol->pre->type == T_CMD || symbol->pre->type == T_OPTION))
+		if (symbol->pre
+			&& (symbol->pre->type == T_CMD || symbol->pre->type == T_OPTION))
 			return (T_OPTION);
 	}
 	else

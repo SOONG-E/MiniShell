@@ -25,7 +25,7 @@ char	*double_quote(char *str)
 			return (str);
 		++str;
 	}
-	return (NULL);		
+	return (NULL);
 }
 
 char	*single_quote(char *str)

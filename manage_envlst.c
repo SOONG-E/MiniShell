@@ -27,3 +27,31 @@ t_envlst	*ft_envlst_new(char *key, char *value)
 	new->next = NULL;
 	return (new);
 }
+
+t_envlst	*get_envlst(char *key)
+{
+	t_envlst	*temp;
+
+	temp = g_envlst;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->key, key))
+			return (temp);
+		temp = temp->next;
+	}
+	return (NULL);
+}
+
+void	set_envlst(char *key, char *value)
+{
+	t_envlst	*envlst;
+
+	envlst = get_envlst(key);
+	if (!envlst)
+		ft_envlst_add_back(ft_envlst_new(key, value));
+	else
+	{
+		free(envlst->value);
+		envlst->value = ft_strdup(value);
+	}
+}
