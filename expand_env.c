@@ -46,7 +46,10 @@ t_symbol	*expand_basic_env(char *str, int *idx)
 	key = ft_substr(str, 1, i);
 	value = get_value_n(key, i);
 	if (ft_strichr(value, ' ') == -1)
+	{
+		free(key);
 		return (ft_symbol_new(value));
+	}
 	new_symbol = make_sub_lst(value);
 	free(key);
 	free(value);
@@ -110,6 +113,7 @@ t_symbol	*expand_env(t_symbol *symbol_lst)
 	head = ft_symbol_new(ft_strdup("head"));
 	head->next = symbol_lst;
 	symbol_lst->pre = head;
+	
 	while (symbol_lst)
 	{
 		if (ft_strichr(symbol_lst->str, '$') < 0)
@@ -125,6 +129,7 @@ t_symbol	*expand_env(t_symbol *symbol_lst)
 		free(symbol_lst->str);
 		free(symbol_lst);
 		symbol_lst = temp_lst->next;
+		
 	}
 	symbol_lst = head->next;
 	free(head->str);

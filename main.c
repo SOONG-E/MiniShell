@@ -20,6 +20,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		cmd = parsing_line(str);
+		system("leaks minishell");
 		//free(str);
 	}
 	return (0);

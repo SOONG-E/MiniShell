@@ -20,7 +20,7 @@ void	free_symbol(t_symbol *symbols)
 	while (symbols)
 	{
 		temp = symbols;
-		free(symbols->str);
+		free(temp->str);
 		symbols = symbols->next;
 		free(temp);
 	}
