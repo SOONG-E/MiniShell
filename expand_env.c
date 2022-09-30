@@ -53,6 +53,24 @@ t_symbol	*expand_basic_env(char *str, int *idx)
 	return (new_symbol);
 }
 
+char	*make_single_str(char *str, int *idx)
+{
+	char	*ret;
+	int		i;
+
+	i = 0;
+	while (str[i] != '$' && str[i])
+	{
+		if (str[i] == Q_SINGLE)
+			i += ft_skip_single_qoute(&str[i]);
+		else
+			i++;
+	}
+	ret = ft_substr(str, 0, i);
+	*idx += i;
+	return (ret);
+}
+
 t_symbol	*combine_lst(t_symbol *first_lst, t_symbol *second_lst)
 {
 	t_symbol	*temp_lst;
@@ -70,59 +88,45 @@ t_symbol	*combine_lst(t_symbol *first_lst, t_symbol *second_lst)
 t_symbol	*get_temp_lst(char *str)
 {
 	t_symbol	*temp_lst;
-	int			e;
-	int			s;
+	int			i;
 
-	e = 0;
 	temp_lst = ft_symbol_new(ft_strdup(""));
-	while (e >= 0 && str[e])
+	i = 0;
+	while (str[i])
 	{
-		s = e;
-		if (str[s] == '$')
-			temp_lst = combine_lst(temp_lst, expand_basic_env(&str[e], &e));
+		if (str[i] == '$')
+			temp_lst = combine_lst(temp_lst, expand_basic_env(&str[i], &i));
 		else
-		{
-			e = ft_strichr(str, '$');
-			if (e > 0)
-				temp_lst = combine_lst(temp_lst, ft_symbol_new(ft_substr(str, s, e - s)));
-			else
-				temp_lst = combine_lst(temp_lst, ft_symbol_new(ft_strdup(&str[s])));
-		}
+			temp_lst = combine_lst(temp_lst, ft_symbol_new(make_single_str(&str[i], &i)));
 	}
 	return (temp_lst);
 }
 
-void	expand_env(t_symbol *symbol_lst)
+t_symbol	*expand_env(t_symbol *symbol_lst)
 {
 	t_symbol	*head;
 	t_symbol	*temp_lst;
-	
-	head = ft_symbol_new(ft_strdup(""));
+
+	head = ft_symbol_new(ft_strdup("head"));
+	head->next = symbol_lst;
 	symbol_lst->pre = head;
 	while (symbol_lst)
 	{
-		symbol_lst->str = expand_env_quote_case(symbol_lst->str);
 		if (ft_strichr(symbol_lst->str, '$') < 0)
 		{
 			symbol_lst = symbol_lst->next;
 			continue ;
 		}
+		symbol_lst->str = expand_env_quote_case(symbol_lst->str);
 		temp_lst = get_temp_lst(symbol_lst->str);
-		/*vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv*/
-		while (temp_lst)
-		{
-			printf("temp_lst: %s\n", temp_lst->str);
-			temp_lst = temp_lst->next;
-		}
-		/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 		symbol_lst->pre->next = temp_lst;
 		if (symbol_lst->next)
 			lst_symbol_add_back(&temp_lst, symbol_lst->next);
 		free(symbol_lst->str);
 		free(symbol_lst);
-		printf("여까지 됨됨\n");
-		symbol_lst = temp_lst->next;//segfault!!!
+		symbol_lst = temp_lst->next;
 	}
 	free(head->str);
 	free(head);
+	return (head->next);
 }

@@ -15,10 +15,13 @@ void	split_free(char **str)
 
 void	free_symbol(t_symbol *symbols)
 {
-	int	i;
+	t_symbol *temp;
 
-	i = -1;
-	while (symbols[++i].str)
-		free(symbols[i].str);
-	free(symbols);
+	while (symbols)
+	{
+		temp = symbols;
+		free(symbols->str);
+		symbols = symbols->next;
+		free(temp);
+	}
 }

@@ -52,6 +52,6 @@ void	set_envlst(char *key, char *value)
 	else
 	{
 		free(envlst->value);
-		envlst->value = ft_strdup(value);
+		envlst->value = value;
 	}
 }

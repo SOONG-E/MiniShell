@@ -16,3 +16,5 @@ void	ft_export(char *key, char *value)
 	}
 	ft_envlst_add_back(ft_envlst_new(key, value));
 }
+
+// 정렬, value값에 환경변수 있으면 치환 후 add

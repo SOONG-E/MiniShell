@@ -64,9 +64,9 @@ t_symbol	*find_first_cmd(t_symbol *symbol)
 			temp->type = T_LBRACE;
 			temp = temp->next;
 		}
-		else if (classify_operator(temp->str) > 0)
+		else if (classify_op(temp->str) > 0)
 		{
-			symbol->type = (classify_operator(temp->str) * -1);
+			symbol->type = (classify_op(temp->str) * -1);
 			return (NULL);
 		}
 		else

@@ -76,12 +76,12 @@ char	*replace_op(char *str)
 	i = 0;
 	while (str[i])
 	{
+		op = get_op(&str[i]);
 		if (str[i] == Q_DOUBLE)
 			i += ft_skip_double_qoute(&str[i]);
-		if (str[i] == Q_SINGLE)
+		else if (str[i] == Q_SINGLE)
 			i += ft_skip_single_qoute(&str[i]);
-		op = get_op(&str[i]);
-		if (op)
+		else if (op)
 		{
 			temp = str;
 			if (op[1] == OP_AND_IF || op[1] == OP_OR_IF
@@ -90,7 +90,7 @@ char	*replace_op(char *str)
 			else
 				str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 1]), &i);
 			free(temp);
-			i += 3;
+			i += 2;
 		}
 		else
 			i++;
