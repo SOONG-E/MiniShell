@@ -45,5 +45,6 @@ t_symbol	*make_symbol_lst(char **temp)
 		lst_symbol_add_back(&symbol_lst, new);
 		i++;
 	}
+	free(temp);
 	return (symbol_lst);
 }

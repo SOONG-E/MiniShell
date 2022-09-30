@@ -126,7 +126,8 @@ t_symbol	*expand_env(t_symbol *symbol_lst)
 		free(symbol_lst);
 		symbol_lst = temp_lst->next;
 	}
+	symbol_lst = head->next;
 	free(head->str);
 	free(head);
-	return (head->next);
+	return (symbol_lst);
 }

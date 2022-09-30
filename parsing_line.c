@@ -38,17 +38,13 @@ char	**parsing_line(char *str)
 		exit(1);	// pair error!!!
 	//VVV--parsing_cmd.c preprocess_str.c 수정함--VVV
 	temp = preprocess_line(str);
-	printf("preprocess_line 성공!\n");
+	
 	symbol_lst = make_symbol_lst(temp);
-	printf("make_symbol_lst 성공!\n");
+	
 	symbol_lst = expand_env(symbol_lst);//진행중
-	printf("expand_env 성공!\n");
-	while (symbol_lst)
-	{
-		printf("%s\n", symbol_lst->str);
-		symbol_lst = symbol_lst->next;
-	}
+	
 	free_symbol(symbol_lst);
+	system("leaks minishell");
 	
 	//symbols = symbolizing(symbol_lst);//수정필요! symbols free 필요! // 심볼리스트로 치환
 	// symbols->type < 0 면 빈 괄호 있는거

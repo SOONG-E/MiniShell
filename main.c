@@ -14,10 +14,12 @@ int	main(int ac, char **av, char **env)
 	{
 		str = readline("minishell$ ");
 		if (!ft_strlen(str))
+		{
+			free(str);
 			continue ;
+		}
 		add_history(str);
 		cmd = parsing_line(str);
-		system("leaks minishell");
 		//free(str);
 	}
 	return (0);
