@@ -21,6 +21,7 @@ SRCS		= 	main.c						\
 				symbolize.c					\
 				preprocess_line.c			\
 				check_cmd.c					\
+				validate.c					\
 				./built_in/ft_cd.c			\
 				./built_in/ft_echo.c		\
 				./built_in/ft_env.c			\
@@ -36,7 +37,7 @@ all		: $(NAME)
 $(NAME) : $(OBJS)
 			make -C $(LIBFT)
 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft -I $(INCLUDE) -lreadline
-			make clean
+			make clean 
 
 clean	:
 			rm -rf $(OBJS)

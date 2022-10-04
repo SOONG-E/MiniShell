@@ -20,6 +20,8 @@
 
 # include "./symbols.h"
 
+# define SHELL "minishell"
+
 typedef	struct s_info t_info;
 typedef struct s_envlst	t_envlst;
 typedef struct s_symbol	t_symbol;
@@ -52,6 +54,7 @@ struct	s_token
 {
 	int			type;
 	char		*str;
+	t_symbol	*symbol;
 	t_token		*left;
 	t_token		*right;
 	//struct s_token	*parent;
@@ -89,6 +92,7 @@ void		set_envlst(char *key, char *value);
 
 /*manage_error.c*/
 void	allocat_error(void);
+int		error_msg(char *str);
 
 /*manage_mem.c*/
 void    split_free(char **str);
@@ -116,6 +120,11 @@ int		ft_skip_double_qoute(char *str);
 
 /*symbolize.c*/
 void	symbolizing(t_symbol *symbol_lst);
+int		classify_op(char *str);
+
+/*validate.c*/
+int		validate(t_symbol *symbol_lst);
+int		syntax_error_token(char *str);
 
 /// test
 //void	print_env_test(void);
