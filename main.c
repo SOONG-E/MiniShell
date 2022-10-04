@@ -1,5 +1,13 @@
 #include "./include/minishell.h"
 
+int	is_end_op(char *str)
+{
+	int	i;
+
+	i = 0;
+	while ()
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*str;
@@ -13,6 +21,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		str = readline("minishell$ ");
+		while ()
+		{
+			readline("> ");
+		}
 		if (!ft_strlen(str))
 		{
 			free(str);
@@ -20,8 +32,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		cmd = parsing_line(str);
-		system("leaks minishell");
-		//free(str);
+		//system("leaks minishell");
 	}
 	return (0);
 }

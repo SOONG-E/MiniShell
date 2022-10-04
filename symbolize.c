@@ -35,7 +35,7 @@ static int	classify_type(t_symbol	*symbol)
 	{
 		if (op == T_RBRACE)
 			return (op);
-		else if (symbol->next && classify_op(symbol->next->str) == T_LBRACE)
+		else if (symbol->next && classify_op(symbol->next->str) > 0)
 			return (op);
 		else if (symbol->next)
 			symbol->next->type = (T_CMD + (op == T_IN_RID || op == T_OUT_RID));
