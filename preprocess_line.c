@@ -90,10 +90,7 @@ char	*replace_op(char *str)
 			temp = str;
 			if (op[1] == OP_AND_IF || op[1] == OP_OR_IF \
 				|| op[1] == OP_IN_HEREDOC || op[1] == OP_OUT_HEREDOC)
-			{
-				printf("op = %d\n\n", op[1]);
 				str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 2]), &i);
-			}
 			else
 				str = combine_str(ft_substr(str, 0, i), op, ft_strdup(&str[i + 1]), &i);
 			free(temp);

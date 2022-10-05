@@ -8,7 +8,8 @@ int	main(int ac, char **av, char **env)
     (void)av;
 	if (ac != 1)
 		return (0);
-	g_envlst = NULL;
+	init_info(env);
+	//g_envlst = NULL;
 	parsing_env(env);
 	while (1)
 	{
@@ -20,8 +21,9 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		cmd = parsing_line(str);
-		(void)cmd;
-		//system("leaks minishell");
+		if (!cmd)
+			set_exit_code(127); // d임시
+		system("leaks minishell");
 	}
 	return (0);
 }

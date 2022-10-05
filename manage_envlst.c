@@ -4,9 +4,9 @@ void	ft_envlst_add_back(t_envlst *new)
 {
 	t_envlst	*tmp;
 
-	tmp = g_envlst;
+	tmp = g_info->envlst;
 	if (!tmp)
-		g_envlst = new;
+		g_info->envlst = new;
 	else
 	{
 		while (tmp->next)
@@ -32,7 +32,7 @@ t_envlst	*get_envlst(char *key)
 {
 	t_envlst	*temp;
 
-	temp = g_envlst;
+	temp = g_info->envlst;
 	while (temp)
 	{
 		if (!ft_strcmp(temp->key, key))

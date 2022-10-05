@@ -60,8 +60,8 @@ struct	s_token
 	//struct s_token	*parent;
 };
 
-t_envlst	*g_envlst;
-//t_info		*g_info;
+//t_envlst	*g_envlst;
+t_info		*g_info;
 
 /*check_cmd.c*/
 char	*get_cmd_path(char *cmd, char *path);
@@ -93,6 +93,10 @@ void		set_envlst(char *key, char *value);
 /*manage_error.c*/
 void	allocat_error(void);
 int		error_msg(char *str);
+
+/*manage_info.c*/
+void	init_info(char **env);
+void	set_exit_code(int code);
 
 /*manage_mem.c*/
 void    split_free(char **str);

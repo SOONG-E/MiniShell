@@ -45,6 +45,8 @@ int	check_expression_error(t_symbol *symbol_lst)
 			rbrace_in_row = 1;
 		else if (symbol_lst->type == T_RBRACE)
 			++rbrace_in_row;
+		else
+			rbrace_in_row = 0;
 		if (lbrace_in_row > 1 && rbrace_in_row > 1)
 		{
 			error_msg("syntax error in expression");
