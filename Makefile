@@ -37,8 +37,8 @@ all		: $(NAME)
 
 $(NAME) : $(OBJS)
 			make -C $(LIBFT)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft -I $(INCLUDE) -lreadline
-			make clean 
+			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft -Lvendor/readline/lib -lreadline -I $(INCLUDE)
+			make clean  
 
 clean	:
 			rm -rf $(OBJS)

@@ -19,7 +19,7 @@ static char	*find_env(char *str)
 
 	if (str[0] == '?')
 	{
-		ret = ft_strjoin_free(get_value_n("exitcode", 8), &str[1]); // exitcode 따로 환경변수 만들어야하는지? 일단 set_envlst만들뒀어ㅡㅂ네다
+		ret = ft_strjoin(g_info->exit_code, &str[1]); // exitcode 따로 환경변수 만들어야하는지? 일단 set_envlst만들뒀어ㅡㅂ네다
 		free(str);
 		return (ret);
 	}

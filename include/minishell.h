@@ -21,6 +21,8 @@
 # include "./symbols.h"
 
 # define SHELL "minishell"
+# define C_BLUE "\033[34m"
+# define C_BLCK "\033[30m"
 
 typedef	struct s_info t_info;
 typedef struct s_envlst	t_envlst;

@@ -9,5 +9,6 @@ void	allocat_error(void)
 int	error_msg(char *str)
 {
 	printf("%s: %s\n", SHELL, str);
+	set_exit_code(127);
 	return (0);
 }

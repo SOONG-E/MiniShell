@@ -45,7 +45,12 @@ char	**parsing_line(char *str)
 		free_symbol(symbol_lst);
 		return (0);
 	}
-	// symbols->type < 0 면 빈 괄호 있는거
+	t_symbol *tmp = symbol_lst;
+	while (tmp)
+	{
+		printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
+		tmp = tmp->next;
+	} 
 	//tree_root = make_parse_tree(symbols);//미구현! //파스트리 생성
 	free_symbol(symbol_lst);
 	//return (tree_root);
