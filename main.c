@@ -2,10 +2,15 @@
 
 int	is_end_op(char *str)
 {
-	int	i;
+	int	idx;
 
-	i = 0;
-	while ()
+	idx = ft_strlen(str);
+	if (idx > 1)
+		if (!ft_strcmp(str[idx - 2], "&&"))
+			return (1);
+	else if (!ft_strcmp(str[idx - 2], "||"))
+		return (1);
+	if (!ft_strcmp(str[idx - 1], "|")),
 }
 
 int	main(int ac, char **av, char **env)
