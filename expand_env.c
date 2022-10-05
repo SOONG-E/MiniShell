@@ -1,6 +1,5 @@
 #include "./include/minishell.h"
 
-//update function name plz...
 int	is_alnum_under(char c)
 {
 	if (ft_isalnum(c))
@@ -116,20 +115,17 @@ t_symbol	*expand_env(t_symbol *symbol_lst)
 	
 	while (symbol_lst)
 	{
-		if (ft_strichr(symbol_lst->str, '$') < 0)
+		if (ft_strichr(symbol_lst->str, '$') >= 0)
 		{
-			symbol_lst = symbol_lst->next;
-			continue ;
+			symbol_lst->str = expand_env_quote_case(symbol_lst->str);
+
+			printf("1. %s\n", symbol_lst->str);
+			temp_lst = get_temp_lst(symbol_lst->str);
+			printf("2. %s\n", temp_lst->str);
+			symbol_lst = lst_symbol_add_middle(symbol_lst, temp_lst);
+			printf("3. %s\n", symbol_lst->str);
 		}
-		symbol_lst->str = expand_env_quote_case(symbol_lst->str);
-		temp_lst = get_temp_lst(symbol_lst->str);
-		symbol_lst->pre->next = temp_lst;
-		if (symbol_lst->next)
-			lst_symbol_add_back(&temp_lst, symbol_lst->next);
-		free(symbol_lst->str);
-		free(symbol_lst);
-		symbol_lst = temp_lst->next;
-		
+		symbol_lst = symbol_lst->next;
 	}
 	symbol_lst = head->next;
 	symbol_lst->pre = NULL;

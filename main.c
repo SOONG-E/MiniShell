@@ -1,14 +1,5 @@
 #include "./include/minishell.h"
 
-void	handler(int signum)
-{
-	if (signum != SIGINT)
-		return ;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
 int	main(int ac, char **av, char **env)
 {
 	char	*str;
@@ -17,14 +8,23 @@ int	main(int ac, char **av, char **env)
     (void)av;
 	if (ac != 1)
 		return (0);
-	//signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, handler);
+	// signal(SIGQUIT, SIG_IGN);
+	// signal(SIGINT, sigint_handler);
+
+	// struct termios	ori_term;
+	// struct termios	new_term;
+
+	// tcgetattr(STDIN_FILENO, &ori_term);
+	// tcgetattr(STDIN_FILENO, &new_term);
+	// new_term.c_lflag &= ~ICANON;
+	// new_term.c_lflag &= ~ECHO;
+	// tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
 	init_info(env);
-	//g_envlst = NULL;
-	parsing_env(env);
 	while (1)
 	{
 		str = readline(C_BLUE"minishell$ "C_BLCK);
+		if (!strcmp(str, "exit"))
+			exit(0);
 		if (!ft_strlen(str))
 		{
 			free(str);

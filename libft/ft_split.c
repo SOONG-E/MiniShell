@@ -6,11 +6,11 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/26 15:36:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/09/30 17:23:12 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/10/05 16:43:20 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<stdlib.h>
+#include <stdlib.h>
 
 int	ft_charset(char a, char *charset)
 {

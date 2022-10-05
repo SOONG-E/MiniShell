@@ -1,5 +1,7 @@
 #include "./include/minishell.h"
 
+char	**double_quote_split(char *str, char chr);
+
 static char	*simple_join_three_str(char *str1, char *str2, char *str3)
 {
 	char	*ret;
@@ -40,7 +42,7 @@ static char	*expand_env_in_quote(char *str)
 	char	**temp;
 	char	*ret;
 
-	temp = ft_split(str, "$");
+	temp = double_quote_split(str, '$');
 	if (!temp)
 		allocat_error();
 	free(str);

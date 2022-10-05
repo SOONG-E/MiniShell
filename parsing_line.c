@@ -40,12 +40,13 @@ char	**parsing_line(char *str)
 	symbol_lst = make_symbol_lst(temp);
 	symbol_lst = expand_env(symbol_lst);//진행중
 	symbolizing(symbol_lst);
+	t_symbol *tmp = symbol_lst;
 	if (validate(symbol_lst))
 	{
 		free_symbol(symbol_lst);
 		return (0);
 	}
-	t_symbol *tmp = symbol_lst;
+	//expand_filename(symbol_lst);
 	while (tmp)
 	{
 		printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
@@ -54,7 +55,6 @@ char	**parsing_line(char *str)
 	//tree_root = make_parse_tree(symbols);//미구현! //파스트리 생성
 	free_symbol(symbol_lst);
 	//return (tree_root);
-
 	//^^^---------------------------------------^^^
 	return (0);
 }

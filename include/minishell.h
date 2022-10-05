@@ -34,6 +34,7 @@ struct s_info
 {
 	t_envlst	*envlst;
 	char		*exit_code;
+	bool		signalset;
 };
 
 struct s_envlst
@@ -104,11 +105,14 @@ void	set_exit_code(int code);
 void    split_free(char **str);
 void    free_symbol(t_symbol *symbols);
 
+/*manage_signal.c*/
+void	sigint_handler(int signum);
+
 /*manage_symbol.c*/
 t_symbol	*ft_symbol_new(char	*str);
 t_symbol	*make_symbol_lst(char **temp);
 void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
-t_symbol	*ft_symbol_new(char	*str);
+t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new);
 
 /*parsing_line.c*/
 char		**parsing_line(char *str);
@@ -147,6 +151,9 @@ void	ft_export(char *key, char *value);
 void	ft_echo(char *arg, int option);
 void	ft_exit(int n);
 void	ft_env(char *env);
+
+/* delete_quote.c */
+t_symbol	*delete_quote(t_symbol *symbol);
 
 
 #endif
