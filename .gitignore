@@ -7,3 +7,4 @@ exe.sh
 *.dSYM
 *.o
 .DS_Store
+*test.c

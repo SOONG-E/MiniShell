@@ -1,6 +1,6 @@
 #include "./include/minishell.h"
 
-static int	classify_op(char *str)
+int	classify_op(char *str)
 {
 	if (ft_strlen(str) != 1 || str[0] > 0)
 		return (0);
@@ -26,7 +26,7 @@ static int	classify_op(char *str)
 		return (0);
 }
 
-static int	classify_type(t_symbol	*symbol)
+int	classify_type(t_symbol	*symbol)
 {
 	int	op;
 
@@ -52,37 +52,16 @@ static int	classify_type(t_symbol	*symbol)
 	return (T_ARG);
 } //-n아닌경우 무조건 arg !  누가 뭐라하면 민수칸님이 패기로함;;
 
-t_symbol	*find_first_cmd(t_symbol *symbol)
-{
-	t_symbol	*temp;
-
-	temp = symbol;
-	while (temp)
-	{
-		if (temp->str[0] == OP_LBRACE)
-		{
-			temp->type = T_LBRACE;
-			temp = temp->next;
-		}
-		else if (classify_op(temp->str) > 0)
-		{
-			symbol->type = (classify_op(temp->str) * -1);
-			return (NULL);
-		}
-		else
-		{
-			temp->type = T_CMD;
-			return (temp->next);
-		}
-	}
-	return (NULL);
-}
-
 void	symbolizing(t_symbol *symbol_lst)
 {
 	t_symbol	*temp;
 
-	temp = find_first_cmd(symbol_lst);
+	temp = symbol_lst;
+	if (!classify_op(temp->str))
+	{
+		temp->type = T_CMD;
+		symbol_lst = symbol_lst->next;
+	}
 	while (temp)
 	{
 		if (temp->type < 0)

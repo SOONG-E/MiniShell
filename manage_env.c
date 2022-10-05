@@ -43,11 +43,11 @@ char	**ft_env_split(char *env)
 char	*get_value_n(char *key, int n)
 {
 	t_envlst	*temp;
-/*
-	if (!strcmp(key, "?"))
-		return (ft_strdup(g_info->exitcode));
-*/
-	temp = g_envlst;
+
+	if (!ft_strcmp(key, "?"))
+		return (ft_strdup(g_info->exit_code));
+
+	temp = g_info->envlst;
 	while (temp)
 	{
 		if (!ft_strncmp(temp->key, key, n))
