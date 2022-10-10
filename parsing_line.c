@@ -31,30 +31,33 @@ char	**parsing_line(char *str)
 	//t_token	*tree_root;
 
 	if (!check_pair(str))
-	{
+0	{
 		free(str);
 		error_msg("incomplete command");
 		return (0);
 	}
 	temp = preprocess_line(str);
 	symbol_lst = make_symbol_lst(temp);
-	symbol_lst = expand_env(symbol_lst);//진행중
+	symbol_lst = ft_expand_env(symbol_lst);
+	if (!symbol_lst)
+		return (0);
 	symbolizing(symbol_lst);
-	t_symbol *tmp = symbol_lst;
 	if (validate(symbol_lst))
 	{
 		free_symbol(symbol_lst);
 		return (0);
 	}
-	//expand_filename(symbol_lst);
-	while (tmp)
-	{
-		printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
-		tmp = tmp->next;
-	} 
-	//tree_root = make_parse_tree(symbols);//미구현! //파스트리 생성
+	expand_filename(symbol_lst);
+	/*--------------test--------------*/
+	// t_symbol *tmp = symbol_lst;
+	// while (tmp)
+	// {
+	// 	printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
+	// 	tmp = tmp->next;
+	// }
+	/*--------------^^^^---------------*/
+	//tree_root = make_parse_tree(symbols);
 	free_symbol(symbol_lst);
 	//return (tree_root);
-	//^^^---------------------------------------^^^
 	return (0);
 }

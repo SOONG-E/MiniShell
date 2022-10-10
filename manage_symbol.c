@@ -64,3 +64,43 @@ t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new)
 	free(symbol);
 	return (new_end);
 }
+
+/*--------------seojin-------------*/
+void	ft_add_back_symbol(t_symbol **head, t_symbol *new)
+{
+	t_symbol	*tmp;
+
+	tmp = *head;
+	if (!tmp)
+		*head = new;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->pre = tmp;
+	}
+}
+
+t_symbol	*ft_new_symbol(char *str)
+{
+	t_symbol	*new;
+
+	new = (t_symbol *)malloc(sizeof(t_symbol));
+	if (!new)
+		exit(1);
+	new->str = ft_strdup(str);
+	new->type = -1;
+	new->pre = NULL;
+	new->next = NULL;
+	return (new);
+}
+
+t_symbol	*ft_get_last_symbol(t_symbol *symbol)
+{
+	if (!symbol)
+		return (NULL);
+	while (symbol->next)
+		symbol = symbol->next;
+	return (symbol);
+}

@@ -70,3 +70,23 @@ void	parsing_env(char **env)
 		free(str);
 	}
 }
+
+
+/* ---------seojin -----------*/
+char	*ft_get_env(char *key)
+{
+	t_envlst	*tmp;
+	int			len;
+
+	if (*key == '?')
+		return (ft_strdup(g_info->exit_code));
+	tmp = g_info->envlst;
+	len = ft_strlen(key);
+	while (tmp)
+	{
+		if (!ft_strcmp(tmp->key, key))
+			return (ft_strdup(tmp->value));
+		tmp = tmp->next;
+	}
+	return (ft_strdup(""));
+}

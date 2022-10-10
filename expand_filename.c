@@ -1,7 +1,49 @@
 #include "./include/minishell.h"
 
+int	is_need_expand(char *str)
+{
+	int	i;
 
-void	replace_quote(char *str)
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == Q_SINGLE)
+		{
+			i++;
+			i += ft_strichr(&str[i], Q_SINGLE) + 1;
+		}
+		else if (str[i] == Q_DOUBLE)
+		{
+			i++;
+			i += ft_strichr(&str[i], Q_DOUBLE) + 1;
+		}
+		else if (str[i] == '*')
+			return (1);
+		else
+			i++;
+	}
+	return (0);
+}
+
+void	replace_back_wild_card(char **str)
+{
+	int	i;
+	int	j;
+
+	while (str[i])
+	{
+		i = 0;
+		while (str[i][j])
+		{
+			if (str[i][j] < 0)
+				str[i][j] *= -1;
+			j++;
+		}
+		i++;
+	}
+}
+
+void	replace_wild_card(char *str)
 {
 	while (*str)
 	{
@@ -10,7 +52,7 @@ void	replace_quote(char *str)
 			str++;
 			while (*str != Q_DOUBLE)
 			{
-				if (*str == Q_SINGLE)
+				if (*str == '*')
 					*str *= -1;
 				str++;
 			}
@@ -20,7 +62,7 @@ void	replace_quote(char *str)
 			str++;
 			while (*str != Q_SINGLE)
 			{
-				if (*str == Q_DOUBLE)
+				if (*str == '*')
 					*str *= -1;
 				str++;
 			}
@@ -29,71 +71,62 @@ void	replace_quote(char *str)
 	}
 }
 
-int	quote_cnt(char *str)
+int	cmp_wild_card(char *filename, char *wild)
 {
-	int	i;
-
-	i = 0;
-	while (*str++)
-	{
-		if (*str == Q_DOUBLE || *str == Q_SINGLE)
-			i++;
-	}
-	return (i);
-}
-
-t_symbol	*delete_quote(t_symbol *symbol)
-{
-	char	*tmp;
 	int		i;
-	int		j;
-	
-	i = 0;
-	j = 0;
-	replace_quote(symbol->str);
-	tmp = (char *)ft_calloc(ft_strlen(symbol->str) - quote_cnt(symbol->str) + 1, 1);
-	while (symbol->str[i++] != 0)
-	{
-		if (symbol->str[i] != Q_SINGLE && symbol->str[i] != Q_DOUBLE)
-			tmp[j++] = symbol->str[i];
-	}
-	free(symbol->str);
-	symbol->str = tmp;
-}
+	int		len_filename;
+	char	**wild_cards;
 
-int	is_need_expand(char *str)
-{
-	int	i;
-	
+	len_filename = ft_strlen(filename);
+	wild_cards = ft_split(wild, "*");
+	if (wild_cards[0] == NULL)
+		return (1);
+	replace_back_wild_card(wild_cards);
 	i = 0;
-	while (str[i])
+	if (wild[0] != '*' && ft_strncmp(filename, wild_cards[0], ft_strlen(wild_cards[0])) != 0)
+		return (0);
+	while (wild_cards[i])
 	{
-		if (str[i++] == Q_SINGLE)
-			i += ft_strichr(&str[i], Q_SINGLE) + 1;//??
-		else if (str[i++] == Q_DOUBLE)
-			i += ft_strichr(&str[i], Q_DOUBLE) + 1;
-		else if (str[i] == '*')
-			return (1);
-		else
-			i++;
+		filename = ft_strnstr(filename, wild_cards[i], len_filename);
+		if (!filename)
+		{
+			split_free(wild_cards);
+			return (0);
+		}
+		i++;
 	}
-	return (0);
+	if (*(filename + ft_strlen(wild_cards[i - 1])) && wild[ft_strlen(wild) - 1] != '*')
+		i = 0;
+	else
+		i = 1;
+	split_free(wild_cards);
+	return (i);
 }
 
 t_symbol	*get_file_lst(t_symbol *symbol)
 {
 	t_symbol		*file_lst;
+	t_symbol		*file;
 	DIR				*dirp;
 	struct dirent	*file_entry;
 
-	dirp = opendir('.');
+	file_lst = NULL;
+	dirp = opendir(".");
+	file_entry = readdir(dirp);
+	file_entry = readdir(dirp);
 	file_entry = readdir(dirp);
 	while (file_entry)
 	{
-		printf("%s", file_entry->d_name);
+		if (cmp_wild_card(file_entry->d_name, symbol->str))
+		{
+			file = ft_symbol_new(ft_strdup(file_entry->d_name));
+			file->type = symbol->type;
+			lst_symbol_add_back(&file_lst, file);
+		}
 		file_entry = readdir(dirp);
 	}
-	return (NULL);
+	closedir(dirp);
+	return (file_lst);
 }
 
 t_symbol	*expand_filename(t_symbol *symbol)
@@ -108,14 +141,20 @@ t_symbol	*expand_filename(t_symbol *symbol)
 		{
 			if (is_need_expand(symbol->str))
 			{
+				replace_wild_card(symbol->str);
+				delete_quote(symbol);
 				file_lst = get_file_lst(symbol);
-				symbol = lst_symbol_add_middle(symbol, file_lst);
+				t_symbol *tmp = file_lst;
+				symbol = ft_update_symbol(symbol, file_lst);
 			}
 			else
+			{
 				delete_quote(symbol);
+				symbol = symbol->next;
+			}
 		}
-		symbol = symbol->next;
+		else
+			symbol = symbol->next;
 	}
-
 	return (ret_symbol);
 }

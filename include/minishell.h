@@ -22,7 +22,7 @@
 
 # define SHELL "minishell"
 # define C_BLUE "\033[34m"
-# define C_BLCK "\033[30m"
+# define C_NRML "\033[0m"
 
 typedef	struct s_info t_info;
 typedef struct s_envlst	t_envlst;
@@ -33,8 +33,9 @@ typedef struct s_token	t_token;
 struct s_info
 {
 	t_envlst	*envlst;
+	char		*home;
 	char		*exit_code;
-	bool		signalset;
+	int			oldpwd_flag;
 };
 
 struct s_envlst
@@ -153,7 +154,34 @@ void	ft_exit(int n);
 void	ft_env(char *env);
 
 /* delete_quote.c */
-t_symbol	*delete_quote(t_symbol *symbol);
+void	delete_quote(t_symbol *symbol);
 
+/* replace_wild_card.c */
+void	replace_back_wild_card(char **str);
+void	replace_wild_card(char *str);
+
+/* expand_filename.c */
+t_symbol	*expand_filename(t_symbol *symbol);
+
+
+
+
+
+
+
+/*------- seojin---------- */
+char		*ft_get_value(char *str, int *idx);
+char		*ft_get_env(char *key);
+char		*ft_new_str(char *str, char *key, int *idx);
+char		*ft_expand_env_in_double_quote(char *str);
+void		ft_skip_quote(char *str, int *idx, int flag);
+void		ft_backup_space_symbol(t_symbol *symbol);
+void		ft_add_back_symbol(t_symbol **head, t_symbol *new);
+int			ft_is_alnum(char c);
+t_symbol	*ft_expand_env(t_symbol *symbol);
+t_symbol	*ft_update_symbol(t_symbol *symbol, t_symbol *new);
+t_symbol	*ft_new_symbol(char *str);
+t_symbol	*ft_get_last_symbol(t_symbol *symbol);
+t_symbol	*ft_expand_env_out_quote(char *str);
 
 #endif

@@ -41,7 +41,17 @@ static int	quote_cnt(char *str)
 	return (i);
 }
 
-t_symbol	*delete_quote(t_symbol *symbol)
+static void	replace_back_quote(char *str)
+{
+	while (*str)
+	{
+		if (*str < 0)
+			*str *= -1;
+		str++;
+	}
+}
+
+void	delete_quote(t_symbol *symbol)
 {
 	char	*tmp;
 	int		i;
@@ -51,11 +61,16 @@ t_symbol	*delete_quote(t_symbol *symbol)
 	j = 0;
 	replace_quote(symbol->str);
 	tmp = (char *)ft_calloc(ft_strlen(symbol->str) - quote_cnt(symbol->str) + 1, 1);
-	while (symbol->str[i++] != 0)
+	while (symbol->str[i] != 0)
 	{
 		if (symbol->str[i] != Q_SINGLE && symbol->str[i] != Q_DOUBLE)
-			tmp[j++] = symbol->str[i];
+		{
+			tmp[j] = symbol->str[i];
+			j++;
+		}
+		i++;
 	}
 	free(symbol->str);
+	replace_back_quote(tmp);
 	symbol->str = tmp;
 }

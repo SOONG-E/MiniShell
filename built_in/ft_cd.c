@@ -3,6 +3,7 @@
 static void	ft_update_oldpwd(char *old_pwd);
 static void	ft_update_pwd(char *pwd);
 static void	ft_cd_home(void);
+static void	ft_check_rv(char *path, char *cwd, char *pwd, int rv);
 
 void	ft_cd(char *path)
 {
@@ -17,7 +18,7 @@ void	ft_cd(char *path)
 	if (*path == '~')
 	{
 		rv = chdir("/");
-		rv = chdir("Users/minsukan");
+		rv = chdir(g_info->home);
 		if (*(path + 1) == '/' && *(path + 2))
 			rv = chdir(path + 2);
 		else if (*(path + 1) != '/')
@@ -27,6 +28,11 @@ void	ft_cd(char *path)
 	}
 	else
 		rv = chdir(path);
+	ft_check_rv(path, cwd, pwd, rv);
+}
+
+static void	ft_check_rv(char *path, char *cwd, char *pwd, int rv)
+{
 	if (rv == 0)
 	{
 		ft_update_pwd(pwd);
@@ -53,7 +59,7 @@ static void	ft_cd_home(void)
 	else
 	{
 		chdir(home);
-		ft_update_pwd(pwd);
+		ft_update_pwd(home);
 		ft_update_oldpwd(pwd);
 	}
 }
@@ -64,7 +70,7 @@ static void	ft_update_oldpwd(char *old_pwd)
 
 	if (!old_pwd)
 		return ;
-	tmp = g_envlst;
+	tmp = g_info->envlst;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, "OLDPWD"))
@@ -74,8 +80,11 @@ static void	ft_update_oldpwd(char *old_pwd)
 		}
 		tmp = tmp->next;
 	}
-	// if (처음 만들어지는 거라면)
-	// 	ft_lst_add_back(ft_lst_new("OLDPWD", old_pwd));
+	if (g_info->oldpwd_flag == 0)
+	{
+		ft_lst_add_back(ft_lst_new("OLDPWD", old_pwd));
+		g_info->oldpwd_flag = 1;
+	}
 }
 
 static void	ft_update_pwd(char *pwd)
@@ -84,7 +93,7 @@ static void	ft_update_pwd(char *pwd)
 
 	if (!pwd)
 		return ;
-	tmp = g_envlst;
+	tmp = g_info->envlst;
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, "OLDPWD"))
