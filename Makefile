@@ -1,8 +1,7 @@
 NAME		=	minishell
 
 CC			= 	cc -g
-# CFLAGS		=	-Wall -Werror -Wextra
-CFLAGS		=
+CFLAGS		=	-Wall -Werror -Wextra
 LDFLAGS		=	-L/$(HOME)/.brew/opt/readline/lib -lreadline
 CPPFLAGS	=	-I/$(HOME)/.brew/opt/readline/include
 
@@ -45,7 +44,7 @@ OBJS		=	$(SRCS:%.c=%.o)
 all		: $(NAME)
 
 #$(OBJS): $(OUTDIR)%.o: %.c
-#	$(CC) $(CFLAGS) -c $^ -o $@ $(LDFLAGS) $(CPPFLAGS) -I $(INCLUDE)
+#	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS)
 			make -C $(LIBFT)
@@ -59,7 +58,7 @@ clean	:
 fclean	: clean
 			rm -rf $(NAME)
 			$(RM) $(LIBFT)/libft.a
-	
+
 re		:
 			make fclean
 			make all

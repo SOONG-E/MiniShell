@@ -30,9 +30,10 @@ void	replace_back_wild_card(char **str)
 	int	i;
 	int	j;
 
+	i = 0;
 	while (str[i])
 	{
-		i = 0;
+		j = 0;
 		while (str[i][j])
 		{
 			if (str[i][j] < 0)
@@ -144,7 +145,6 @@ t_symbol	*expand_filename(t_symbol *symbol)
 				replace_wild_card(symbol->str);
 				delete_quote(symbol);
 				file_lst = get_file_lst(symbol);
-				t_symbol *tmp = file_lst;
 				symbol = ft_update_symbol(symbol, file_lst);
 			}
 			else

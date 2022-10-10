@@ -3,9 +3,9 @@
 static void	ft_update_oldpwd(char *old_pwd);
 static void	ft_update_pwd(char *pwd);
 static void	ft_cd_home(void);
-static void	ft_check_rv(char *path, char *cwd, char *pwd, int rv);
+static int	ft_check_rv(char *path, char *cwd, char *pwd, int rv);
 
-void	ft_cd(char *path)
+int	ft_cd(char *path)
 {
 	int		rv;
 	char	*cwd;
@@ -14,36 +14,40 @@ void	ft_cd(char *path)
 	if (!path)
 		ft_cd_home();
 	cwd = getcwd(NULL, 0);
-	pwd = getenv("PWD");
-	if (*path == '~')
+	pwd = ft_get_env("PWD");
+	if (path[0] == '~')
 	{
 		rv = chdir("/");
 		rv = chdir(g_info->home);
-		if (*(path + 1) == '/' && *(path + 2))
+		if (path[1] && path[1] == '/' && path[2])
 			rv = chdir(path + 2);
-		else if (*(path + 1) != '/')
-			rv = 1;
-		else if (*(path + 1) == '/' && !*(path + 2))
-			rv = 0;
+		else if (path[1] && path[1] != '/')
+			rv = -1;
 	}
 	else
 		rv = chdir(path);
-	ft_check_rv(path, cwd, pwd, rv);
+	return (ft_check_rv(path, cwd, pwd, rv));
 }
 
-static void	ft_check_rv(char *path, char *cwd, char *pwd, int rv)
+static int	ft_check_rv(char *path, char *cwd, char *pwd, int rv)
 {
 	if (rv == 0)
 	{
-		ft_update_pwd(pwd);
-		ft_update_oldpwd(pwd);
 		free(cwd);
+		cwd = getcwd(NULL, 0);
+		ft_update_pwd(cwd);
+		free(cwd);
+		ft_update_oldpwd(pwd);
+		free(pwd);
+		return (1);
 	}
 	else
 	{
 		chdir(cwd);
 		free(cwd);
+		free(pwd);
 		printf("minishell: cd: %s: No such file or directory\n", path);
+		return (0);
 	}
 }
 
@@ -75,6 +79,7 @@ static void	ft_update_oldpwd(char *old_pwd)
 	{
 		if (!ft_strcmp(tmp->key, "OLDPWD"))
 		{
+			free(tmp->value);
 			tmp->value = old_pwd;
 			return ;
 		}
@@ -82,7 +87,7 @@ static void	ft_update_oldpwd(char *old_pwd)
 	}
 	if (g_info->oldpwd_flag == 0)
 	{
-		ft_lst_add_back(ft_lst_new("OLDPWD", old_pwd));
+		ft_add_back_env(ft_new_env("OLDPWD", old_pwd));
 		g_info->oldpwd_flag = 1;
 	}
 }
@@ -96,8 +101,9 @@ static void	ft_update_pwd(char *pwd)
 	tmp = g_info->envlst;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->key, "OLDPWD"))
+		if (!ft_strcmp(tmp->key, "PWD"))
 		{
+			free(tmp->value);
 			tmp->value = pwd;
 			return ;
 		}

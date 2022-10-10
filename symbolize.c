@@ -26,50 +26,106 @@ int	classify_op(char *str)
 		return (0);
 }
 
-int	classify_type(t_symbol	*symbol)
+t_symbol	*classify_type(t_symbol	*symbol)
 {
-	int	op;
+	symbol->type = T_CMD;
+	symbol = symbol->next;
+	while (symbol && symbol->type < 0 && !ft_strcmp(symbol->str, "-n"))
+	{
+		symbol->type = T_OPTION;
+		symbol = symbol->next;
+	}
+	while (symbol && symbol->type < 0)
+	{
+		symbol->type = T_ARG;
+		symbol = symbol->next;
+	}
+	return (symbol);
+}
 
-	op = classify_op(symbol->str);
-	if (op)
+void	find_op(t_symbol *symbol_lst)
+{
+	t_symbol	*temp;
+
+	temp = symbol_lst;
+	while (temp)
 	{
-		if (op == T_RBRACE)
-			return (op);
-		else if (symbol->next && classify_op(symbol->next->str) > 0)
-			return (op);
-		else if (symbol->next)
-			symbol->next->type = (T_CMD + (op == T_IN_RID || op == T_OUT_RID));
-		return (op);
+		if (temp->type < 0)
+		{
+			temp->type = classify_op(temp->str);
+			if (!temp->type)
+				temp->type = -1;
+			else if (temp->next && (T_IN_RID <= temp->type && temp->type <= T_OUT_HEREDOC))
+			{
+				if (!classify_op(temp->next->str))
+					temp->next->type = T_FILEPATH;
+			}
+		}
+		temp = temp->next;
 	}
-	else if (!ft_strcmp(symbol->str, "-n"))
-	{
-		if (symbol->pre
-			&& (symbol->pre->type == T_CMD || symbol->pre->type == T_OPTION))
-			return (T_OPTION);
-	}
-	else
-		return (T_ARG);
-	return (T_ARG);
-} //-n아닌경우 무조건 arg !  누가 뭐라하면 민수칸님이 패기로함;;
+}
 
 void	symbolizing(t_symbol *symbol_lst)
 {
 	t_symbol	*temp;
 
+	find_op(symbol_lst);
 	temp = symbol_lst;
-	if (!classify_op(temp->str))
-	{
-		temp->type = T_CMD;
-		symbol_lst = symbol_lst->next;
-	}
 	while (temp)
 	{
 		if (temp->type < 0)
-			temp->type = classify_type(temp);
-		temp = temp->next;
+			temp = classify_type(temp);
+		if (temp)
+			temp = temp->next;
 	}
-	// //test
-	// for (int i = 0; symbol_lst[i].str ; ++i)
-	// 	printf("%s type = %d\n", symbol_lst[i].str, symbol_lst[i].type);
-	// //
+	//test
+	// while (symbol_lst)
+	// {
+	// 	char *type;
+	// 	switch (symbol_lst->type)
+	// 	{
+	// 	case 0:
+	// 		type = "CMD";
+	// 		break;
+	// 	case 1:
+	// 		type = "FILEPATH";
+	// 		break;
+	// 	case 2:			
+	// 		type = "OPTION";
+	// 		break;
+	// 	case 3:			
+	// 		type = "ARG";
+	// 		break;
+	// 	case 4:			
+	// 		type = "PIPE";
+	// 		break;
+	// 	case 5:			
+	// 		type = "AND_IF";
+	// 		break;
+	// 	case 6:			
+	// 		type = "OR_IF";
+	// 		break;
+	// 	case 7:			
+	// 		type = "LBRACE";
+	// 		break;
+	// 	case 8:			
+	// 		type = "RBRACE";
+	// 		break;
+	// 	case 9:			
+	// 		type = "IN_RID";
+	// 		break;
+	// 	case 10:			
+	// 		type = "OUT_RID";
+	// 		break;
+	// 	case 11:			
+	// 		type = "IN_HEREDOC";
+	// 		break;
+	// 	case 12:			
+	// 		type = "OUT_HEREDOC";
+	// 		break;
+	// 	}
+	// 	printf("%s \ttype = %s\n", symbol_lst->str, type);
+	// 	symbol_lst = symbol_lst->next;
+	// }
+	//
 }

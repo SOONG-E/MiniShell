@@ -58,9 +58,11 @@ int	check_expression_error(t_symbol *symbol_lst)
 	return (0);
 }
 
+
+
 int	check_unexpected_token(t_symbol *symbol_lst)
 {
-	if (symbol_lst->type >= T_PIPE && symbol_lst->type != T_LBRACE)
+	if (symbol_lst->type >= 1 && symbol_lst->type <= 6)
 		return(syntax_error_token(get_origin_op(symbol_lst->type)));
 	while (symbol_lst->next)
 	{
@@ -76,9 +78,14 @@ int	check_unexpected_token(t_symbol *symbol_lst)
 			if (symbol_lst->next->type < T_PIPE || symbol_lst->next->type == T_LBRACE)
 				return (syntax_error_token(symbol_lst->next->str));
 		}
-		else if (symbol_lst->type >= T_PIPE)
+		else if (symbol_lst->type >= 4 && symbol_lst->type <= 6)
 		{
-			if (symbol_lst->next->type >= T_PIPE && symbol_lst->next->type != T_LBRACE)
+			if (symbol_lst->next->type >= 4 && symbol_lst->next->type <= 6 && symbol_lst->next->type != T_LBRACE)
+				return (syntax_error_token(get_origin_op(symbol_lst->next->type)));
+		}
+		else if (symbol_lst->type >= 9 && symbol_lst->type <= 12)
+		{
+			if (symbol_lst->next->type != 1)
 				return (syntax_error_token(get_origin_op(symbol_lst->next->type)));
 		}
 		symbol_lst = symbol_lst->next;

@@ -71,6 +71,9 @@ t_info		*g_info;
 char	*get_cmd_path(char *cmd, char *path);
 int		is_cmd(char	*str);
 
+/* delete_quote.c */
+void	delete_quote(t_symbol *symbol);
+
 /*expand_env_double_quote.c*/
 char	*expand_env_quote_case(char *str);
 
@@ -82,6 +85,9 @@ char	*ft_join(char **str);
 
 /*expand_env.c*/
 t_symbol	*expand_env(t_symbol *symbol_lst);
+
+/* expand_filename.c */
+t_symbol	*expand_filename(t_symbol *symbol);
 
 /*manage_env.c*/
 void		parsing_env(char **env);
@@ -129,6 +135,10 @@ char    **preprocess_line(char *str);
 int		ft_skip_single_qoute(char *str);
 int		ft_skip_double_qoute(char *str);
 
+/* replace_wild_card.c */
+void	replace_back_wild_card(char **str);
+void	replace_wild_card(char *str);
+
 /*symbolize.c*/
 void	symbolizing(t_symbol *symbol_lst);
 int		classify_op(char *str);
@@ -145,23 +155,13 @@ int		syntax_error_token(char *str);
 
 
 /* functions for built_in */
-void	ft_cd(char *path);
-void	ft_unset(char *rmvkey);
-void	ft_pwd(void);
-void	ft_export(char *key, char *value);
-void	ft_echo(char *arg, int option);
-void	ft_exit(int n);
-void	ft_env(char *env);
-
-/* delete_quote.c */
-void	delete_quote(t_symbol *symbol);
-
-/* replace_wild_card.c */
-void	replace_back_wild_card(char **str);
-void	replace_wild_card(char *str);
-
-/* expand_filename.c */
-t_symbol	*expand_filename(t_symbol *symbol);
+int			ft_cd(char *path);
+void		ft_unset(char *rmvkey);
+void		ft_pwd(void);
+void		ft_export(char *key, char *value);
+void		ft_echo(char *arg, int option);
+void		ft_exit(int n);
+void		ft_env(char *env);
 
 
 

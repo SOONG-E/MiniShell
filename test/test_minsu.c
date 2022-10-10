@@ -51,3 +51,33 @@ int main()
 
 	printf("%s\n", expand_env_with_quote(str));
 }
+
+
+if (symbol_lst->type >= T_PIPE && symbol_lst->type != T_LBRACE)
+		return(syntax_error_token(get_origin_op(symbol_lst->type)));
+	while (symbol_lst->next)
+	{
+		if (symbol_lst->type == T_LBRACE)
+		{
+			if (symbol_lst->pre && !(T_PIPE <= symbol_lst->pre->type && symbol_lst->pre->type <= T_LBRACE))
+				return (syntax_error_token("("));
+			if (symbol_lst->next->type >= T_PIPE && symbol_lst->next->type != T_LBRACE)
+				return (syntax_error_token(get_origin_op(symbol_lst->next->type)));
+		}
+		else if (symbol_lst->type == T_RBRACE)
+		{
+			if (symbol_lst->next->type < T_PIPE || symbol_lst->next->type == T_LBRACE)
+				return (syntax_error_token(symbol_lst->next->str));
+		}
+		else if (symbol_lst->type >= T_PIPE)
+		{
+			if (symbol_lst->next->type >= T_PIPE && symbol_lst->next->type != T_LBRACE)
+				return (syntax_error_token(get_origin_op(symbol_lst->next->type)));
+		}
+		symbol_lst = symbol_lst->next;
+	}
+	if (symbol_lst->pre && symbol_lst->pre->type == T_RBRACE && symbol_lst->type != T_RBRACE)
+		return (syntax_error_token(symbol_lst->str));
+	if (symbol_lst->type >= T_PIPE && symbol_lst->type != T_RBRACE)
+		return (syntax_error_token(get_origin_op(symbol_lst->type)));
+	return (0);

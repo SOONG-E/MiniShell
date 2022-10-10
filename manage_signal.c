@@ -9,8 +9,3 @@ void	sigint_handler(int signum)
 	rl_on_new_line();
 	rl_redisplay();
 }
-
-void	ignore_signal(void)
-{
-
-}
