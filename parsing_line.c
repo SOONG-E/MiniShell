@@ -31,7 +31,7 @@ char	**parsing_line(char *str)
 	//t_token	*tree_root;
 
 	if (!check_pair(str))
-0	{
+	{
 		free(str);
 		error_msg("incomplete command");
 		return (0);
