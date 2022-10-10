@@ -1,5 +1,13 @@
 #include "./include/minishell.h"
 
+void	init_shell(char **env)
+{
+	rl_catch_signals = 0;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, sigint_handler);
+	init_info(env);
+}
+
 int	main(int ac, char **av, char **env)
 {
 	char	*str;
@@ -8,22 +16,11 @@ int	main(int ac, char **av, char **env)
     (void)av;
 	if (ac != 1)
 		return (0);
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, sigint_handler);
-
-	// struct termios	ori_term;
-	// struct termios	new_term;
-
-	// tcgetattr(STDIN_FILENO, &ori_term);
-	// tcgetattr(STDIN_FILENO, &new_term);
-	// new_term.c_lflag &= ~ICANON;
-	// new_term.c_lflag &= ~ECHO;
-	// tcsetattr(STDIN_FILENO, TCSANOW, &new_term);
-	init_info(env);
+	init_shell(env);
 	while (1)
 	{
-		str = readline(C_BLUE"minishell$ "C_BLCK);
-		if (!strcmp(str, "exit"))
+		str = readline(C_BLUE"minishell$ "C_NRML);
+		if (!str)
 			exit(0);
 		if (!ft_strlen(str))
 		{
@@ -32,7 +29,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		cmd = parsing_line(str);
-		//system("leaks minishell");
+		system("leaks minishell");
 	}
 	return (0);
 }
