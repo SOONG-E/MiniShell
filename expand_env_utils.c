@@ -1,98 +1,6 @@
 #include "./include/minishell.h"
 
-// char	*ft_join(char **str)
-// {
-// 	char	*ret;
-// 	int		idx;
-
-// 	idx = 0;
-// 	while (str[++idx])
-// 		str[0] = ft_strjoin_free(str[0], str[idx]);
-// 	ret = ft_strdup(str[0]);
-// 	split_free(str);
-// 	printf("after ft_join = %s\n", ret);
-// 	return (ret);
-// }
-
-// int	count_pair(char *str)
-// {
-// 	int	count;
-
-// 	count = 0;
-// 	while (*str)
-// 	{	
-// 		++count;
-// 		if (*str == Q_SINGLE)
-// 		{
-// 			++str;
-// 			str = ft_strchr(str, Q_SINGLE);
-// 		}
-// 		else if (*str == Q_DOUBLE)
-// 		{
-// 			++str;
-// 			str = ft_strchr(str, Q_DOUBLE);
-// 		}
-// 		else
-// 		{
-// 			while (*str && *str != Q_DOUBLE && *str != Q_SINGLE)
-// 				++str;
-// 			continue ;
-// 		}
-// 		++str;
-// 	}
-// 	return (count);
-// }
-
-// char	*cut_str(char **str)
-// {
-// 	char	*temp;
-// 	char	quote;
-// 	int		i;
-
-// 	quote = '\0';
-// 	temp = *str;
-// 	if (*temp == Q_SINGLE || *temp == Q_DOUBLE)
-// 	{
-// 		quote = *temp;
-// 		temp++;
-// 		if (*temp == quote)
-// 		{
-// 			*(str) = temp + 1;
-// 			return (ft_strdup(""));
-// 		}
-// 	}
-// 	i = 0;
-// 	while (temp[i + 1] != quote)
-// 		i++;
-// 	if (quote == 0)
-// 		*(str) = &temp[i] + 1;
-// 	else
-// 		*(str) = &temp[i] + 2;
-// 	return (ft_substr(temp, 0, i + 1));
-// }
-
-// int	cut_temp(char **temp, char *str)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	if (str[0] == '$')
-// 	{
-// 		str++;
-// 		while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-// 			i++;
-// 		*(temp) = get_value_n(str, i);
-// 		return (i + 1);
-// 	}
-// 	while (str[i] && str[i] != '$')
-// 		i++;
-// 	*(temp) = ft_substr(str, 0, i);
-// 	return (i);
-// }
-
-
-/*--------------------------------------------*/
-char	*ft_get_value(char *str, int *idx)
+char	*get_value(char *str, int *idx)
 {
 	int		len;
 	char	*key;
@@ -102,9 +10,9 @@ char	*ft_get_value(char *str, int *idx)
 	if (str[len] == '?')
 	{
 		*idx += 1;
-		return (ft_get_env("?"));
+		return (get_env("?"));
 	}
-	while (ft_is_alnum(str[len]) || str[len] == '_')
+	while (ft_isalnum(str[len]) || str[len] == '_')
 	{
 		len++;
 		*idx += 1;
@@ -112,12 +20,12 @@ char	*ft_get_value(char *str, int *idx)
 	if (len == 0)
 		return (NULL);
 	key = ft_substr(str, 0, len);
-	value = ft_get_env(key);
+	value = get_env(key);
 	free(key);
 	return (value);
 }
 
-void	ft_skip_quote(char *str, int *idx, int flag)
+void	skip_quote(char *str, int *idx, int flag)
 {
 	str++;
 	if (flag == Q_SINGLE)
@@ -140,7 +48,7 @@ void	ft_skip_quote(char *str, int *idx, int flag)
 	}
 }
 
-char	*ft_new_str(char *str, char *key, int *idx)
+char	*new_str(char *str, char *key, int *idx)
 {
 	int		len;
 	char	*value;
@@ -149,7 +57,7 @@ char	*ft_new_str(char *str, char *key, int *idx)
 	char	*s3;
 
 	len = 0;
-	value = ft_get_value(key, &len);
+	value = get_value(key, &len);
 	if (!value)
 	{
 		*idx += 1;
@@ -168,7 +76,7 @@ char	*ft_new_str(char *str, char *key, int *idx)
 	return (s3);
 }
 
-void	ft_backup_space_symbol(t_symbol *symbol)
+void	backup_space_symbol(t_symbol *symbol)
 {
 	char	*str;
 	int		idx;
@@ -187,7 +95,7 @@ void	ft_backup_space_symbol(t_symbol *symbol)
 	}
 }
 
-t_symbol	*ft_update_symbol(t_symbol *symbol, t_symbol *new)
+t_symbol	*update_symbol(t_symbol *symbol, t_symbol *new)
 {
 	t_symbol	*tmp;
 
@@ -197,8 +105,8 @@ t_symbol	*ft_update_symbol(t_symbol *symbol, t_symbol *new)
 		new->pre = symbol->pre;
 		if (symbol->next)
 		{
-			symbol->next->pre = ft_get_last_symbol(new);
-			ft_get_last_symbol(new)->next = symbol->next;
+			symbol->next->pre = get_last_symbol(new);
+			get_last_symbol(new)->next = symbol->next;
 		}
 	}
 	else

@@ -1,5 +1,93 @@
 #include "./include/minishell.h"
 
+static char		*expand_env_in_double_quote(char *str);
+static t_symbol	*expand_env_out_quote(char *str);
+
+
+t_symbol	*expand_env(t_symbol *symbol)
+{
+	t_symbol	*head;
+	t_symbol	*new;
+
+	head = new_symbol("");
+	head->next = symbol;
+	symbol->pre = head;
+	while (symbol)
+	{
+		if (ft_strchr(symbol->str, '$'))
+		{
+			symbol->str = expand_env_in_double_quote(symbol->str);
+			replace_white_space(symbol->str);
+			new = expand_env_out_quote(symbol->str);
+			backup_space_symbol(new);
+			symbol = update_symbol(symbol, new);
+		}
+		else
+			symbol = symbol->next;
+	}
+	symbol = head->next;
+	if (symbol)
+		symbol->pre = NULL;
+	free(head->str);
+	free(head);
+	return (symbol);
+}
+
+static char	*expand_env_in_double_quote(char *str)
+{
+	int		idx;
+
+	idx = 0;
+	while (str[idx])
+	{
+		if (str[idx] == Q_SINGLE)
+			skip_quote(&str[idx], &idx, Q_SINGLE);
+		else if (str[idx] == Q_DOUBLE)
+		{
+			idx++;
+			while (str[idx] != Q_DOUBLE)
+			{
+				if (str[idx] == '$')
+					str = new_str(str, &str[idx + 1], &idx);
+				else
+					idx++;
+			}
+			idx++;
+		}
+		else
+			idx++;
+	}
+	return (str);
+}
+
+static t_symbol	*expand_env_out_quote(char *str)
+{
+	int			idx;
+	char		**str_2d;
+	t_symbol	*head;
+
+	idx = 0;
+	while (str[idx])
+	{
+		if (str[idx] == Q_SINGLE || str[idx] == Q_DOUBLE)
+			skip_quote(&str[idx], &idx, str[idx]);
+		else if (str[idx] == '$')
+			str = new_str(str, &str[idx + 1], &idx);
+		else
+			idx++;
+	}
+	head = NULL;
+	str_2d = ft_split(str, "\n\t\v\f\r ");
+	idx = 0;
+	while (str_2d[idx])
+	{
+		add_back_symbol(&head, new_symbol(str_2d[idx]));
+		free(str_2d[idx++]);
+	}
+	free(str_2d);
+	free(str);
+	return (head);
+}
 // int	is_alnum_under(char c)
 // {
 // 	if (ft_isalnum(c))
@@ -161,43 +249,3 @@
 // }
 
 /*-------------------------------------*/
-t_symbol	*ft_expand_env(t_symbol *symbol)
-{
-	t_symbol	*head;
-	t_symbol	*new;
-
-	head = ft_new_symbol("");
-	head->next = symbol;
-	symbol->pre = head;
-	while (symbol)
-	{
-		if (ft_strchr(symbol->str, '$'))
-		{
-			symbol->str = ft_expand_env_in_double_quote(symbol->str);
-			replace_white_space(symbol->str);
-			new = ft_expand_env_out_quote(symbol->str);
-			ft_backup_space_symbol(new);
-			symbol = ft_update_symbol(symbol, new);
-		}
-		else
-			symbol = symbol->next;
-	}
-	symbol = head->next;
-	if (symbol)
-		symbol->pre = NULL;
-	free(head->str);
-	free(head);
-	return (symbol);
-}
-
-int	ft_is_alnum(char c)
-{
-	if ('0' <= c && c <= '9')
-		return (1);
-	else if ('A' <= c && c <= 'Z')
-		return (1);
-	else if ('a' <= c && c <= 'z')
-		return (1);
-	else
-		return (0);
-}

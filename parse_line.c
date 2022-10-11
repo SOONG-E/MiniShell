@@ -24,11 +24,13 @@ static int	check_pair(char *str)
 	return (1);
 }
 
+void search_tree(t_token *tree);
+
 char	**parse_line(char *str)
 {
 	char		**temp;
 	t_symbol	*symbol_lst;
-	t_token	*tree_root;
+	t_token		*tree_root;
 
 	if (!check_pair(str))
 	{
@@ -38,7 +40,7 @@ char	**parse_line(char *str)
 	}
 	temp = preprocess_line(str);
 	symbol_lst = make_symbol_lst(temp);
-	symbol_lst = ft_expand_env(symbol_lst);
+	symbol_lst = expand_env(symbol_lst);
 	if (!symbol_lst)
 		return (0);
 	symbolizing(symbol_lst);
@@ -49,7 +51,14 @@ char	**parse_line(char *str)
 	}
 	expand_filename(symbol_lst);
 	/*--------------test--------------*/
-	// t_symbol *tmp = symbol_lst;
+	//t_symbol *tmp = symbol_lst;
+	// while (tmp)
+	// {
+	// 	printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
+	// 	tmp = tmp->next;
+	// }
+	//tmp = sort_redirection(symbol_lst);
+	// printf("\n\n---------after sort--------\n");
 	// while (tmp)
 	// {
 	// 	printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
@@ -57,6 +66,8 @@ char	**parse_line(char *str)
 	// }
 	/*--------------^^^^---------------*/
 	tree_root = make_parse_tree(symbol_lst);
+	printf("-------tree test------------\n");
+	search_tree(tree_root);
 	//free_symbols(symbol_lst);
 	//return (tree_root);
 	return (0);

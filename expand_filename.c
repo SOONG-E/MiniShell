@@ -120,9 +120,9 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 	{
 		if (cmp_wild_card(file_entry->d_name, symbol->str))
 		{
-			file = ft_new_symbol(ft_strdup(file_entry->d_name));
+			file = new_symbol(ft_strdup(file_entry->d_name));
 			file->type = symbol->type;
-			lst_symbol_add_back(&file_lst, file);
+			add_back_symbol(&file_lst, file);
 		}
 		file_entry = readdir(dirp);
 	}
@@ -145,7 +145,7 @@ t_symbol	*expand_filename(t_symbol *symbol)
 				replace_wild_card(symbol->str);
 				delete_quote(symbol);
 				file_lst = get_file_lst(symbol);
-				symbol = ft_update_symbol(symbol, file_lst);
+				symbol = update_symbol(symbol, file_lst);
 			}
 			else
 			{

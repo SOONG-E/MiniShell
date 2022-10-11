@@ -105,3 +105,15 @@ int	validate(t_symbol *symbol_lst)
 		return (1);
 	return (0);
 }
+
+/*
+validate rule
+
+1. lbrace
+ 1-1. pre가 ||, && 아닌 경우	syntax_error_token("(")
+ 1-2. next가 연산자인 경우(< << > >> 제외)		syntax_error_token(연산자)
+2. rbrace
+ 2-1. next가 연산자가 아닌 경우, lbrace인 경우	syntax_error_token(next->type)
+3. 
+
+*/

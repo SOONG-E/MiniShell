@@ -9,14 +9,14 @@ OUTDIR = out/
 
 INCLUDE		=	include
 LIBFT		=	libft
-
+#LIBFT		=	./libft/libft.a
+#LIBSHELL	=	libmini.a
 SRCS		= 	main.c						\
 				parse_line.c				\
 				replace_space.c				\
+				replace_op.c				\
 				expand_env.c				\
 				expand_env_utils.c			\
-				expand_env_double_quote.c	\
-				expand_env_double_quote_utils.c	\
 				manage_symbol.c				\
 				manage_envlst.c				\
 				manage_error.c				\
@@ -29,7 +29,13 @@ SRCS		= 	main.c						\
 				validate.c					\
 				manage_info.c				\
 				expand_filename.c			\
-				delete_quote.c
+				delete_quote.c				\
+				./token_tree/and_or.c		\
+				./token_tree/brace_group.c	\
+				./token_tree/make_parse_tree.c\
+				./token_tree/pipeline.c		\
+				./token_tree/utils.c		\
+				./test/test_tree.c
 # ./built_in/ft_cd.c			\
 # ./built_in/ft_echo.c		\
 # ./built_in/ft_env.c			\
@@ -50,6 +56,16 @@ $(NAME) : $(OBJS)
 			make -C $(LIBFT)
 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft $(LDFLAGS) $(CPPFLAGS) -I $(INCLUDE)
 			make clean
+# $(NAME) : $(LIBFT) $(LIBMINI)
+# 	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(CPPFLAGS)
+# $(LIBFT) :
+# 	cd libft; make
+
+# $(LIBMINI) : $(OBJS)
+# 	ar rc $@ $^
+
+# %.o	:	%.c
+# 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@
 
 clean	:
 			rm -rf $(OBJS)

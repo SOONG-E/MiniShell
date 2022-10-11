@@ -73,7 +73,7 @@ void	parsing_env(char **env)
 
 
 /* ---------seojin -----------*/
-char	*ft_get_env(char *key)
+char	*get_env(char *key)
 {
 	t_envlst	*tmp;
 	int			len;

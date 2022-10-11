@@ -29,7 +29,7 @@ int	is_cmd(char	*str)
 	char	*path;
 	char	*cmd_path;
 
-	path = get_value_n("PATH", 4);
+	path = get_env("PATH");
 	cmd_path = get_cmd_path(str, path);
 	free(path);
 	if (cmd_path)

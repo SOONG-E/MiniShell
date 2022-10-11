@@ -7,7 +7,7 @@ void	init_info(char **env)
 	parsing_env(env);
 	g_info->exit_code = ft_itoa(0);
 	g_info->oldpwd_flag = 0;
-	g_info->home = ft_get_env("HOME");
+	g_info->home = get_env("HOME");
 }
 
 void	set_exit_code(int code)
