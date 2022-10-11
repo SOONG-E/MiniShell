@@ -7,10 +7,10 @@ CPPFLAGS	=	-I/$(HOME)/.brew/opt/readline/include
 
 OUTDIR = out/
 
-INCLUDE		=	include
-LIBFT		=	libft
-#LIBFT		=	./libft/libft.a
-#LIBSHELL	=	libmini.a
+# INCLUDE		=	include
+# LIBFT		=	libft
+LIBFT		=	./libft/libft.a
+LIBMINI		=	libmini.a
 SRCS		= 	main.c						\
 				parse_line.c				\
 				replace_space.c				\
@@ -52,31 +52,31 @@ all		: $(NAME)
 #$(OBJS): $(OUTDIR)%.o: %.c
 #	$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME) : $(OBJS)
-			make -C $(LIBFT)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft $(LDFLAGS) $(CPPFLAGS) -I $(INCLUDE)
-			make clean
-# $(NAME) : $(LIBFT) $(LIBMINI)
-# 	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(CPPFLAGS)
-# $(LIBFT) :
-# 	cd libft; make
+# $(NAME) : $(OBJS)
+# 			make -C $(LIBFT)
+# 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft $(LDFLAGS) $(CPPFLAGS) -I $(INCLUDE)
+# 			make clean
+$(NAME) : $(LIBFT) $(LIBMINI)
+	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(CPPFLAGS)
 
-# $(LIBMINI) : $(OBJS)
-# 	ar rc $@ $^
+$(LIBFT) :
+	cd libft; make
 
-# %.o	:	%.c
-# 	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@
+$(LIBMINI) : $(OBJS)
+	ar rc $@ $^
+
+%.o		:	%.c
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@
 
 clean	:
 			rm -rf $(OBJS)
-			make clean -C $(LIBFT)
+			cd libft; make clean
 
 fclean	: clean
-			rm -rf $(NAME)
-			$(RM) $(LIBFT)/libft.a
+			rm -rf $(NAME) $(LIBMINI)
 
 re		:
 			make fclean
 			make all
 
-PHONY : all clean fclean re
+.PHONY	: all clean fclean re

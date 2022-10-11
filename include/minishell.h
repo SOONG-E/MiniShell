@@ -31,7 +31,7 @@ t_info		*g_info;
 /*token_tree*/ 
 t_token		*and_or(t_symbol *symbol);
 t_token		*brace_group(t_symbol *symbol);
-t_token		*make_token(t_symbol *symbol);
+t_token		*make_token(t_symbol **symbol);
 t_token		*make_parse_tree(t_symbol *symbol);
 t_token		*pipeline(t_symbol *symbol);
 t_symbol	*skip_brace(t_symbol *symbol);

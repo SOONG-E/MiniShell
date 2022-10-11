@@ -46,11 +46,22 @@ t_token	*pipeline(t_symbol *symbol)
 {
 	t_token	*token;
 
+	if (!symbol)
+		return (NULL);
 	if (symbol->type == T_LBRACE)
 		return (brace_group(symbol));
 	else
 	{
-		token = make_token(symbol);
+		token = make_token(&symbol);
+		//-------------------------------
+		t_symbol *tmp;
+		tmp = token->symbol;
+		while (tmp)
+		{
+			
+			tmp = tmp->next;
+		}
+		//------------------------------
 		//token->symbol = sort_redirection(token->symbol);
 		return (token);
 	}

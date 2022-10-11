@@ -11,10 +11,12 @@ void search_tree(t_token *tree)
 		search_tree(tree->left);
 		//free(tree->left);
 	}
+	printf("\n");	
 	while (tree->symbol)
 	{
 		temp = tree->symbol;
-		printf("%s  ", tree->symbol->str);
+		if (tree->symbol->str)
+			printf(" %d %s |", tree->symbol->type, tree->symbol->str);
 		tree->symbol = tree->symbol->next;
 	//	free(temp);
 	}

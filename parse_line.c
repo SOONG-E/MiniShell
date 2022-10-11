@@ -49,21 +49,24 @@ char	**parse_line(char *str)
 		free_symbols(symbol_lst);
 		return (0);
 	}
-	expand_filename(symbol_lst);
+	//expand_filename(symbol_lst);
 	/*--------------test--------------*/
-	//t_symbol *tmp = symbol_lst;
+	// t_symbol *tmp = symbol_lst;
 	// while (tmp)
 	// {
-	// 	printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
+	// 	printf("%s ", tmp->str);
 	// 	tmp = tmp->next;
 	// }
-	//tmp = sort_redirection(symbol_lst);
-	// printf("\n\n---------after sort--------\n");
+	// printf("\n");
+	// // tmp = sort_redirection(symbol_lst);
+	// tmp = get_last_symbol(symbol_lst);
+	// //printf("\n\n---------after sort--------\n");
 	// while (tmp)
 	// {
-	// 	printf("--------------\nstr: %s\ntype: %d\n-----------------\n", tmp->str, tmp->type);
-	// 	tmp = tmp->next;
+	// 	printf("%s ", tmp->str);
+	// 	tmp = tmp->pre;
 	// }
+	// printf("\n");
 	/*--------------^^^^---------------*/
 	tree_root = make_parse_tree(symbol_lst);
 	printf("-------tree test------------\n");

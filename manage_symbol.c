@@ -51,6 +51,7 @@ t_symbol	*make_symbol_lst(char **temp)
 	{
 		new = new_symbol(temp[i]);
 		add_back_symbol(&symbol_lst, new);
+		free(temp[i]);
 		i++;
 	}
 	free(temp);
