@@ -56,11 +56,12 @@ void	delete_quote(t_symbol *symbol)
 	char	*tmp;
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	j = 0;
 	replace_quote(symbol->str);
-	tmp = (char *)ft_calloc(ft_strlen(symbol->str) - quote_cnt(symbol->str) + 1, 1);
+	tmp = (char *)ft_calloc(ft_strlen(symbol->str) - \
+	quote_cnt(symbol->str) + 1, 1);
 	while (symbol->str[i] != 0)
 	{
 		if (symbol->str[i] != Q_SINGLE && symbol->str[i] != Q_DOUBLE)

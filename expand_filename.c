@@ -120,7 +120,7 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 	{
 		if (cmp_wild_card(file_entry->d_name, symbol->str))
 		{
-			file = ft_symbol_new(ft_strdup(file_entry->d_name));
+			file = ft_new_symbol(ft_strdup(file_entry->d_name));
 			file->type = symbol->type;
 			lst_symbol_add_back(&file_lst, file);
 		}

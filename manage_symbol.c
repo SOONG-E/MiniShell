@@ -1,6 +1,6 @@
 #include "./include/minishell.h"
 
-t_symbol	*ft_symbol_new(char	*str)
+t_symbol	*new_symbol(char *str)
 {
 	t_symbol	*new;
 
@@ -11,7 +11,6 @@ t_symbol	*ft_symbol_new(char	*str)
 	new->type = -1;
 	new->pre = NULL;
 	new->next = NULL;
-	free(str);
 	return (new);
 }
 
@@ -41,7 +40,7 @@ t_symbol	*make_symbol_lst(char **temp)
 	i = 0;
 	while (temp[i])
 	{
-		new = ft_symbol_new(temp[i]);
+		new = ft_new_sy(temp[i]);
 		lst_symbol_add_back(&symbol_lst, new);
 		i++;
 	}
@@ -66,7 +65,7 @@ t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new)
 }
 
 /*--------------seojin-------------*/
-void	ft_add_back_symbol(t_symbol **head, t_symbol *new)
+void	add_back_symbol(t_symbol **head, t_symbol *new)
 {
 	t_symbol	*tmp;
 
@@ -82,21 +81,7 @@ void	ft_add_back_symbol(t_symbol **head, t_symbol *new)
 	}
 }
 
-t_symbol	*ft_new_symbol(char *str)
-{
-	t_symbol	*new;
-
-	new = (t_symbol *)malloc(sizeof(t_symbol));
-	if (!new)
-		exit(1);
-	new->str = ft_strdup(str);
-	new->type = -1;
-	new->pre = NULL;
-	new->next = NULL;
-	return (new);
-}
-
-t_symbol	*ft_get_last_symbol(t_symbol *symbol)
+t_symbol	*get_last_symbol(t_symbol *symbol)
 {
 	if (!symbol)
 		return (NULL);

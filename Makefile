@@ -11,7 +11,7 @@ INCLUDE		=	include
 LIBFT		=	libft
 
 SRCS		= 	main.c						\
-				parsing_line.c				\
+				parse_line.c				\
 				replace_space.c				\
 				expand_env.c				\
 				expand_env_utils.c			\

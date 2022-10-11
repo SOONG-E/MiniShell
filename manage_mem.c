@@ -13,7 +13,19 @@ void	split_free(char **str)
 	free(str);
 }
 
-void	free_symbol(t_symbol *symbols)
+void	free_symbol(t_symbol *symbol)
+{
+	if (!symbol)
+		return ;
+	if (symbol->pre)
+		symbol->pre->next = NULL;
+	if (symbol->next)
+		symbol->next->pre = NULL;
+	free(symbol->str);
+	free(symbol);
+}
+
+void	free_symbols(t_symbol *symbols)
 {
 	t_symbol *temp;
 

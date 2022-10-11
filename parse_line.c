@@ -24,11 +24,11 @@ static int	check_pair(char *str)
 	return (1);
 }
 
-char	**parsing_line(char *str)
+char	**parse_line(char *str)
 {
 	char		**temp;
 	t_symbol	*symbol_lst;
-	//t_token	*tree_root;
+	t_token	*tree_root;
 
 	if (!check_pair(str))
 	{
@@ -44,7 +44,7 @@ char	**parsing_line(char *str)
 	symbolizing(symbol_lst);
 	if (validate(symbol_lst))
 	{
-		free_symbol(symbol_lst);
+		free_symbols(symbol_lst);
 		return (0);
 	}
 	expand_filename(symbol_lst);
@@ -56,8 +56,8 @@ char	**parsing_line(char *str)
 	// 	tmp = tmp->next;
 	// }
 	/*--------------^^^^---------------*/
-	//tree_root = make_parse_tree(symbols);
-	free_symbol(symbol_lst);
+	tree_root = make_parse_tree(symbol_lst);
+	//free_symbols(symbol_lst);
 	//return (tree_root);
 	return (0);
 }

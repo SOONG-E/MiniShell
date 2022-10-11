@@ -51,24 +51,24 @@ char	*combine_str(char *s1, char *s2, char *s3, int *i)
 	return (ret);
 }
 
-int	ft_skip_double_qoute(char *str)
+static int	skip_quote(char *str, int flag)
 {
 	int	i;
-
-	i = 1;
-	while (str[i] != Q_DOUBLE)
-		i++;
-	return (i + 1);
-}
-
-int	ft_skip_single_qoute(char *str)
-{
-	int	i;
-
-	i = 1;
-	while (str[i] != Q_SINGLE)
-		i++;
-	return (i + 1);
+	
+	if (flag == Q_SINGLE)
+	{
+		i = 1;
+		while (str[i] != Q_SINGLE)
+			i++;
+		return (i + 1);
+	}
+	else
+	{
+		i = 1;
+		while (str[i] != Q_DOUBLE)
+			i++;
+		return (i + 1);
+	}
 }
 
 char	*replace_op(char *str)
@@ -81,10 +81,8 @@ char	*replace_op(char *str)
 	while (str[i])
 	{
 		op = get_op(&str[i]);
-		if (str[i] == Q_DOUBLE)
-			i += ft_skip_double_qoute(&str[i]);
-		else if (str[i] == Q_SINGLE)
-			i += ft_skip_single_qoute(&str[i]);
+		if (str[i] == Q_SINGLE || str[i] == Q_DOUBLE)
+			i += skip_quote(&str[i], str[i]);
 		else if (op)
 		{
 			temp = str;
@@ -101,7 +99,22 @@ char	*replace_op(char *str)
 	return (str);
 }
 
-static void	replace_backup(char	**temp)
+
+char	**preprocess_line(char *str)
+{
+	char	**temp;
+
+	str = replace_op(str);
+	replace_white_space(str);
+	temp = ft_split(str, "\n\t\v\f\r ");
+	if (!temp)
+		allocat_error();
+	backup_white_space(temp);
+	free(str);
+	return (temp);
+}
+
+static void	backup_white_space(char	**temp)
 {
 	int	i;
 	int	j;
@@ -118,18 +131,4 @@ static void	replace_backup(char	**temp)
 		}
 		i++;
 	}
-}
-
-char	**preprocess_line(char *str)
-{
-	char	**temp;
-
-	str = replace_op(str);
-	replace_white_space(str);
-	temp = ft_split(str, "\n\t\v\f\r ");
-	if (!temp)
-		allocat_error();
-	replace_backup(temp);
-	free(str);
-	return (temp);
 }

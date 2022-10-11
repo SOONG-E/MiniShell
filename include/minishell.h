@@ -24,10 +24,11 @@
 # define C_BLUE "\033[34m"
 # define C_NRML "\033[0m"
 
-typedef	struct s_info t_info;
+typedef	struct s_info 	t_info;
 typedef struct s_envlst	t_envlst;
 typedef struct s_symbol	t_symbol;
 typedef struct s_token	t_token;
+typedef struct s_child_info	t_child_info;
 
 /* struct definition */
 struct s_info
@@ -47,7 +48,6 @@ struct s_envlst
 
 struct	s_symbol
 {
-	int			idx;
 	int			type;
 	char		*str;
 	t_symbol	*pre;
@@ -56,16 +56,31 @@ struct	s_symbol
 
 struct	s_token
 {
-	int			type;
-	char		*str;
 	t_symbol	*symbol;
 	t_token		*left;
 	t_token		*right;
-	//struct s_token	*parent;
+	int			self;
 };
+
+/*
+struct	s_child_info
+{
+	int			left_token;
+	t_symbol	*left_symbol;
+	int			right_token;
+	t_symbol	*right_symbol;
+	t_symbol	*curr_symbol;
+};*/
 
 //t_envlst	*g_envlst;
 t_info		*g_info;
+
+/*token_tree/ */
+t_token		*and_or(t_symbol *symbol);
+t_token		*brace_group(t_symbol *symbol);
+t_token		*make_parse_tree(t_symbol *symbol);
+t_token		*pipeline(t_symbol *symbol);
+t_symbol	*skip_brace(t_symbol *symbol);
 
 /*check_cmd.c*/
 char	*get_cmd_path(char *cmd, char *path);
@@ -111,18 +126,19 @@ void	set_exit_code(int code);
 /*manage_mem.c*/
 void    split_free(char **str);
 void    free_symbol(t_symbol *symbols);
+void    free_symbols(t_symbol *symbols);
 
 /*manage_signal.c*/
 void	sigint_handler(int signum);
 
 /*manage_symbol.c*/
-t_symbol	*ft_symbol_new(char	*str);
+t_symbol	*ft_new_symbol(char	*str);
 t_symbol	*make_symbol_lst(char **temp);
 void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
 t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new);
 
-/*parsing_line.c*/
-char		**parsing_line(char *str);
+/*parse_line.c*/
+char		**parse_line(char *str);
 
 /*replace_space.c*/
 void		is_space(char *str);
@@ -153,7 +169,6 @@ int		syntax_error_token(char *str);
 //void    printf_ls_test(void);
 ///
 
-
 /* functions for built_in */
 int			ft_cd(char *path);
 void		ft_unset(char *rmvkey);
@@ -162,8 +177,6 @@ void		ft_export(char *key, char *value);
 void		ft_echo(char *arg, int option);
 void		ft_exit(int n);
 void		ft_env(char *env);
-
-
 
 
 
