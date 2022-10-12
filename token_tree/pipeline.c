@@ -52,16 +52,9 @@ t_token	*pipeline(t_symbol *symbol)
 		return (brace_group(symbol));
 	else
 	{
-		token = make_token(&symbol);
-		//-------------------------------
-		t_symbol *tmp;
-		tmp = token->symbol;
-		while (tmp)
-		{
-			
-			tmp = tmp->next;
-		}
-		//------------------------------
+		token = make_token(symbol);
+		if (symbol->pre)
+			symbol->pre->next = NULL; // 추가
 		//token->symbol = sort_redirection(token->symbol);
 		return (token);
 	}

@@ -51,19 +51,24 @@ char	**parse_line(char *str)
 	}
 	//expand_filename(symbol_lst);
 	/*--------------test--------------*/
+	// int	cnt = 0;
+
 	// t_symbol *tmp = symbol_lst;
 	// while (tmp)
 	// {
-	// 	printf("%s ", tmp->str);
+	// 	printf("(%d)%s[%d] ",cnt , tmp->str, tmp->type);
+	// 	cnt++;
 	// 	tmp = tmp->next;
 	// }
 	// printf("\n");
 	// // tmp = sort_redirection(symbol_lst);
 	// tmp = get_last_symbol(symbol_lst);
 	// //printf("\n\n---------after sort--------\n");
+	// cnt = 0;
 	// while (tmp)
 	// {
-	// 	printf("%s ", tmp->str);
+	// 	printf("(%d)%s[%d] ", cnt, tmp->str, tmp->type);
+	// 	cnt++;
 	// 	tmp = tmp->pre;
 	// }
 	// printf("\n");

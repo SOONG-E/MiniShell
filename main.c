@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **env)
 	init_shell(env);
 	while (1)
 	{
-		str = readline(C_BLUE"minishell$ "C_NRML);
+		str = readline(C_BLUE "minishell$ " C_NRML);
 		if (!str)
 			exit(0);
 		if (!ft_strlen(str))
