@@ -35,7 +35,6 @@ typedef struct	s_token
 	struct s_symbol	*symbol;
 	struct s_token	*left;
 	struct s_token	*right;
-	int				self;
 }	t_token;
 
 #endif

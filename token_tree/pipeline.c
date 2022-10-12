@@ -52,7 +52,11 @@ t_token	*pipeline(t_symbol *symbol)
 		return (brace_group(symbol));
 	else
 	{
-		token = make_token(symbol);
+		// token = make_token(symbol);
+		token = (t_token *)malloc(sizeof(t_token));
+		token->symbol = symbol;
+		token->left = NULL;
+		token->right = NULL;
 		if (symbol->pre)
 			symbol->pre->next = NULL; // 추가
 		//token->symbol = sort_redirection(token->symbol);

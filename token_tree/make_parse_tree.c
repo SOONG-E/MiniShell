@@ -4,7 +4,7 @@ t_token	*make_token(t_symbol *symbol)
 {
 	t_token	*token;
 
-	token = (t_token *)malloc(sizeof(token));
+	token = (t_token *)malloc(sizeof(t_token));
 	if (!token)
 		exit(-1);
 	token->symbol = symbol;
