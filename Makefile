@@ -58,6 +58,7 @@ all		: $(NAME)
 # 			make clean
 $(NAME) : $(LIBFT) $(LIBMINI)
 	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(CPPFLAGS)
+	make clean
 
 $(LIBFT) :
 	cd libft; make
