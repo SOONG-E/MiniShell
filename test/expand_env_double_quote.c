@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 // char	**double_quote_split(char *str, char chr);
 

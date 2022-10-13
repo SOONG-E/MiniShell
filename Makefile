@@ -2,8 +2,10 @@ NAME		=	minishell
 
 CC			= 	cc -g
 CFLAGS		=	-Wall -Werror -Wextra 
-LDFLAGS		=	-L/$(HOME)/.brew/opt/readline/lib -lreadline
+LDFLAGS		=	-L/$(HOME)/.brew/opt/readline/lib
+LDLIBS		=	-lreadline
 CPPFLAGS	=	-I/$(HOME)/.brew/opt/readline/include
+CPPFLAGS	+=	-I./include
 
 OUTDIR = out/
 
@@ -15,6 +17,7 @@ SRCS		= 	main.c						\
 				parse_line.c				\
 				replace_space.c				\
 				replace_op.c				\
+				replace_op_utils.c			\
 				expand_env.c				\
 				expand_env_utils.c			\
 				manage_symbol.c				\
@@ -36,6 +39,7 @@ SRCS		= 	main.c						\
 				./token_tree/pipeline.c		\
 				./token_tree/utils.c		\
 				./test/test_tree.c
+#				replace_wild_card.c			\
 # ./built_in/ft_cd.c			\
 # ./built_in/ft_echo.c		\
 # ./built_in/ft_env.c			\
@@ -57,17 +61,15 @@ all		: $(NAME)
 # 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft $(LDFLAGS) $(CPPFLAGS) -I $(INCLUDE)
 # 			make clean
 $(NAME) : $(LIBFT) $(LIBMINI)
-	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(CPPFLAGS)
-	make clean
+	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(LDLIBS) $(CPPFLAGS)
+#	make clean
+#main.c수정했는데 재컴파일이 안돼서 수정했습니다
 
 $(LIBFT) :
 	cd libft; make
 
 $(LIBMINI) : $(OBJS)
 	ar rc $@ $^
-
-%.o		:	%.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $^ -o $@
 
 clean	:
 			rm -rf $(OBJS)

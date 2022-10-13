@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 void	ft_envlst_add_back(t_envlst *new)
 {

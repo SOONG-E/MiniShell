@@ -1,4 +1,4 @@
-// #include "./include/minishell.h"
+// #include "minishell.h"
 
 // char	*combine_str(char *s1, char *s2, char *s3, int *i)
 // {

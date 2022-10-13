@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 char	*get_cmd_path(char *cmd, char *path)
 {

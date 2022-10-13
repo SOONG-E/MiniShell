@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 static char		*expand_env_in_double_quote(char *str);
 static t_symbol	*expand_env_out_quote(char *str);

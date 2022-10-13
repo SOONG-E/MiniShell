@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 static int	ft_count(char *str, char chr)
 {

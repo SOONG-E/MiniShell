@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 static char	*simple_join_three_str(char *str1, char *str2, char *str3)
 {
