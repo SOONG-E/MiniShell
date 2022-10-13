@@ -8,10 +8,12 @@ void	init_shell(char **env)
 	init_info(env);
 }
 
+void	search_tree(t_token	*tree);
+
 int	main(int ac, char **av, char **env)
 {
 	char	*str;
-	char	**cmd;
+	t_token	*cmd;
 
     (void)env;
 	(void)av;
@@ -30,7 +32,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		cmd = parse_line(str);
-		// system("leaks minishell");
+	//	search_tree(cmd);
 	}
 	return (0);
 }

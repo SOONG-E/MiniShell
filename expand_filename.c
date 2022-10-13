@@ -120,7 +120,7 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 	{
 		if (cmp_wild_card(file_entry->d_name, symbol->str))
 		{
-			file = new_symbol(ft_strdup(file_entry->d_name));
+			file = new_symbol(file_entry->d_name);
 			file->type = symbol->type;
 			add_back_symbol(&file_lst, file);
 		}
@@ -130,7 +130,7 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 	return (file_lst);
 }
 
-t_symbol	*expand_filename(t_symbol *symbol)
+void	expand_filename(t_symbol *symbol)
 {
 	t_symbol	*ret_symbol;
 	t_symbol	*file_lst;
@@ -140,6 +140,7 @@ t_symbol	*expand_filename(t_symbol *symbol)
 	{
 		if (symbol->type == T_FILEPATH || symbol->type == T_ARG)
 		{
+			
 			if (is_need_expand(symbol->str))
 			{
 				replace_wild_card(symbol->str);
@@ -156,5 +157,4 @@ t_symbol	*expand_filename(t_symbol *symbol)
 		else
 			symbol = symbol->next;
 	}
-	return (ret_symbol);
 }

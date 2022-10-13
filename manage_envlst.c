@@ -22,8 +22,8 @@ t_envlst	*ft_envlst_new(char *key, char *value)
 	new = (t_envlst *)malloc(sizeof(t_envlst));
 	if (!new)
 		exit(0);
-	new->key = key;
-	new->value = value;
+	new->key = ft_strdup(key);
+	new->value = ft_strdup(value);
 	new->next = NULL;
 	return (new);
 }

@@ -116,7 +116,8 @@ t_symbol	*update_symbol(t_symbol *symbol, t_symbol *new)
 			symbol->next->pre = symbol->pre;
 	}
 	tmp = symbol->next;
-	free(symbol->str);
+	if (symbol->str)
+		free(symbol->str);
 	free(symbol);
 	symbol = tmp;
 	return (symbol);

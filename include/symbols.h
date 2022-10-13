@@ -30,5 +30,8 @@
 
 # define DIRECTORY		4
 # define FILE			8
-// cat && (cat && cat)
+
+# define STDIN			0
+# define STDOUT			1
+# define STDERR			2
 #endif

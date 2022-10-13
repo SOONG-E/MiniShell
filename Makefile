@@ -12,32 +12,34 @@ OUTDIR		=	out/
 
 LIBFT		=	./libft/libft.a
 
-SRCS		= 	main.c						\
-				parse_line.c				\
-				replace_space.c				\
-				replace_op.c				\
-				replace_op_utils.c			\
-				expand_env.c				\
-				expand_env_utils.c			\
-				manage_symbol.c				\
-				manage_envlst.c				\
-				manage_error.c				\
-				manage_env.c				\
-				manage_mem.c				\
-				manage_signal.c				\
-				symbolize.c					\
-				preprocess_line.c			\
-				check_cmd.c					\
-				validate.c					\
-				manage_info.c				\
-				expand_filename.c			\
-				delete_quote.c				\
-				token_tree/and_or.c		\
-				token_tree/brace_group.c	\
-				token_tree/make_parse_tree.c\
-				token_tree/pipeline.c		\
-				token_tree/utils.c		\
-				test/test_tree.c
+SRCS		= 	main.c							\
+				parse_line.c					\
+				replace_space.c					\
+				replace_op.c					\
+				expand_env.c					\
+				expand_env_utils.c				\
+				manage_symbol.c					\
+				manage_envlst.c					\
+				manage_error.c					\
+				manage_env.c					\
+				manage_mem.c					\
+				manage_signal.c					\
+				symbolize.c						\
+				preprocess_line.c				\
+				check_cmd.c						\
+				validate.c						\
+				manage_info.c					\
+				expand_filename.c				\
+				delete_quote.c					\
+				execute.c						\
+				token_tree/and_or.c				\
+				token_tree/brace_group.c		\
+				token_tree/make_parse_tree.c	\
+				token_tree/pipeline.c			\
+				token_tree/utils.c				\
+				#excute_pipe_line.c				\
+				#excute_pipe_line_utils.c		
+#				test/test_tree.c
 #				replace_wild_card.c			\
 # ./built_in/ft_cd.c			\
 # ./built_in/ft_echo.c		\

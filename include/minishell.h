@@ -21,12 +21,11 @@
 # include "./symbols.h"
 # include "./structs.h"
 
-# define SHELL "minishell"
+# define SHELL	"minishell"
 # define C_BLUE "\033[34m"
 # define C_NRML "\033[0m"
 
 t_info		*g_info;
-
 
 /*token_tree*/ 
 t_token		*and_or(t_symbol *symbol);
@@ -36,31 +35,34 @@ t_token		*make_parse_tree(t_symbol *symbol);
 t_token		*pipeline(t_symbol *symbol);
 t_symbol	*skip_brace(t_symbol *symbol);
 
-
 /*check_cmd.c*/
-char	*get_cmd_path(char *cmd, char *path);
-int		is_cmd(char	*str);
+char		*get_cmd_path(char *cmd, char *path);
+int			is_cmd(char	*str);
 
 /* delete_quote.c */
-void	delete_quote(t_symbol *symbol);
+void		delete_quote(t_symbol *symbol);
+
+/*execute.c*/
+void		search_tree(t_token	*tree);
 
 /*expand_env_double_quote.c*/
-char	*expand_env_quote_case(char *str);
+char		*expand_env_quote_case(char *str);
 
 /*expand_env_utils.c*/
-int		cut_temp(char **temp, char *str);
-char	*cut_str(char **str);
-char	*ft_join(char **str);
-int		count_pair(char *str);
+int			cut_temp(char **temp, char *str);
+char		*cut_str(char **str);
+char		*ft_join(char **str);
+int			count_pair(char *str);
 
 /*expand_env.c*/
 t_symbol	*expand_env(t_symbol *symbol_lst);
 
 /* expand_filename.c */
-t_symbol	*expand_filename(t_symbol *symbol);
+void		expand_filename(t_symbol *symbol);
 
 /*manage_env.c*/
-void		parsing_env(char **env);
+int			get_env_len(char *env);
+void		parse_env(char **env);
 char		**ft_env_split(char *env);
 char		*get_value_n(char *key, int n);
 
@@ -93,7 +95,7 @@ void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
 t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new);
 
 /*parse_line.c*/
-char		**parse_line(char *str);
+t_token	*parse_line(char *str);
 
 /*replace_space.c*/
 void		is_space(char *str);
@@ -119,25 +121,23 @@ int			classify_op(char *str);
 int			validate(t_symbol *symbol_lst);
 int			syntax_error_token(char *str);
 
-/// test
-//void	print_env_test(void);
-//void	test_print(char **temp);
-//void    printf_ls_test(void);
-
-///
-
 /* functions for built_in */
-int			ft_cd(char *path);
-void		ft_unset(char *rmvkey);
-void		ft_pwd(void);
-void		ft_export(char *key, char *value);
-void		ft_echo(char *arg, int option);
-void		ft_exit(int n);
+void		ft_cd(char **path, int pipe_cnt);
+void		ft_unset(char **arg, int pipe_cnt);
+void		ft_pwd(char **arg, int pipe_cnt);
+void		ft_export(char **arg, int pipe_cnt);
+void		ft_echo(char **arg, int pipe_cnt);
+void		ft_exit(char **arg, int pipe_cnt);
 void		ft_env(char *env);
 
+/* excute_pipe_line.c */
+void		excute_pipe_line(t_symbol *symbol);
 
-
-
+/* excute_pipe_line_utils.c */
+int			get_exitcode(int status);
+int			get_pipe_cnt(t_symbol *symbol);
+int			open_file(char *file, int redirection_type);
+t_symbol	*dup_redirection(t_symbol *symbol, int *fd);
 
 /*------- seojin---------- */
 char		*get_value(char *str, int *idx);
@@ -151,5 +151,4 @@ t_symbol	*update_symbol(t_symbol *symbol, t_symbol *new);
 t_symbol	*new_symbol(char *str);
 t_symbol	*get_last_symbol(t_symbol *symbol);
 
-t_symbol	*sort_redirection(t_symbol *symbol);
 #endif

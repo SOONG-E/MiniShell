@@ -1,10 +1,9 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	swap_place(t_symbol *symbol, t_symbol *cmd_place)
 {
 	symbol->pre->next = symbol->next;
 	symbol->next->pre = symbol->pre;
-
 	if (cmd_place->next)
 	{
 		cmd_place->next->pre = symbol;
@@ -16,7 +15,23 @@ void	swap_place(t_symbol *symbol, t_symbol *cmd_place)
 	symbol->pre = cmd_place;
 }
 
-t_symbol	*sort_redirection(t_symbol *symbol)// | cmd < in > out | < in cmd > out
+t_symbol	*find_cmd_place(t_symbol *symbol)
+{
+	t_symbol	*cmd_place;
+
+	cmd_place = symbol;
+	while (1)
+	{
+		if (!cmd_place->next)
+			break ;
+		if (cmd_place->next->type == T_PIPE)
+			break ;
+		cmd_place = cmd_place->next;
+	}
+	return (cmd_place);
+}
+
+t_symbol	*sort_redirection(t_symbol *symbol)
 {
 	t_symbol	*head;
 	t_symbol	*cmd_place;
@@ -24,17 +39,16 @@ t_symbol	*sort_redirection(t_symbol *symbol)// | cmd < in > out | < in cmd > out
 	head = (t_symbol *)malloc(sizeof(t_symbol));
 	head->next = symbol;
 	symbol->pre = head;
-	while (symbol)
-	{
-		if (symbol->type != T_CMD
-			&& (symbol->next->type != T_PIPE || symbol->next != NULL))
+	while (symbol->next)
+	{	
+		if (symbol->type == T_CMD)
 		{
-			cmd_place = symbol;
-			while (cmd_place->next->type == T_PIPE || cmd_place->next == NULL)
-				cmd_place = cmd_place->next;
-			swap_place(symbol, cmd_place);
+			cmd_place = find_cmd_place(symbol);
+			if (symbol != cmd_place)
+				swap_place(symbol, cmd_place);
 		}
-		symbol = symbol->next;
+		if (symbol->next)
+			symbol = symbol->next;
 	}
 	symbol = head->next;
 	symbol->pre = NULL;
@@ -52,14 +66,8 @@ t_token	*pipeline(t_symbol *symbol)
 		return (brace_group(symbol));
 	else
 	{
-		// token = make_token(symbol);
-		token = (t_token *)malloc(sizeof(t_token));
-		token->symbol = symbol;
-		token->left = NULL;
-		token->right = NULL;
-		if (symbol->pre)
-			symbol->pre->next = NULL; // 추가
-		//token->symbol = sort_redirection(token->symbol);
+		token = make_token(symbol);
+		token->symbol = sort_redirection(token->symbol);
 		return (token);
 	}
 }

@@ -37,4 +37,13 @@ typedef struct	s_token
 	struct s_token	*right;
 }	t_token;
 
+typedef struct	s_cd
+{
+	char	*path;
+	char	*cwd;
+	char	*pwd;
+	int		rv;
+	int		pipe_cnt;
+}	t_cd;
+
 #endif

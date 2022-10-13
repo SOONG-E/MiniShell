@@ -1,10 +1,11 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
-void	ft_pwd(void)
+void	ft_pwd(char **arg, int pipe_cnt)
 {
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
+	write(1, pwd, ft_strlen(pwd));
 	free(pwd);
+	set_exit_code(0);
 }

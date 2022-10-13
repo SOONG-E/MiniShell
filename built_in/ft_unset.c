@@ -1,26 +1,58 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
-void	ft_unset(char *rmvkey)
+static int	arg_vaild_check(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) || str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+	
+}
+
+static void	delete_env_lst(char *str)
 {
 	t_envlst	*tmp;
-	t_envlst	*next;
+	t_envlst	*free_tmp;
 
-	if (!ft_strcmp(g_envlst->key, rmvkey))
+	tmp = g_info->envlst;
+	while (tmp->next)
 	{
-		next = g_envlst->next;
-		free(g_envlst);
-		g_envlst = next;
-	}
-	tmp = g_envlst;
-	while (g_envlst->next)
-	{
-		if (!ft_strcmp(g_envlst->next->key, rmvkey))
+		if (ft_strcmp(tmp->next->key, str) == 0)
 		{
-			next = tmp->next;
-			free(g_envlst);
-			g_envlst = next;
+			free_tmp = tmp->next;
+			tmp->next = tmp->next->next;
+			free(free_tmp->key);
+			free(free_tmp->value);
+			free(free_tmp);
 		}
-		g_envlst = g_envlst->next;
+		tmp = tmp->next;
 	}
-	g_envlst = tmp;
+}
+
+void	ft_unset(char **arg, int pipe_cnt)
+{
+	int	i;
+
+	i = 1;
+	while (arg[i])
+	{
+		if (arg_vaild_check(arg[i]))
+		{
+			printf("%s: unset: '%s': not a valid identiier\n", SHELL, arg[i]);
+			set_exit_code(1);
+			return ;
+		}
+		else if(pipe_cnt)
+		{
+			delete_env_lst(arg[i]);
+		}
+		i++;
+	}
+	set_exit_code(0);
 }
