@@ -1,18 +1,17 @@
+.DEFAULT_GOAL = all
+
 NAME		=	minishell
 
-CC			= 	cc -g
-CFLAGS		=	-Wall -Werror -Wextra 
-LDFLAGS		=	-L/$(HOME)/.brew/opt/readline/lib
-LDLIBS		=	-lreadline
-CPPFLAGS	=	-I/$(HOME)/.brew/opt/readline/include
-CPPFLAGS	+=	-I./include
+RM			=	rm -rf
+CFLAGS		=	-Wall -Werror -Wextra -MMD -MP -g
+CPPFLAGS	=	-I./include -I$(HOME)/.brew/opt/readline/include
+LDFLAGS		=	-L./libft -L$(HOME)/.brew/opt/readline/lib
+LDLIBS		=	-lft -lreadline
 
-OUTDIR = out/
+OUTDIR		=	out/
 
-# INCLUDE		=	include
-# LIBFT		=	libft
 LIBFT		=	./libft/libft.a
-LIBMINI		=	libmini.a
+
 SRCS		= 	main.c						\
 				parse_line.c				\
 				replace_space.c				\
@@ -33,12 +32,12 @@ SRCS		= 	main.c						\
 				manage_info.c				\
 				expand_filename.c			\
 				delete_quote.c				\
-				./token_tree/and_or.c		\
-				./token_tree/brace_group.c	\
-				./token_tree/make_parse_tree.c\
-				./token_tree/pipeline.c		\
-				./token_tree/utils.c		\
-				./test/test_tree.c
+				token_tree/and_or.c		\
+				token_tree/brace_group.c	\
+				token_tree/make_parse_tree.c\
+				token_tree/pipeline.c		\
+				token_tree/utils.c		\
+				test/test_tree.c
 #				replace_wild_card.c			\
 # ./built_in/ft_cd.c			\
 # ./built_in/ft_echo.c		\
@@ -48,38 +47,32 @@ SRCS		= 	main.c						\
 # ./built_in/ft_pwd.c			\
 # ./built_in/ft_unset.c
 
-#OBJS		=	$(SRCS:%.c=$(OUTDIR)%.o)
-OBJS		=	$(SRCS:%.c=%.o)
+OBJS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.o))
+DEPS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.d))
+-include $(DEPS)
 
+$(OUTDIR)%.o : %.c
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+	
 all		: $(NAME)
 
-#$(OBJS): $(OUTDIR)%.o: %.c
-#	$(CC) $(CFLAGS) -c $< -o $@
+$(NAME) : $(OBJS)
+	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
-# $(NAME) : $(OBJS)
-# 			make -C $(LIBFT)
-# 			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT) -lft $(LDFLAGS) $(CPPFLAGS) -I $(INCLUDE)
-# 			make clean
-$(NAME) : $(LIBFT) $(LIBMINI)
-	$(CC) $(LIBFT) $(LIBMINI) main.c -o $@ $(LDFLAGS) $(LDLIBS) $(CPPFLAGS)
-#	make clean
-#main.c수정했는데 재컴파일이 안돼서 수정했습니다
+$(OBJS) : $(LIBFT)
 
 $(LIBFT) :
-	cd libft; make
-
-$(LIBMINI) : $(OBJS)
-	ar rc $@ $^
+	$(MAKE) -C libft
 
 clean	:
-			rm -rf $(OBJS)
-			cd libft; make clean
+			$(RM) $(OUTDIR)
+			$(MAKE) -C libft clean
 
 fclean	: clean
-			rm -rf $(NAME) $(LIBMINI)
+			$(RM) $(NAME) $(LIBFT)
 
-re		:
-			make fclean
-			make all
+re		: fclean
+			$(MAKE) all
 
 .PHONY	: all clean fclean re

@@ -58,7 +58,7 @@ OBJS_BONUS = $(SRCS_BN:.c=.o)
 all : $(NAME)
 
 %.o : %.c
-	$(CC) $(CFLAG) -c $< -o $@ -I libft.h
+	$(CC) $(CFLAG) -c $< -o $@
 
 clean :
 	$(RM) $(OBJS) $(OBJS_BONUS)
