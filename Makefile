@@ -55,24 +55,26 @@ $(OUTDIR)%.o : %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 	
-all		: $(NAME)
+all		:
+	$(MAKE) -C $(dir $(LIBFT))
+	$(MAKE) $(NAME)
 
 $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 $(OBJS) : $(LIBFT)
 
-$(LIBFT) :
-	$(MAKE) -C libft
+$(LIBFT) : 
+	@$(MAKE) -C $(dir $(LIBFT))
 
 clean	:
-			$(RM) $(OUTDIR)
-			$(MAKE) -C libft clean
+	@$(RM) $(OUTDIR)
+	@$(MAKE) -C libft clean
 
 fclean	: clean
-			$(RM) $(NAME) $(LIBFT)
+	@$(RM) $(NAME) $(LIBFT)
 
 re		: fclean
-			$(MAKE) all
+	$(MAKE) all
 
-.PHONY	: all clean fclean re
+.PHONY	: all clean fclean re $(dir $(LIBFT))

@@ -1,8 +1,8 @@
+.DEFAULT_GOAL = all
+
 NAME = libft.a
 
-CC = cc -g
-CFLAG = -Wall -Wextra -Werror
-RM = rm -rf
+CFLAG = -Wall -Wextra -Werror -MMD -MP -g
 AR = ar rcu
 
 SRCS_1	= ft_strlen.c		\
@@ -52,8 +52,8 @@ SRCS	= $(SRCS_1)			\
 	  		$(SRCS_2)		\
 
 OBJS	= $(SRCS:.c=.o)
-
-OBJS_BONUS = $(SRCS_BN:.c=.o)
+DEPS	= $(SRCS:.c=.d)
+-include $(DEPS)
 
 all : $(NAME)
 
@@ -61,12 +61,13 @@ all : $(NAME)
 	$(CC) $(CFLAG) -c $< -o $@
 
 clean :
-	$(RM) $(OBJS) $(OBJS_BONUS)
+	@$(RM) $(OBJS) $(DEPS)
 
 fclean : clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
 
-re : fclean $(NAME)
+re : fclean
+	$(NAME)
 
 $(NAME) : $(OBJS)
 	$(AR) $@ $^
