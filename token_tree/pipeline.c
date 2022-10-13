@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	swap_place(t_symbol *symbol, t_symbol *cmd_place)
 {

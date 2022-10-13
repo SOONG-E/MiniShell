@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_token	*brace_group(t_symbol *symbol)
 {

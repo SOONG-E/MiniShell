@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_token	*make_token(t_symbol *symbol)
 {

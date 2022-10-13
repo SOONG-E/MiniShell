@@ -69,7 +69,7 @@ $(LIBFT) :
 
 clean	:
 	@$(RM) $(OUTDIR)
-	@$(MAKE) -C libft clean
+	@$(MAKE) -C $(dir $(LIBFT)) clean
 
 fclean	: clean
 	@$(RM) $(NAME) $(LIBFT)
