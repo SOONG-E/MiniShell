@@ -45,8 +45,7 @@ void	ft_unset(char **arg, int pipe_cnt)
 		if (arg_vaild_check(arg[i]))
 		{
 			printf("%s: unset: '%s': not a valid identiier\n", SHELL, arg[i]);
-			set_exit_code(1);
-			return ;
+			exit(1);
 		}
 		else if(pipe_cnt)
 		{
@@ -54,5 +53,5 @@ void	ft_unset(char **arg, int pipe_cnt)
 		}
 		i++;
 	}
-	set_exit_code(0);
+	exit(0);
 }

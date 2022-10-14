@@ -55,7 +55,8 @@ void	find_op(t_symbol *symbol_lst)
 			temp->type = classify_op(temp->str);
 			if (!temp->type)
 				temp->type = -1;
-			else if (temp->next && (T_IN_RID <= temp->type && temp->type <= T_OUT_HEREDOC))
+			else if (temp->next
+					&& (T_IN_RID <= temp->type && temp->type <= T_OUT_HEREDOC))
 			{
 				if (!classify_op(temp->next->str))
 					temp->next->type = T_FILEPATH;

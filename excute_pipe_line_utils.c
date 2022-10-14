@@ -69,6 +69,8 @@ t_symbol	*dup_in_redirection(t_symbol *symbol, int *fd)
 	{
 		if (symbol->type ==  T_IN_RID)
 		{
+			if (fd_redirection != STDIN)
+				close(fd_redirection);
 			fd_redirection = open_file(symbol->next->str, T_IN_RID);
 			dup2(fd_redirection, fd[0]);
 			flag = 1;
@@ -87,30 +89,21 @@ t_symbol	*dup_in_redirection(t_symbol *symbol, int *fd)
 
 t_symbol	*dup_out_redirection(t_symbol *symbol, int *fd)
 {
-	t_symbol	*rid_symbol;
+	int			type_redirection;
 	int			fd_redirection;
 	int			flag;
 
-	fd_redirection = STDIN;
+	fd_redirection = STDOUT;
 	flag = 0;
 
 	while (symbol->type != T_CMD)
 	{
-		
-	}
-	while (symbol->type != T_CMD)
-	{
-		if (flag)
-			close(fd_redirection);
-		if (symbol->type ==  T_OUT_RID)
+		type_redirection = symbol->type;
+		if (symbol->type ==  T_OUT_RID || symbol->type == T_OUT_HEREDOC)
 		{
-			fd_redirection = open_file(symbol->next->str, T_OUT_RID);
-			dup2(fd_redirection, fd[1]);
-			flag = 1;
-		}
-		else if (symbol->type == T_OUT_HEREDOC)
-		{
-			fd_redirection = open_file(symbol->next->str, T_OUT_HEREDOC);
+			if (fd_redirection != STDOUT)
+				close(fd_redirection);
+			fd_redirection = open_file(symbol->next->str, type_redirection);
 			dup2(fd_redirection, fd[1]);
 			flag = 1;
 		}

@@ -21,5 +21,5 @@ void	search_tree(t_token	*tree)
 			search_tree(tree->right);
 	}
 //	else
-//		excute_pipe_line(tree->symbol);
+		// excute_pipe_line(tree->symbol);
 }

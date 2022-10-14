@@ -128,7 +128,7 @@ void		ft_pwd(char **arg, int pipe_cnt);
 void		ft_export(char **arg, int pipe_cnt);
 void		ft_echo(char **arg, int pipe_cnt);
 void		ft_exit(char **arg, int pipe_cnt);
-void		ft_env(char *env);
+void		ft_env(char **arg, int pipe_cnt);
 
 /* excute_pipe_line.c */
 void		excute_pipe_line(t_symbol *symbol);

@@ -5,6 +5,7 @@ void	ft_echo(char **arg, int pipe_cnt)
 	int	idx;
 	int new_line;
 
+	(void)pipe_cnt;
 	new_line = 1;
 	idx = 1;
 	while (arg[idx] && !ft_strcmp(arg[idx], "-n"))
@@ -20,5 +21,5 @@ void	ft_echo(char **arg, int pipe_cnt)
 	}
 	if (new_line)
 		write(1, "\n", 1);
-	set_exit_code(0);
+	exit(0);
 }

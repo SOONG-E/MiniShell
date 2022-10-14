@@ -47,7 +47,7 @@ static void	ft_check_rv(t_cd *info)
 			free(info->cwd);
 			ft_update_oldpwd(info->pwd);
 			free(info->pwd);
-			set_exit_code(0);
+			exit(0);
 		}
 	}
 	else
@@ -56,7 +56,7 @@ static void	ft_check_rv(t_cd *info)
 		free(info->cwd);
 		free(info->pwd);
 		printf("%s: cd: %s: No such file or directory\n", SHELL, info->path);
-		set_exit_code(127);
+		exit(1);
 	}
 }
 
