@@ -13,6 +13,21 @@ void	split_free(char **str)
 	free(str);
 }
 
+void	free_tree(t_token *tree)
+{
+	t_token	*right_tree;
+
+	if (!tree)
+		return ;
+	if (tree->left)
+		free_tree(tree->left);
+	free(tree->symbol);
+	right_tree = tree->right;
+	free(tree);
+	if (right_tree)
+		free_tree(right_tree);
+}
+
 void	free_symbol(t_symbol *symbol)
 {
 	if (!symbol)
