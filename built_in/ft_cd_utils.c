@@ -51,7 +51,7 @@ void	ft_cd_home(int pipe_cnt)
 	home = get_env("HOME");
 	if (!*home)
 	{
-		printf("%s: cd: HOME not set", SHELL);
+		printf("%s: cd: HOME not set\n", SHELL);
 		set_exit_code(1);
 		if (pipe_cnt)
 			exit(1);

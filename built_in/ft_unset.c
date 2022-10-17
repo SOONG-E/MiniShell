@@ -37,6 +37,7 @@ static void	delete_env_lst(char *str)
 				free(free_tmp->key);
 				free(free_tmp->value);
 				free(free_tmp);
+				break ;
 			}
 			tmp = tmp->next;
 		}

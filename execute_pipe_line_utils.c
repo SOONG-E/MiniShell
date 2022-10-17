@@ -19,6 +19,15 @@ int	get_pipe_cnt(t_symbol *symbol)
 	return (cnt);
 }
 
+void	close_all_pipefd(int *fd, int error_case)
+{
+	close(fd[0]);
+	close(fd[1]);
+	if (error_case == 1)
+		ft_putstr_fd("pipex: Here_doc allocate error!\n", STDERR);
+	exit(error_case);
+}
+
 void	read_here_doc(char *limiter, int fd[2])
 {
 	size_t	len_limiter;
@@ -45,6 +54,7 @@ int	open_file(char *file, int redirection_type)
 {
 	int	fd;
 
+	fd = 0;
 	if (redirection_type == T_IN_RID)
 		fd = open(file, O_RDONLY);
 	else if (redirection_type == T_OUT_RID)
@@ -58,7 +68,7 @@ int	open_file(char *file, int redirection_type)
 	return (fd);
 }
 
-t_symbol	*dup_in_redirection(t_symbol *symbol, int *fd)
+int	dup_in_redirection(t_symbol *symbol)
 {
 	int	fd_redirection;
 	int	flag;
@@ -72,22 +82,22 @@ t_symbol	*dup_in_redirection(t_symbol *symbol, int *fd)
 			if (fd_redirection != STDIN)
 				close(fd_redirection);
 			fd_redirection = open_file(symbol->next->str, T_IN_RID);
-			dup2(fd_redirection, fd[0]);
+			dup2(fd_redirection, STDIN);
 			flag = 1;
 		}
 		else if (symbol->type == T_IN_HEREDOC)
-			read_here_doc(symbol->next->str, fd);
+			;//read_here_doc(symbol->next->str, fd);
 		if (fd_redirection < 0)
 		{
 			set_exit_code(errno);
-			return (NULL);
+			exit(errno);
 		}
 		symbol = symbol->next->next;
 	}
 	return (flag);
 }
 
-t_symbol	*dup_out_redirection(t_symbol *symbol, int *fd)
+int	dup_out_redirection(t_symbol *symbol)
 {
 	int			type_redirection;
 	int			fd_redirection;
@@ -95,7 +105,6 @@ t_symbol	*dup_out_redirection(t_symbol *symbol, int *fd)
 
 	fd_redirection = STDOUT;
 	flag = 0;
-
 	while (symbol->type != T_CMD)
 	{
 		type_redirection = symbol->type;
@@ -104,13 +113,13 @@ t_symbol	*dup_out_redirection(t_symbol *symbol, int *fd)
 			if (fd_redirection != STDOUT)
 				close(fd_redirection);
 			fd_redirection = open_file(symbol->next->str, type_redirection);
-			dup2(fd_redirection, fd[1]);
+			dup2(fd_redirection, STDOUT);
 			flag = 1;
 		}
 		if (fd_redirection < 0)
 		{
 			set_exit_code(errno);
-			return (NULL);
+			exit(errno);
 		}
 		symbol = symbol->next->next;
 	}

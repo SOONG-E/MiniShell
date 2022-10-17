@@ -6,13 +6,14 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 19:46:14 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/09/19 16:32:30 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/10/17 15:18:42 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line.h"
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>

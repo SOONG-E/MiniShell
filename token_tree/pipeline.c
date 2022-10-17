@@ -67,7 +67,7 @@ t_token	*pipeline(t_symbol *symbol)
 	else
 	{
 		token = make_token(symbol);
-		token->symbol = sort_redirection(token->symbol);
+		//token->symbol = sort_redirection(token->symbol);
 		return (token);
 	}
 }

@@ -37,17 +37,19 @@ SRCS		= 	main.c							\
 				token_tree/make_parse_tree.c	\
 				token_tree/pipeline.c			\
 				token_tree/utils.c				\
-				#excute_pipe_line.c				\
-				#excute_pipe_line_utils.c		
-#				test/test_tree.c
-#				replace_wild_card.c			\
-# ./built_in/ft_cd.c			\
-# ./built_in/ft_echo.c		\
-# ./built_in/ft_env.c			\
-# ./built_in/ft_exit.c		\
-# ./built_in/ft_export.c		\
-# ./built_in/ft_pwd.c			\
-# ./built_in/ft_unset.c
+				execute_pipe_line.c				\
+				execute_pipe_line_utils.c		\
+				replace_wild_card.c				\
+				make_env.c						\
+				built_in/ft_cd.c				\
+				built_in/ft_cd_utils.c			\
+				built_in/ft_echo.c				\
+				built_in/ft_env.c				\
+				built_in/ft_exit.c				\
+				built_in/ft_export.c			\
+				built_in/ft_pwd.c				\
+				built_in/ft_unset.c				\
+				built_in/ft_pipe_export.c
 
 OBJS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.o))
 DEPS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.d))

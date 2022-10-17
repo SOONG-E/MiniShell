@@ -23,7 +23,10 @@ t_envlst	*ft_envlst_new(char *key, char *value)
 	if (!new)
 		exit(0);
 	new->key = ft_strdup(key);
-	new->value = ft_strdup(value);
+	if (value)
+		new->value = ft_strdup(value);
+	else
+		new->value = NULL;
 	new->next = NULL;
 	return (new);
 }

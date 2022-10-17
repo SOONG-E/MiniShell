@@ -3,7 +3,6 @@
 static char		*expand_env_in_double_quote(char *str);
 static t_symbol	*expand_env_out_quote(char *str);
 
-
 t_symbol	*expand_env(t_symbol *symbol)
 {
 	t_symbol	*head;

@@ -2,11 +2,21 @@
 
 void	init_shell(char **env)
 {
-	// set_signal();
+	// int		shell_img;
+	// char	img;
+	//
+	// shell_img = open(".daengdaeng.txt", O_RDONLY);
+	// if (shell_img < 0)
+	// 	exit(1);
+	// while (read(shell_img, &img, 1) > 0)
+	// {
+	// 	write(1, &img, 1);
+	// 	usleep(1000);
+	// }
 	init_info(env);
 }
 
-void	execute_cmd(char *str)
+void	execute(char *str)
 {
 	t_token	*cmd;
 
@@ -23,7 +33,8 @@ int	main(int ac, char **av, char **env)
 	init_shell(env);
 	while (1)
 	{
-		str = readline(C_BLUE "minishell$ " C_NRML);
+		set_signal();
+		str = readline(C_BLUE "minihell$ " C_NRML);
 		if (!str)
 			exit(0);
 		if (!ft_strlen(str))
@@ -32,7 +43,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		add_history(str);
-		execute_cmd(str);
+		execute(str);
 	}
 	return (0);
 }

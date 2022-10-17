@@ -8,3 +8,4 @@ exe.sh
 *.o
 .DS_Store
 *test.c
+*.d

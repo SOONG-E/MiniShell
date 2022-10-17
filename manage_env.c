@@ -23,7 +23,7 @@ void	parse_env(char **env)
 	{
 		str = ft_env_split(env[i]);
 		ft_envlst_add_back(ft_envlst_new(str[0], str[1]));
-		free(str);
+		split_free(str);
 	}
 }
 

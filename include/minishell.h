@@ -21,7 +21,7 @@
 # include "./symbols.h"
 # include "./structs.h"
 
-# define SHELL	"minishell"
+# define SHELL	"minihell"
 # define C_BLUE "\033[34m"
 # define C_NRML "\033[0m"
 
@@ -43,7 +43,7 @@ int			is_cmd(char	*str);
 void		delete_quote(t_symbol *symbol);
 
 /*execute.c*/
-void		search_tree(t_token	*tree);
+void		execute_tree(t_token *tree);
 
 /*expand_env_double_quote.c*/
 char		*expand_env_quote_case(char *str);
@@ -75,6 +75,7 @@ void		set_envlst(char *key, char *value);
 /*manage_error.c*/
 void		allocat_error(void);
 int			error_msg(char *str);
+void		execute_error(char *cmd);
 
 /*manage_info.c*/
 void		init_info(char **env);
@@ -86,7 +87,9 @@ void		free_symbol(t_symbol *symbols);
 void		free_symbols(t_symbol *symbols);
 
 /*manage_signal.c*/
-void		sigint_handler(int signum);
+void		set_child_signal(void);
+void		block_signal(void);
+void		set_signal(void);
 
 /*manage_symbol.c*/
 t_symbol	*ft_new_symbol(char	*str);
@@ -106,8 +109,6 @@ void		replace_white_space(char *str);
 /*preprocess_line.c*/
 char		**preprocess_line(char *str);
 char		*replace_op(char *line);
-// int		ft_skip_single_qoute(char *str);
-// int		ft_skip_double_qoute(char *str);
 
 /* replace_wild_card.c */
 void		replace_back_wild_card(char **str);
@@ -123,21 +124,32 @@ int			syntax_error_token(char *str);
 
 /* functions for built_in */
 void		ft_cd(char **path, int pipe_cnt);
+t_cd		*ft_init_cd_info(int pipe_cnt, char *arg);
+void		ft_check_rv(t_cd *info);
+void		ft_cd_home(int pipe_cnt);
+void		ft_update_oldpwd(char *old_pwd);
+void		ft_update_pwd(char *pwd);
 void		ft_unset(char **arg, int pipe_cnt);
 void		ft_pwd(char **arg, int pipe_cnt);
 void		ft_export(char **arg, int pipe_cnt);
+void		ft_pipe_export(char **arg);
 void		ft_echo(char **arg, int pipe_cnt);
 void		ft_exit(char **arg, int pipe_cnt);
 void		ft_env(char **arg, int pipe_cnt);
 
-/* excute_pipe_line.c */
-void		excute_pipe_line(t_symbol *symbol);
+/* execute_pipe_line.c */
+void		execute_pipe_line(t_symbol *symbol);
 
-/* excute_pipe_line_utils.c */
+/* execute_pipe_line_utils.c */
 int			get_exitcode(int status);
+void		close_all_pipefd(int *fd, int error_case);
 int			get_pipe_cnt(t_symbol *symbol);
 int			open_file(char *file, int redirection_type);
-t_symbol	*dup_redirection(t_symbol *symbol, int *fd);
+int			dup_in_redirection(t_symbol *symbol);
+int			dup_out_redirection(t_symbol *symbol);
+
+/* make_env.c */
+char		**make_env(void);
 
 /*------- seojin---------- */
 char		*get_value(char *str, int *idx);

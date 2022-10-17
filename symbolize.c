@@ -29,7 +29,7 @@ int	classify_op(char *str)
 t_symbol	*classify_type(t_symbol	*symbol)
 {
 	symbol->type = T_CMD;
-	symbol = symbol->next;
+	symbol = symbol->next; //내일 수정하기 ㅎㅎ 흑흑
 	while (symbol && symbol->type < 0 && !ft_strcmp(symbol->str, "-n"))
 	{
 		symbol->type = T_OPTION;
