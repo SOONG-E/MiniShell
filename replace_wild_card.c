@@ -6,9 +6,10 @@ void	replace_back_wild_card(char **str)
 	int	i;
 	int	j;
 
+	i = 0;
 	while (str[i])
 	{
-		i = 0;
+		j = 0;
 		while (str[i][j])
 		{
 			if (str[i][j] < 0)
