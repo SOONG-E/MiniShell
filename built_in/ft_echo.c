@@ -1,10 +1,14 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_echo(char **arg, int pipe_cnt)
 {
 	int	idx;
 	int new_line;
+	void	(*f_exit)(int);
 
+	f_exit = set_exit_code;
+	if (pipe_cnt)
+		f_exit = exit;
 	(void)pipe_cnt;
 	new_line = 1;
 	idx = 1;
@@ -19,7 +23,7 @@ void	ft_echo(char **arg, int pipe_cnt)
 		if (arg[idx])
 			write(1, " ", 1);
 	}
-	if (new_line)
+	if (!new_line)
 		write(1, "\n", 1);
-	exit(0);
+	f_exit(0);
 }

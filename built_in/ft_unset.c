@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 static int	arg_vaild_check(char *str)
 {
@@ -21,17 +21,25 @@ static void	delete_env_lst(char *str)
 	t_envlst	*free_tmp;
 
 	tmp = g_info->envlst;
-	while (tmp->next)
+	if (tmp && ft_strcmp(tmp->key, str) == 0)
 	{
-		if (ft_strcmp(tmp->next->key, str) == 0)
+		free_tmp = tmp;
+		g_info->envlst = tmp->next;
+		free(free_tmp);
+	}
+	else {
+		while (tmp->next)
 		{
-			free_tmp = tmp->next;
-			tmp->next = tmp->next->next;
-			free(free_tmp->key);
-			free(free_tmp->value);
-			free(free_tmp);
+			if (ft_strcmp(tmp->next->key, str) == 0)
+			{
+				free_tmp = tmp->next;
+				tmp->next = tmp->next->next;
+				free(free_tmp->key);
+				free(free_tmp->value);
+				free(free_tmp);
+			}
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
 	}
 }
 
@@ -45,13 +53,16 @@ void	ft_unset(char **arg, int pipe_cnt)
 		if (arg_vaild_check(arg[i]))
 		{
 			printf("%s: unset: '%s': not a valid identiier\n", SHELL, arg[i]);
-			exit(1);
+			if (pipe_cnt)
+				exit(1);
+			set_exit_code(1);
+			return ;
 		}
-		else if(pipe_cnt)
-		{
-			delete_env_lst(arg[i]);
-		}
+		delete_env_lst(arg[i]);
 		i++;
 	}
-	exit(0);
+	if (pipe_cnt)
+		exit(0);
+	set_exit_code(1);
+	return ;
 }

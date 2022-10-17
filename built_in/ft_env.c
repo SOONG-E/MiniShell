@@ -1,29 +1,30 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 void	ft_env(char **arg, int pipe_cnt)
 {
 	t_envlst	*tmp;
 
-	(void)pipe_cnt;
 	tmp = g_info->envlst;
-	if (arg)
+	if (arg[1])
 	{
-		printf("env: %s: No such file or directory\n", arg);
-		exit(127);
+		printf("env: %s: No such file or directory\n", arg[1]);
+		if (pipe_cnt)
+			exit(127);
+		set_exit_code(127);
+		return ;
 	}
-	else
+	while (tmp)
 	{
-		while (tmp)
+		if (tmp->value)
 		{
-			if (tmp->value)
-			{
-				write(1, tmp->key, ft_strlen(tmp->key));
-				write(1, "=", 1);
-				write(1, tmp->value, ft_strlen(tmp->value));
-				write(1, "\n", 1);
-			}
-			tmp = tmp->next;
+			write(1, tmp->key, ft_strlen(tmp->key));
+			write(1, "=", 1);
+			write(1, tmp->value, ft_strlen(tmp->value));
+			write(1, "\n", 1);
 		}
-		exit(0);
+		tmp = tmp->next;
 	}
+	if (pipe_cnt)
+		exit(0);
+	set_exit_code(0);
 }

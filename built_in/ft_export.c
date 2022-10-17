@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "../include/minishell.h"
 
 static void	set_env(char *name, char *arg);
 static void	print_export(void);
@@ -10,6 +10,8 @@ void	ft_export(char **arg, int pipe_cnt)
 	char	*name;
 	int		idx;
 
+	if (pipe_cnt)
+		ft_pipe_export(arg);
 	if (!arg[1])
 		return (print_export());
 	idx = 1;
@@ -18,17 +20,14 @@ void	ft_export(char **arg, int pipe_cnt)
 		name = get_name(arg[idx]);
 		if (!name)
 		{
-			printf("%s: export: `%s': not a valid identifier\n", SHELL, arg);
+			printf("%s: export: `%s': not a valid identifier\n", SHELL, arg[idx]);
 			set_exit_code(127);
 			return ;
 		}
-		else if (!pipe_cnt)
-		{
-			set_env(name, arg[idx]);
-			set_exit_code(0);
-		}
+		set_env(name, arg[idx]);
+		set_exit_code(0);
 		free(name);
-		idx++;
+		++idx;
 	}
 }
 
@@ -74,7 +73,7 @@ static char	*get_name(char *arg)
 	int	idx;
 
 	idx = 1;
-	if (!ft_isalpha(arg[0]) || arg[0] != '_')
+	if (!ft_isalpha(arg[0]) && arg[0] != '_')
 		return (NULL);
 	while (arg[idx] && arg[idx] != '=')
 	{
@@ -96,8 +95,8 @@ static void	print_export(void)
 		write(1, temp->key, ft_strlen(temp->key));
 		if (temp->value)
 		{
-			write(1, "=\"", 1);
-			write(1, temp->value, ft_strlen(temp->key));
+			write(1, "=\"", 2);
+			write(1, temp->value, ft_strlen(temp->value));
 			write(1, "\"", 1);
 		}
 		write(1, "\n", 1);
