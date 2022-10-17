@@ -3,7 +3,7 @@
 int	classify_op(char *str)
 {
 	if (ft_strlen(str) != 1 || str[0] > 0)
-		return (0);
+		return (-1);
 	if (str[0] == OP_PIPE)
 		return (T_PIPE);
 	else if (str[0] == OP_OR_IF)
@@ -23,7 +23,7 @@ int	classify_op(char *str)
 	else if (str[0] == OP_OUT_RID)
 		return (T_OUT_RID);
 	else
-		return (0);
+		return (-1);
 }
 
 t_symbol	*classify_type(t_symbol	*symbol)
@@ -53,12 +53,10 @@ void	find_op(t_symbol *symbol_lst)
 		if (temp->type < 0)
 		{
 			temp->type = classify_op(temp->str);
-			if (!temp->type)
-				temp->type = -1;
-			else if (temp->next
-					&& (T_IN_RID <= temp->type && temp->type <= T_OUT_HEREDOC))
+			if (temp->next
+				&& (T_IN_RID <= temp->type && temp->type <= T_OUT_HEREDOC))
 			{
-				if (!classify_op(temp->next->str))
+				if (classify_op(temp->next->str) < 0)
 					temp->next->type = T_FILEPATH;
 			}
 		}
@@ -79,7 +77,7 @@ void	symbolizing(t_symbol *symbol_lst)
 		if (temp)
 			temp = temp->next;
 	}
-	//test
+	// test
 	// while (symbol_lst)
 	// {
 	// 	char *type;
@@ -128,5 +126,5 @@ void	symbolizing(t_symbol *symbol_lst)
 	// 	printf("%s \ttype = %s\n", symbol_lst->str, type);
 	// 	symbol_lst = symbol_lst->next;
 	// }
-	//
+	// test
 }
