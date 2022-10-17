@@ -19,6 +19,14 @@ void	set_child_signal(void)
 		exit(errno);
 }
 
+void	block_signal(void)
+{
+	if (signal(SIGQUIT, SIG_IGN) == SIG_ERR)
+		exit(errno);
+	if (signal(SIGINT, SIG_IGN) == SIG_ERR)
+		exit(errno);
+}
+
 void	set_signal(void)
 {
 	rl_catch_signals = 0;
