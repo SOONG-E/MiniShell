@@ -2,22 +2,23 @@
 
 void	init_shell(char **env)
 {
-	// rl_catch_signals = 0;
-	// signal(SIGQUIT, SIG_IGN);
-	// signal(SIGINT, sigint_handler);
+	// set_signal();
 	init_info(env);
 }
 
-void	search_tree(t_token	*tree);
+void	execute_cmd(char *str)
+{
+	t_token	*cmd;
+
+	cmd = parse_line(str);
+	execute_tree(cmd);
+}
 
 int	main(int ac, char **av, char **env)
 {
 	char	*str;
-	t_token	*cmd;
 
-    (void)env;
-	(void)av;
-	if (ac != 1)
+	if (ac != 1 && av)
 		return (0);
 	init_shell(env);
 	while (1)
@@ -31,8 +32,7 @@ int	main(int ac, char **av, char **env)
 			continue ;
 		}
 		add_history(str);
-		cmd = parse_line(str);
-	//	search_tree(cmd);
+		execute_cmd(str);
 	}
 	return (0);
 }
