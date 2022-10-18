@@ -16,11 +16,10 @@ void	ft_pipe_export(char **arg)
 		name = pipe_get_name(arg[idx]);
 		if (!name)
 		{
-			printf("%s: export: `%s': not a valid identifier\n", SHELL, arg[idx]);
+			printf("%s: export: `%s': not a valid identifier\n", \
+			SHELL, arg[idx]);
 			exit(127);
 		}
-		// set_env(name, arg[idx]);
-		// set_exit_code(0);
 		free(name);
 		++idx;
 	}

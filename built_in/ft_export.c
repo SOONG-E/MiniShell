@@ -20,7 +20,8 @@ void	ft_export(char **arg, int pipe_cnt)
 		name = get_name(arg[idx]);
 		if (!name)
 		{
-			printf("%s: export: `%s': not a valid identifier\n", SHELL, arg[idx]);
+			printf("%s: export: `%s': not a valid identifier\n", \
+			SHELL, arg[idx]);
 			set_exit_code(127);
 			return ;
 		}

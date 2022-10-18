@@ -17,7 +17,7 @@ char	*replace_op(char *line)
 		if (line[i] == Q_DOUBLE || line[i] == Q_SINGLE)
 			i += skip(&line[i], line[i]);
 		op = get_op(&line[i]);
-		if (op)
+		if (op[1] != ' ')
 		{
 			tmp = line;
 			line = combine_str(ft_substr(line, 0, i), op, \
@@ -84,6 +84,7 @@ static char	*get_op(char *str)
 	char	op_str[4];
 
 	op_str[0] = ' ';
+	op_str[1] = ' ';
 	op_str[2] = ' ';
 	if (!ft_strncmp(str, "<<", 2))
 		op_str[1] = OP_IN_HEREDOC;
@@ -103,8 +104,6 @@ static char	*get_op(char *str)
 		op_str[1] = OP_LBRACE;
 	else if (!ft_strncmp(str, ")", 1))
 		op_str[1] = OP_RBRACE;
-	else
-		return (NULL);
 	op_str[3] = '\0';
 	return (ft_strdup(op_str));
 }

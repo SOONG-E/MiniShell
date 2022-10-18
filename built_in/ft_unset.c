@@ -8,11 +8,17 @@ static int	arg_vaild_check(char *str)
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) || str[i] != '_')
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1);
-	
+	return (0);
+}
+
+static void	free_lst(t_envlst *node)
+{
+	free(node->key);
+	free(node->value);
+	free(node);
 }
 
 static void	delete_env_lst(char *str)
@@ -21,26 +27,25 @@ static void	delete_env_lst(char *str)
 	t_envlst	*free_tmp;
 
 	tmp = g_info->envlst;
-	if (tmp && ft_strcmp(tmp->key, str) == 0)
+	if (!tmp)
+		return ;
+	if (ft_strcmp(tmp->key, str) == 0)
 	{
 		free_tmp = tmp;
 		g_info->envlst = tmp->next;
 		free(free_tmp);
+		return ;
 	}
-	else {
-		while (tmp->next)
+	while (tmp->next)
+	{
+		if (ft_strcmp(tmp->next->key, str) == 0)
 		{
-			if (ft_strcmp(tmp->next->key, str) == 0)
-			{
-				free_tmp = tmp->next;
-				tmp->next = tmp->next->next;
-				free(free_tmp->key);
-				free(free_tmp->value);
-				free(free_tmp);
-				break ;
-			}
-			tmp = tmp->next;
+			free_tmp = tmp->next;
+			tmp->next = tmp->next->next;
+			free_lst(free_tmp);
+			break ;
 		}
+		tmp = tmp->next;
 	}
 }
 

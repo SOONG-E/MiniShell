@@ -14,7 +14,7 @@ void	execute_tree(t_token *tree)
 		return ;
 	if (tree->left)
 		execute_tree(tree->left);
-	if	(tree->symbol->type == T_AND_IF || tree->symbol->type == T_OR_IF)
+	if (tree->symbol->type == T_AND_IF || tree->symbol->type == T_OR_IF)
 	{
 		if ((tree->symbol->type == T_AND_IF && !check_exit_code())
 			|| (tree->symbol->type == T_OR_IF && check_exit_code()))

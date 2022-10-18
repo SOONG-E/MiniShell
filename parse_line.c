@@ -24,7 +24,7 @@ static int	check_pair(char *str)
 	return (1);
 }
 
-t_token		*parse_line(char *str)
+t_token	*parse_line(char *str)
 {
 	t_symbol	*symbol_lst;
 

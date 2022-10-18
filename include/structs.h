@@ -1,49 +1,49 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
-struct s_info;
-struct s_envlst;
-struct s_symbol;
-struct s_token;
-struct s_child_info;
+typedef struct s_info		t_info;
+typedef struct s_envlst		t_envlst;
+typedef struct s_symbol		t_symbol;
+typedef struct s_token		t_token;
+typedef struct s_cd			t_cd;
 
-typedef struct s_info
+struct s_info
 {
-	struct s_envlst	*envlst;
+	t_envlst		*envlst;
 	char			*home;
 	char			*exit_code;
 	int				oldpwd_flag;
-}	t_info;
+};
 
-typedef struct s_envlst
+struct s_envlst
 {
 	char			*key;
-    char			*value;
-	struct s_envlst	*next;
-}	t_envlst;
+	char			*value;
+	t_envlst		*next;
+};
 
-typedef struct	s_symbol
+struct	s_symbol
 {
 	int				type;
 	char			*str;
-	struct s_symbol	*pre;
-	struct s_symbol	*next;
-}	t_symbol;
+	t_symbol		*pre;
+	t_symbol		*next;
+};
 
-typedef struct	s_token
+struct	s_token
 {
-	struct s_symbol	*symbol;
-	struct s_token	*left;
-	struct s_token	*right;
-}	t_token;
+	t_symbol	*symbol;
+	t_token		*left;
+	t_token		*right;
+};
 
-typedef struct	s_cd
+struct	s_cd
 {
 	char	*path;
 	char	*cwd;
 	char	*pwd;
 	int		rv;
 	int		pipe_cnt;
-}	t_cd;
+};
 
 #endif

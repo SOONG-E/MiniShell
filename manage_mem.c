@@ -42,7 +42,7 @@ void	free_symbol(t_symbol *symbol)
 
 void	free_symbols(t_symbol *symbols)
 {
-	t_symbol *temp;
+	t_symbol	*temp;
 
 	while (symbols)
 	{

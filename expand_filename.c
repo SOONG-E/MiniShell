@@ -25,6 +25,21 @@ int	is_need_expand(char *str)
 	return (0);
 }
 
+static int	name_check(char *filename, int len, char **wild_card)
+{
+	int	i;
+
+	i = 0;
+	while (wild_card[i])
+	{
+		filename = ft_strnstr(filename, wild_card[i], len);
+		if (!filename)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	cmp_wild_card(char *filename, char *wild)
 {
 	int		i;
@@ -37,19 +52,16 @@ int	cmp_wild_card(char *filename, char *wild)
 		return (1);
 	replace_back_wild_card(wild_cards);
 	i = 0;
-	if (wild[0] != '*' && ft_strncmp(filename, wild_cards[0], ft_strlen(wild_cards[0])) != 0)
+	if (wild[0] != '*'
+		&& ft_strncmp(filename, wild_cards[0], ft_strlen(wild_cards[0])) != 0)
 		return (0);
-	while (wild_cards[i])
+	if (name_check(filename, len_filename, wild_cards) == 0)
 	{
-		filename = ft_strnstr(filename, wild_cards[i], len_filename);
-		if (!filename)
-		{
-			split_free(wild_cards);
-			return (0);
-		}
-		i++;
+		split_free(wild_cards);
+		return (0);
 	}
-	if (*(filename + ft_strlen(wild_cards[i - 1])) && wild[ft_strlen(wild) - 1] != '*')
+	if (*(filename + ft_strlen(wild_cards[i - 1]))
+		&& wild[ft_strlen(wild) - 1] != '*')
 		i = 0;
 	else
 		i = 1;
@@ -93,7 +105,6 @@ void	expand_filename(t_symbol *symbol)
 	{
 		if (symbol->type == T_FILEPATH || symbol->type == T_ARG)
 		{
-			
 			if (is_need_expand(symbol->str))
 			{
 				replace_wild_card(symbol->str);

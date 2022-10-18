@@ -2,32 +2,32 @@
 
 t_cd	*ft_init_cd_info(int pipe_cnt, char *arg)
 {
-	t_cd	*info;
+	t_cd	*cd_info;
 
-	info = (t_cd *)malloc(sizeof(t_cd));
-	if (!info)
+	cd_info = (t_cd *)malloc(sizeof(t_cd));
+	if (!cd_info)
 		exit(1);
-	info->cwd = getcwd(NULL, 0);
-	info->pwd = get_env("PWD");
-	info->pipe_cnt = pipe_cnt;
-	info->path = arg;
-	return (info);
+	cd_info->cwd = getcwd(NULL, 0);
+	cd_info->pwd = get_env("PWD");
+	cd_info->pipe_cnt = pipe_cnt;
+	cd_info->path = arg;
+	return (cd_info);
 }
 
 void	ft_check_rv(t_cd *info)
 {
 	if (info->rv == 0)
 	{
-			free(info->cwd);
-			info->cwd = getcwd(NULL, 0);
-			ft_update_pwd(info->cwd);
-			free(info->cwd);
-			ft_update_oldpwd(info->pwd);
-			free(info->pwd);
-			set_exit_code(0);
-			if (info->pipe_cnt)
-				exit(0);
-			return ;
+		free(info->cwd);
+		info->cwd = getcwd(NULL, 0);
+		ft_update_pwd(info->cwd);
+		free(info->cwd);
+		ft_update_oldpwd(info->pwd);
+		free(info->pwd);
+		set_exit_code(0);
+		if (info->pipe_cnt)
+			exit(0);
+		return ;
 	}
 	else
 	{

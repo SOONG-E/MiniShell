@@ -20,7 +20,7 @@ static char	*get_origin_op(int type)
 int	syntax_error_token(char *str)
 {
 	if (str[0] < 0)
-	 	str = get_origin_op(classify_op(str));
+		str = get_origin_op(classify_op(str));
 	printf("%s: syntax error near unexpected token \'%s\'\n", SHELL, str);
 	set_exit_code(127);
 	return (1);

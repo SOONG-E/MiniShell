@@ -39,6 +39,7 @@ SRCS		= 	main.c							\
 				token_tree/utils.c				\
 				execute_pipe_line.c				\
 				execute_pipe_line_utils.c		\
+				execute_pipe_line_io.c			\
 				replace_wild_card.c				\
 				make_env.c						\
 				built_in/ft_cd.c				\

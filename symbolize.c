@@ -26,10 +26,19 @@ int	classify_op(char *str)
 		return (-1);
 }
 
-t_symbol	*classify_type(t_symbol	*symbol)
+t_symbol	*find_first_cmd(t_symbol *symbol)
 {
-	symbol->type = T_CMD;
-	symbol = symbol->next; //내일 수정하기 ㅎㅎ 흑흑
+	while (symbol && (symbol->type == T_FILEPATH
+			|| (T_IN_RID <= symbol->type && symbol->type <= T_OUT_HEREDOC)))
+		symbol = symbol->next;
+	if (symbol)
+		symbol->type = T_CMD;
+	return (symbol->next);
+}
+
+t_symbol	*classify_type(t_symbol *symbol)
+{
+	symbol = find_first_cmd(symbol);
 	while (symbol && symbol->type < 0 && !ft_strcmp(symbol->str, "-n"))
 	{
 		symbol->type = T_OPTION;
@@ -78,53 +87,53 @@ void	symbolizing(t_symbol *symbol_lst)
 			temp = temp->next;
 	}
 	// test
-	// while (symbol_lst)
-	// {
-	// 	char *type;
-	// 	switch (symbol_lst->type)
-	// 	{
-	// 	case 0:
-	// 		type = "CMD";
-	// 		break;
-	// 	case 1:
-	// 		type = "FILEPATH";
-	// 		break;
-	// 	case 2:			
-	// 		type = "OPTION";
-	// 		break;
-	// 	case 3:			
-	// 		type = "ARG";
-	// 		break;
-	// 	case 4:			
-	// 		type = "PIPE";
-	// 		break;
-	// 	case 5:			
-	// 		type = "AND_IF";
-	// 		break;
-	// 	case 6:			
-	// 		type = "OR_IF";
-	// 		break;
-	// 	case 7:			
-	// 		type = "LBRACE";
-	// 		break;
-	// 	case 8:			
-	// 		type = "RBRACE";
-	// 		break;
-	// 	case 9:			
-	// 		type = "IN_RID";
-	// 		break;
-	// 	case 10:			
-	// 		type = "OUT_RID";
-	// 		break;
-	// 	case 11:			
-	// 		type = "IN_HEREDOC";
-	// 		break;
-	// 	case 12:			
-	// 		type = "OUT_HEREDOC";
-	// 		break;
-	// 	}
-	// 	printf("%s \ttype = %s\n", symbol_lst->str, type);
-	// 	symbol_lst = symbol_lst->next;
-	// }
+	while (symbol_lst)
+	{
+		char *type;
+		switch (symbol_lst->type)
+		{
+		case 0:
+			type = "CMD";
+			break;
+		case 1:
+			type = "FILEPATH";
+			break;
+		case 2:			
+			type = "OPTION";
+			break;
+		case 3:			
+			type = "ARG";
+			break;
+		case 4:			
+			type = "PIPE";
+			break;
+		case 5:			
+			type = "AND_IF";
+			break;
+		case 6:			
+			type = "OR_IF";
+			break;
+		case 7:			
+			type = "LBRACE";
+			break;
+		case 8:			
+			type = "RBRACE";
+			break;
+		case 9:			
+			type = "IN_RID";
+			break;
+		case 10:			
+			type = "OUT_RID";
+			break;
+		case 11:			
+			type = "IN_HEREDOC";
+			break;
+		case 12:			
+			type = "OUT_HEREDOC";
+			break;
+		}
+		printf("%s \ttype = %s\n", symbol_lst->str, type);
+		symbol_lst = symbol_lst->next;
+	}
 	// test
 }

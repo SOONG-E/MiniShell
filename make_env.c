@@ -20,7 +20,7 @@ char	**make_env(void)
 	char		**str;
 	t_envlst	*env;
 	int			i;
-	
+
 	str = (char **)ft_calloc(sizeof(char *), env_cnt() + 1);
 	if (!str)
 		allocat_error();

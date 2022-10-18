@@ -4,7 +4,7 @@ void	init_shell(char **env)
 {
 	// int		shell_img;
 	// char	img;
-	//
+
 	// shell_img = open(".daengdaeng.txt", O_RDONLY);
 	// if (shell_img < 0)
 	// 	exit(1);

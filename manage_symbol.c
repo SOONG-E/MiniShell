@@ -57,37 +57,3 @@ t_symbol	*make_symbol_lst(char **temp)
 	free(temp);
 	return (symbol_lst);
 }
-
-// t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new)
-// {
-// 	t_symbol	*new_end;
-
-// 	new_end = new;
-// 	while (new_end->next)
-// 		new_end = new_end->next;
-// 	symbol->pre->next = new;
-// 	new->pre = symbol->pre;
-// 	if (symbol->next)
-// 		lst_symbol_add_back(&new, symbol->next);
-// 	free(symbol->str);
-// 	free(symbol);
-// 	return (new_end);
-// }
-
-/*--------------seojin-------------*/
-
-// void	lst_symbol_add_back(t_symbol **head, t_symbol *new)
-// {
-// 	t_symbol	*tmp;
-
-// 	tmp = *head;
-// 	if (!tmp)
-// 		*head = new;
-// 	else
-// 	{
-// 		while (tmp->next)
-// 			tmp = tmp->next;
-// 		tmp->next = new;
-// 		new->pre = tmp;
-// 	}
-// }

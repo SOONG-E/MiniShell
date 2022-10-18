@@ -54,23 +54,6 @@ char	**ft_env_split(char *env)
 	return (splited_env);
 }
 
-char	*get_value_n(char *key, int n)
-{
-	t_envlst	*temp;
-
-	if (!ft_strcmp(key, "?"))
-		return (ft_strdup(g_info->exit_code));
-	temp = g_info->envlst;
-	while (temp)
-	{
-		if (!ft_strncmp(temp->key, key, n))
-			return (ft_strdup(temp->value));
-		temp = temp->next;
-	}
-	return (ft_strdup(""));
-}
-
-
 char	*get_env(char *key)
 {
 	t_envlst	*tmp;

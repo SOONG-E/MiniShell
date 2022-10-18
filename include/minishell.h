@@ -2,21 +2,21 @@
 # define MINISHELL_H
 
 /* headers for allowed functions */
-# include <stdio.h>				/* printf, strerror */
-# include <fcntl.h>				/* open */
-# include <unistd.h>			/* write, read, close, fork, getcwd, chdir, unlink, execve, dup, dup2, pipe, isatty, ttyname, ttyslot */
-# include <stdlib.h>			/* malloc, free, exit, getenv */
-# include <curses.h>			/* tgetent */
-# include <signal.h>			/* signal, kill */
-# include <dirent.h>			/* opendir, readdir, closedir*/
-# include <termios.h>			/* tcsetattr, tcgetattr */
-# include <sys/wait.h>			/* wait, wait3, wait4, waitpid */
-# include <sys/stat.h>			/* stat, lstat, fstat */
-# include <sys/ioctl.h>			/* ioctl */
-# include <sys/errno.h>			/* errno */
+# include <stdio.h>
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <curses.h>
+# include <signal.h>
+# include <dirent.h>
+# include <termios.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/ioctl.h>
+# include <sys/errno.h>
 # include "../libft/libft.h"
-# include <readline/history.h>	/* add_history */
-# include <readline/readline.h>	/* readline, rl_on_new_line, rl_replace_line, rl_redisplay */
+# include <readline/history.h>
+# include <readline/readline.h>
 
 # include "./symbols.h"
 # include "./structs.h"
@@ -27,7 +27,7 @@
 
 t_info		*g_info;
 
-/*token_tree*/ 
+/*token_tree*/
 t_token		*and_or(t_symbol *symbol);
 t_token		*brace_group(t_symbol *symbol);
 t_token		*make_token(t_symbol *symbol);
@@ -53,9 +53,15 @@ int			cut_temp(char **temp, char *str);
 char		*cut_str(char **str);
 char		*ft_join(char **str);
 int			count_pair(char *str);
+char		*get_value(char *str, int *idx);
+char		*new_str(char *str, char *key, int *idx);
+void		skip_quote(char *str, int *idx, int flag);
+void		backup_space_symbol(t_symbol *symbol);
+t_symbol	*update_symbol(t_symbol *symbol, t_symbol *new);
+
 
 /*expand_env.c*/
-t_symbol	*expand_env(t_symbol *symbol_lst);
+t_symbol	*expand_env(t_symbol *symbol);
 
 /* expand_filename.c */
 void		expand_filename(t_symbol *symbol);
@@ -63,8 +69,8 @@ void		expand_filename(t_symbol *symbol);
 /*manage_env.c*/
 int			get_env_len(char *env);
 void		parse_env(char **env);
+char		*get_env(char *key);
 char		**ft_env_split(char *env);
-char		*get_value_n(char *key, int n);
 
 /*manage_envlst.c*/
 t_envlst	*ft_envlst_new(char *key, char *value);
@@ -92,13 +98,16 @@ void		block_signal(void);
 void		set_signal(void);
 
 /*manage_symbol.c*/
-t_symbol	*ft_new_symbol(char	*str);
+// void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
+void		add_back_symbol(t_symbol **head, t_symbol *new);
+t_symbol	*get_last_symbol(t_symbol *symbol);
+// t_symbol	*ft_new_symbol(char	*str);
 t_symbol	*make_symbol_lst(char **temp);
-void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
-t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new);
+t_symbol	*new_symbol(char *str);
+// t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new);
 
 /*parse_line.c*/
-t_token	*parse_line(char *str);
+t_token		*parse_line(char *str);
 
 /*replace_space.c*/
 void		is_space(char *str);
@@ -123,8 +132,8 @@ int			validate(t_symbol *symbol_lst);
 int			syntax_error_token(char *str);
 
 /* functions for built_in */
-void		ft_cd(char **path, int pipe_cnt);
 t_cd		*ft_init_cd_info(int pipe_cnt, char *arg);
+void		ft_cd(char **path, int pipe_cnt);
 void		ft_check_rv(t_cd *info);
 void		ft_cd_home(int pipe_cnt);
 void		ft_update_oldpwd(char *old_pwd);
@@ -141,26 +150,20 @@ void		ft_env(char **arg, int pipe_cnt);
 void		execute_pipe_line(t_symbol *symbol);
 
 /* execute_pipe_line_utils.c */
-int			get_exitcode(int status);
-void		close_all_pipefd(int *fd, int error_case);
+int			is_built_in(char **cmd_arr);
+char		**make_cmd_arr(t_symbol *symbol);
+int			count_until_pipe(t_symbol *symbol);
 int			get_pipe_cnt(t_symbol *symbol);
-int			open_file(char *file, int redirection_type);
-int			dup_in_redirection(t_symbol *symbol);
+void		wait_process(pid_t *pid, int pipe_cnt);
+
+/* execute_pipe_line_io.c */
 int			dup_out_redirection(t_symbol *symbol);
+int			dup_in_redirection(t_symbol *symbol);
+int			open_file(char *file, int redirection_type);
+void		read_here_doc(char *limiter, int fd[2]);
+void		close_all_pipefd(int *fd, int error_case);
 
 /* make_env.c */
 char		**make_env(void);
-
-/*------- seojin---------- */
-char		*get_value(char *str, int *idx);
-char		*get_env(char *key);
-char		*new_str(char *str, char *key, int *idx);
-void		skip_quote(char *str, int *idx, int flag);
-void		backup_space_symbol(t_symbol *symbol);
-void		add_back_symbol(t_symbol **head, t_symbol *new);
-t_symbol	*expand_env(t_symbol *symbol);
-t_symbol	*update_symbol(t_symbol *symbol, t_symbol *new);
-t_symbol	*new_symbol(char *str);
-t_symbol	*get_last_symbol(t_symbol *symbol);
 
 #endif

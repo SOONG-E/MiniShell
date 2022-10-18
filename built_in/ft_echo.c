@@ -2,8 +2,8 @@
 
 void	ft_echo(char **arg, int pipe_cnt)
 {
-	int	idx;
-	int new_line;
+	int		idx;
+	int		new_line;
 	void	(*f_exit)(int);
 
 	f_exit = set_exit_code;

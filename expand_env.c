@@ -1,5 +1,6 @@
 #include "minishell.h"
 
+static void		free_head(t_symbol *head);
 static char		*expand_env_in_double_quote(char *str);
 static t_symbol	*expand_env_out_quote(char *str);
 
@@ -28,9 +29,14 @@ t_symbol	*expand_env(t_symbol *symbol)
 	symbol = head->next;
 	if (symbol)
 		symbol->pre = NULL;
+	free_head(head);
+	return (symbol);
+}
+
+static void	free_head(t_symbol *head)
+{
 	free(head->str);
 	free(head);
-	return (symbol);
 }
 
 static char	*expand_env_in_double_quote(char *str)
