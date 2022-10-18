@@ -160,7 +160,7 @@ void		wait_process(pid_t *pid, int pipe_cnt);
 int			dup_out_redirection(t_symbol *symbol);
 int			dup_in_redirection(t_symbol *symbol);
 int			open_file(char *file, int redirection_type);
-void		read_here_doc(char *limiter, int fd[2]);
+void		read_here_doc(char *limiter);
 void		close_all_pipefd(int *fd, int error_case);
 
 /* make_env.c */

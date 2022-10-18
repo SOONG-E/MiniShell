@@ -1,21 +1,6 @@
 #include "../include/minishell.h"
 
-void	swap_place(t_symbol *symbol, t_symbol *cmd_place)
-{
-	symbol->pre->next = symbol->next;
-	symbol->next->pre = symbol->pre;
-	if (cmd_place->next)
-	{
-		cmd_place->next->pre = symbol;
-		symbol->next = cmd_place->next;
-	}
-	else
-		symbol->next = NULL;
-	cmd_place->next = symbol;
-	symbol->pre = cmd_place;
-}
-
-t_symbol	*find_cmd_place(t_symbol *symbol)
+t_symbol	*find_last(t_symbol *symbol)
 {
 	t_symbol	*cmd_place;
 
@@ -31,29 +16,38 @@ t_symbol	*find_cmd_place(t_symbol *symbol)
 	return (cmd_place);
 }
 
-t_symbol	*sort_redirection(t_symbol *symbol)
+void	swap_symbol(t_symbol *symbol)
 {
-	t_symbol	*head;
-	t_symbol	*cmd_place;
+	int 	temp_type;
+	char	*temp_str;
 
-	head = (t_symbol *)malloc(sizeof(t_symbol));
-	head->next = symbol;
-	symbol->pre = head;
-	while (symbol->next)
-	{	
-		if (symbol->type == T_CMD)
+	temp_type = symbol->type;
+	temp_str = symbol->str;
+	symbol->type = symbol->next->type;
+	symbol->str = symbol->next->str;
+	symbol->next->type = temp_type;
+	symbol->next->str = temp_str;
+}
+
+void	sort_redirection(t_symbol *symbol)
+{
+	t_symbol	*temp;
+
+	symbol = find_last(symbol);
+	while (symbol && symbol->type != T_PIPE)
+	{
+		if (symbol->type == T_CMD || symbol->type == T_OPTION || symbol->type == T_ARG)
 		{
-			cmd_place = find_cmd_place(symbol);
-			if (symbol != cmd_place)
-				swap_place(symbol, cmd_place);
+			temp = symbol;
+			while (temp->next && temp->next->type != T_PIPE && \
+			temp->next->type != T_CMD && temp->next->type != T_ARG && temp->next->type != T_OPTION)
+			{
+				swap_symbol(temp);
+				temp = temp->next;
+			}
 		}
-		if (symbol->next)
-			symbol = symbol->next;
+		symbol = symbol->pre;
 	}
-	symbol = head->next;
-	symbol->pre = NULL;
-	free(head);
-	return (symbol);
 }
 
 t_token	*pipeline(t_symbol *symbol)
@@ -67,7 +61,7 @@ t_token	*pipeline(t_symbol *symbol)
 	else
 	{
 		token = make_token(symbol);
-		//token->symbol = sort_redirection(token->symbol);
+		sort_redirection(token->symbol);
 		return (token);
 	}
 }

@@ -96,7 +96,9 @@ void	execute_pipe_line(t_symbol *symbol)
 	pipe_cnt = get_pipe_cnt(symbol);
 	if (execute_single_commend(symbol, pipe_cnt))
 		return ;
-	pid_lst = (pid_t *)malloc(sizeof(pid_t) * pipe_cnt);
+	pid_lst = (pid_t *)malloc(sizeof(pid_t) * (pipe_cnt + 1));
+	if (!pid_lst)
+		exit(1);
 	i = 0;
 	while (symbol)
 	{
@@ -109,6 +111,6 @@ void	execute_pipe_line(t_symbol *symbol)
 			symbol = symbol->next;
 		i++;
 	}
-	wait_process(pid_lst, pipe_cnt);
+	wait_process(pid_lst, pipe_cnt + 1);
 	dup2(fd_back_up, STDIN);
 }

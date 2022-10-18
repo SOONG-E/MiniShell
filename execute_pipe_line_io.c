@@ -9,28 +9,6 @@ void	close_all_pipefd(int *fd, int error_case)
 	exit(error_case);
 }
 
-void	read_here_doc(char *limiter, int fd[2])
-{
-	size_t	len_limiter;
-	char	*line;
-	int		status;
-
-	len_limiter = ft_strlen(limiter);
-	while (1)
-	{
-		status = get_next_line(STDIN, &line);
-		if (status == 0)
-			close_all_pipefd(fd, 0);
-		else if (status == -1)
-			close_all_pipefd(fd, 1);
-		if (line[len_limiter] == '\n'
-			&& limiter && !ft_strncmp(line, limiter, len_limiter))
-			close_all_pipefd(fd, 0);
-		ft_putstr_fd(line, fd[1]);
-		free(line);
-	}
-}
-
 int	open_file(char *file, int redirection_type)
 {
 	int	fd;
@@ -41,12 +19,41 @@ int	open_file(char *file, int redirection_type)
 	else if (redirection_type == T_OUT_RID)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_SYNC,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
+	else if (redirection_type == T_IN_HEREDOC)
+		fd = open(file, O_RDWR | O_CREAT | O_TRUNC | O_SYNC,
+				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	else if (redirection_type == T_OUT_HEREDOC)
 		fd = open(file, O_RDWR | O_CREAT | O_APPEND,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd < 0)
 		ft_putstr_fd(strerror(errno), STDERR);
 	return (fd);
+}
+
+void	read_here_doc(char *limiter)
+{
+	size_t	len_limiter;
+	char	*line;
+	int		status;
+	int		fd;
+
+	fd = open_file(".heredoc_tmp", T_IN_HEREDOC);
+	len_limiter = ft_strlen(limiter);
+	while (1)
+	{
+		status = get_next_line(STDIN, &line);
+		if (status == 0)
+			break ;
+		else if (status == -1)
+			allocat_error();
+		if (line[len_limiter] == '\n'
+			&& limiter && !ft_strncmp(line, limiter, len_limiter))
+			break ;
+		ft_putstr_fd(line, fd);
+		free(line);
+	}
+	free(line);
+	close(fd);
 }
 
 int	dup_in_redirection(t_symbol *symbol)
@@ -67,7 +74,14 @@ int	dup_in_redirection(t_symbol *symbol)
 			flag = 1;
 		}
 		else if (symbol->type == T_IN_HEREDOC)
-			;//read_here_doc(symbol->next->str, fd);
+		{
+			if (fd_redirection != STDIN)
+				close(fd_redirection);
+			read_here_doc(symbol->next->str);
+			fd_redirection = open_file(".heredoc_tmp", T_IN_RID);
+			dup2(fd_redirection, STDIN);
+			flag = 1;
+		}
 		if (fd_redirection < 0)
 		{
 			set_exit_code(errno);

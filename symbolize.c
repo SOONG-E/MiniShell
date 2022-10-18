@@ -39,14 +39,16 @@ t_symbol	*find_first_cmd(t_symbol *symbol)
 t_symbol	*classify_type(t_symbol *symbol)
 {
 	symbol = find_first_cmd(symbol);
-	while (symbol && symbol->type < 0 && !ft_strcmp(symbol->str, "-n"))
+	while (symbol && symbol->type != T_PIPE && !ft_strcmp(symbol->str, "-n"))
 	{
-		symbol->type = T_OPTION;
+		if (symbol->type < 0)
+			symbol->type = T_OPTION;
 		symbol = symbol->next;
 	}
-	while (symbol && symbol->type < 0)
+	while (symbol && symbol->type != T_PIPE)
 	{
-		symbol->type = T_ARG;
+		if (symbol->type < 0)
+			symbol->type = T_ARG;
 		symbol = symbol->next;
 	}
 	return (symbol);
@@ -86,54 +88,4 @@ void	symbolizing(t_symbol *symbol_lst)
 		if (temp)
 			temp = temp->next;
 	}
-	// test
-	while (symbol_lst)
-	{
-		char *type;
-		switch (symbol_lst->type)
-		{
-		case 0:
-			type = "CMD";
-			break;
-		case 1:
-			type = "FILEPATH";
-			break;
-		case 2:			
-			type = "OPTION";
-			break;
-		case 3:			
-			type = "ARG";
-			break;
-		case 4:			
-			type = "PIPE";
-			break;
-		case 5:			
-			type = "AND_IF";
-			break;
-		case 6:			
-			type = "OR_IF";
-			break;
-		case 7:			
-			type = "LBRACE";
-			break;
-		case 8:			
-			type = "RBRACE";
-			break;
-		case 9:			
-			type = "IN_RID";
-			break;
-		case 10:			
-			type = "OUT_RID";
-			break;
-		case 11:			
-			type = "IN_HEREDOC";
-			break;
-		case 12:			
-			type = "OUT_HEREDOC";
-			break;
-		}
-		printf("%s \ttype = %s\n", symbol_lst->str, type);
-		symbol_lst = symbol_lst->next;
-	}
-	// test
 }
