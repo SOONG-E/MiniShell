@@ -82,7 +82,7 @@ void		set_envlst(char *key, char *value);
 void		allocat_error(void);
 int			error_msg(char *str);
 void		execute_error(char *cmd);
-void		open_file_error(char *file);
+int			open_file_error(char *file, int redirection_type);
 
 /*manage_info.c*/
 void		init_info(char **env);
@@ -161,7 +161,7 @@ void		wait_process(pid_t *pid, int pipe_cnt);
 int			dup_out_redirection(t_symbol *symbol);
 int			dup_in_redirection(t_symbol *symbol);
 int			open_file(char *file, int redirection_type);
-void		read_here_doc(char *limiter);
+int			read_here_doc(char *limiter);
 void		close_all_pipefd(int *fd, int error_case);
 
 /* make_env.c */

@@ -20,17 +20,17 @@ int	open_file(char *file, int redirection_type)
 		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_SYNC,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	else if (redirection_type == T_IN_HEREDOC)
-		fd = open(file, O_RDWR | O_CREAT | O_TRUNC | O_SYNC,
+		fd = open(file, O_WRONLY | O_CREAT | O_TRUNC | O_SYNC,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	else if (redirection_type == T_OUT_HEREDOC)
 		fd = open(file, O_RDWR | O_CREAT | O_APPEND,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd < 0)
-		open_file_error(file);
+		return (open_file_error(file, redirection_type));
 	return (fd);
 }
 
-void	read_here_doc(char *limiter)
+int	read_here_doc(char *limiter)
 {
 	size_t	len_limiter;
 	char	*line;
@@ -38,6 +38,8 @@ void	read_here_doc(char *limiter)
 	int		fd;
 
 	fd = open_file(".heredoc_tmp", T_IN_HEREDOC);
+	if (fd < 0)
+		return (-1);
 	len_limiter = ft_strlen(limiter);
 	while (1)
 	{
@@ -55,6 +57,7 @@ void	read_here_doc(char *limiter)
 	}
 	free(line);
 	close(fd);
+	return (0);
 }
 
 int	dup_in_redirection(t_symbol *symbol)
@@ -71,6 +74,8 @@ int	dup_in_redirection(t_symbol *symbol)
 			if (fd_redirection != STDIN)
 				close(fd_redirection);
 			fd_redirection = open_file(symbol->next->str, T_IN_RID);
+			if (fd_redirection < 0)
+				return (-1);
 			dup2(fd_redirection, STDIN);
 			flag = 1;
 		}
@@ -78,15 +83,13 @@ int	dup_in_redirection(t_symbol *symbol)
 		{
 			if (fd_redirection != STDIN)
 				close(fd_redirection);
-			read_here_doc(symbol->next->str);
+			if (read_here_doc(symbol->next->str) < 0)
+				return (-1);
 			fd_redirection = open_file(".heredoc_tmp", T_IN_RID);
+			if (fd_redirection < 0)
+				return (-1);
 			dup2(fd_redirection, STDIN);
 			flag = 1;
-		}
-		if (fd_redirection < 0)
-		{
-			set_exit_code(errno);
-			exit(errno);
 		}
 		symbol = symbol->next->next;
 	}
@@ -111,11 +114,6 @@ int	dup_out_redirection(t_symbol *symbol)
 			fd_redirection = open_file(symbol->next->str, type_redirection);
 			dup2(fd_redirection, STDOUT);
 			flag = 1;
-		}
-		if (fd_redirection < 0)
-		{
-			set_exit_code(errno);
-			exit(errno);
 		}
 		symbol = symbol->next->next;
 	}

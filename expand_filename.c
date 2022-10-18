@@ -25,17 +25,14 @@ int	is_need_expand(char *str)
 	return (0);
 }
 
-static int	name_check(char *filename, int len, char **wild_card)
+static int	name_check(char *filename, int len, char **wild_card, int *idx)
 {
-	int	i;
-
-	i = 0;
-	while (wild_card[i])
+	while (wild_card[*idx])
 	{
-		filename = ft_strnstr(filename, wild_card[i], len);
+		filename = ft_strnstr(filename, wild_card[*idx], len);
 		if (!filename)
 			return (0);
-		i++;
+		(*idx)++;
 	}
 	return (1);
 }
@@ -46,16 +43,16 @@ int	cmp_wild_card(char *filename, char *wild)
 	int		len_filename;
 	char	**wild_cards;
 
+	i = 0;
 	len_filename = ft_strlen(filename);
 	wild_cards = ft_split(wild, "*");
 	if (wild_cards[0] == NULL)
 		return (1);
 	replace_back_wild_card(wild_cards);
-	i = 0;
 	if (wild[0] != '*'
 		&& ft_strncmp(filename, wild_cards[0], ft_strlen(wild_cards[0])) != 0)
 		return (0);
-	if (name_check(filename, len_filename, wild_cards) == 0)
+	if (name_check(filename, len_filename, wild_cards, &i) == 0)
 	{
 		split_free(wild_cards);
 		return (0);
@@ -65,6 +62,7 @@ int	cmp_wild_card(char *filename, char *wild)
 		i = 0;
 	else
 		i = 1;
+	printf("%d\n\n", i);
 	split_free(wild_cards);
 	return (i);
 }
@@ -83,8 +81,11 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 	file_entry = readdir(dirp);
 	while (file_entry)
 	{
+		printf("%s\n\n ", symbol->str);
+		printf("%s\n\n", file_entry->d_name);
 		if (cmp_wild_card(file_entry->d_name, symbol->str))
 		{
+			printf("%s\n\n", file_entry->d_name);
 			file = new_symbol(file_entry->d_name);
 			file->type = symbol->type;
 			add_back_symbol(&file_lst, file);
@@ -110,7 +111,19 @@ void	expand_filename(t_symbol *symbol)
 				replace_wild_card(symbol->str);
 				delete_quote(symbol);
 				file_lst = get_file_lst(symbol);
-				symbol = update_symbol(symbol, file_lst);
+				///
+				printf("%p\n\n", file_lst);
+				t_symbol	*temp = file_lst;
+				while (temp)
+				{
+					printf("%s ", temp->str);
+					temp = temp->next;
+				}
+				///
+				if (file_lst)
+					symbol = update_symbol(symbol, file_lst);
+				else
+					symbol = symbol->next;
 			}
 			else
 			{

@@ -43,24 +43,28 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
+	int		flag;
 
 	pipe(fd_pipe);
+	flag = dup_in_redirection(symbol);
 	pid = fork();
 	if (pid > 0)
 	{
 		block_signal();
 		close(fd_pipe[1]);
-		if (!dup_in_redirection(symbol))
+		if (flag != 1)
 			dup2(fd_pipe[0], STDIN);
 	}
 	else
 	{
 		close(fd_pipe[0]);
 		set_child_signal();
-		dup_in_redirection(symbol);
-		if (!dup_out_redirection(symbol) && i == pipe_cnt)
+		if (!dup_out_redirection(symbol) && i != pipe_cnt)
 			dup2(fd_pipe[1], STDOUT);
-		execute_cmd(cmd_arr, pipe_cnt);
+		if (flag >= 0)
+			execute_cmd(cmd_arr, pipe_cnt);
+		else
+			exit(errno);
 	}
 	return (pid);
 }
@@ -69,12 +73,12 @@ int	execute_single_commend(t_symbol *symbol, int pipe_cnt)
 {
 	char	**cmd_arr;
 
-	dup_out_redirection(symbol);
 	if (!pipe_cnt)
 	{
 		cmd_arr = make_cmd_arr(symbol);
 		if (is_built_in(cmd_arr))
 		{
+			dup_out_redirection(symbol);
 			execute_built_in(cmd_arr, pipe_cnt);
 			split_free(cmd_arr);
 			return (1);
@@ -99,7 +103,6 @@ void	execute_pipe_line(t_symbol *symbol)
 	pid_lst = (pid_t *)malloc(sizeof(pid_t) * (pipe_cnt + 1));
 	if (!pid_lst)
 		exit(1);
-	dup_out_redirection(symbol);
 	i = 0;
 	while (symbol)
 	{
@@ -114,4 +117,4 @@ void	execute_pipe_line(t_symbol *symbol)
 	}
 	wait_process(pid_lst, pipe_cnt + 1);
 	dup2(fd_back_up, STDIN);
-}
+}////< main.c cat | wc -l (50%확률로 성공??)

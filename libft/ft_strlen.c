@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyuki <jaehyuki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 19:31:09 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/07/06 21:00:58 by jaehyuki         ###   ########.fr       */
+/*   Updated: 2022/10/18 20:15:36 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ size_t	ft_strlen(const char *s)
 	int	cnt;
 
 	cnt = 0;
-	while (*s++)
+	while (*s)
 	{
 		cnt++;
+		s++;
 	}
 	return (cnt);
 }
