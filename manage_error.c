@@ -20,3 +20,13 @@ void	execute_error(char *cmd)
 	ft_putstr_fd("\n", STDERR);
 	exit(127);
 }
+
+void	open_file_error(char *file)
+{
+	ft_putstr_fd("minihell: ", STDERR);
+	ft_putstr_fd(file, STDERR);
+	ft_putstr_fd(": ", STDERR);
+	ft_putstr_fd(strerror(errno), STDERR);
+	ft_putstr_fd("\n", STDERR);
+	exit(errno);
+}

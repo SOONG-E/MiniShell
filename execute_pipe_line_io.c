@@ -26,7 +26,7 @@ int	open_file(char *file, int redirection_type)
 		fd = open(file, O_RDWR | O_CREAT | O_APPEND,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd < 0)
-		ft_putstr_fd(strerror(errno), STDERR);
+		open_file_error(file);
 	return (fd);
 }
 
@@ -41,6 +41,7 @@ void	read_here_doc(char *limiter)
 	len_limiter = ft_strlen(limiter);
 	while (1)
 	{
+		write(STDOUT, ">", 1);
 		status = get_next_line(STDIN, &line);
 		if (status == 0)
 			break ;

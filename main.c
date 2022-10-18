@@ -35,7 +35,6 @@ int	main(int ac, char **av, char **env)
 	{
 		set_signal();
 		str = readline(C_BLUE "minihell$ " C_NRML);
-		printf("zsh: segmentation fault  ./minishell\n");
 		if (!str)
 			exit(0);
 		if (!ft_strlen(str))

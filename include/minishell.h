@@ -82,6 +82,7 @@ void		set_envlst(char *key, char *value);
 void		allocat_error(void);
 int			error_msg(char *str);
 void		execute_error(char *cmd);
+void		open_file_error(char *file);
 
 /*manage_info.c*/
 void		init_info(char **env);

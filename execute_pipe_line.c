@@ -69,7 +69,7 @@ int	execute_single_commend(t_symbol *symbol, int pipe_cnt)
 {
 	char	**cmd_arr;
 
-	dup_in_redirection(symbol);
+	dup_out_redirection(symbol);
 	if (!pipe_cnt)
 	{
 		cmd_arr = make_cmd_arr(symbol);
