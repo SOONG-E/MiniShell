@@ -50,7 +50,7 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 	{
 		block_signal();
 		close(fd_pipe[1]);
-		if (i != 0)
+		if (!dup_in_redirection(symbol))
 			dup2(fd_pipe[0], STDIN);
 	}
 	else
@@ -58,7 +58,7 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 		close(fd_pipe[0]);
 		set_child_signal();
 		dup_in_redirection(symbol);
-		if (!dup_out_redirection(symbol) && i < pipe_cnt)
+		if (!dup_out_redirection(symbol) && i == pipe_cnt)
 			dup2(fd_pipe[1], STDOUT);
 		execute_cmd(cmd_arr, pipe_cnt);
 	}
@@ -99,6 +99,7 @@ void	execute_pipe_line(t_symbol *symbol)
 	pid_lst = (pid_t *)malloc(sizeof(pid_t) * (pipe_cnt + 1));
 	if (!pid_lst)
 		exit(1);
+	dup_out_redirection(symbol);
 	i = 0;
 	while (symbol)
 	{
