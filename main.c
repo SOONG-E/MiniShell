@@ -2,17 +2,17 @@
 
 void	init_shell(char **env)
 {
-	// int		shell_img;
-	// char	img;
+	int		shell_img;
+	char	img;
 
-	// shell_img = open(".daengdaeng.txt", O_RDONLY);
-	// if (shell_img < 0)
-	// 	exit(1);
-	// while (read(shell_img, &img, 1) > 0)
-	// {
-	// 	write(1, &img, 1);
-	// 	usleep(1000);
-	// }
+	shell_img = open(".daengdaeng.txt", O_RDONLY);
+	if (shell_img < 0)
+		exit(1);
+	while (read(shell_img, &img, 1) > 0)
+	{
+		write(1, &img, 1);
+		usleep(600);
+	}
 	init_info(env);
 }
 
@@ -45,7 +45,6 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		execute(str);
-		//system("leaks $PPID");
 	}
 	return (0);
 }
