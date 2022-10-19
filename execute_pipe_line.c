@@ -52,10 +52,7 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 	{
 		block_signal();
 		close(fd_pipe[1]);
-		if (i == 1)
-			close(fd_pipe[0]);
-		else
-			dup2(fd_pipe[0], STDIN);
+		dup2(fd_pipe[0], STDIN);
 	}
 	else
 	{
@@ -68,6 +65,7 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 		else
 			exit(errno);
 	}
+	close(fd_pipe[0]);
 	return (pid);
 }
 

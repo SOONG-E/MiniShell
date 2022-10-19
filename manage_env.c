@@ -66,7 +66,11 @@ char	*get_env(char *key)
 	while (tmp)
 	{
 		if (!ft_strcmp(tmp->key, key))
-			return (ft_strdup(tmp->value));
+		{
+			if (tmp->value)
+				return (ft_strdup(tmp->value));
+			return (tmp->value);
+		}
 		tmp = tmp->next;
 	}
 	return (ft_strdup(""));

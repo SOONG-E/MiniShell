@@ -8,8 +8,9 @@ static int	arg_vaild_check(char *str)
 	while (str[i])
 	{
 		if (ft_isalnum(str[i]) || str[i] != '_')
+			i++;
+		else
 			return (1);
-		i++;
 	}
 	return (0);
 }
