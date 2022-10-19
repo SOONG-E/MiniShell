@@ -45,7 +45,7 @@ int	main(int ac, char **av, char **env)
 		}
 		add_history(str);
 		execute(str);
-		system("leaks $PPID");
+		//system("leaks $PPID");
 	}
 	return (0);
 }

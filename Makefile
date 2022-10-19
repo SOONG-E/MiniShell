@@ -40,6 +40,7 @@ SRCS		= 	main.c							\
 				execute_pipe_line.c				\
 				execute_pipe_line_utils.c		\
 				execute_pipe_line_io.c			\
+				execute_pipe_line_io_utils.c	\
 				replace_wild_card.c				\
 				make_env.c						\
 				built_in/ft_cd.c				\
@@ -50,7 +51,7 @@ SRCS		= 	main.c							\
 				built_in/ft_export.c			\
 				built_in/ft_pwd.c				\
 				built_in/ft_unset.c				\
-				built_in/ft_pipe_export.c
+				built_in/ft_pipe_export.c						
 
 OBJS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.o))
 DEPS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.d))

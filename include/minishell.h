@@ -59,7 +59,6 @@ void		skip_quote(char *str, int *idx, int flag);
 void		backup_space_symbol(t_symbol *symbol);
 t_symbol	*update_symbol(t_symbol *symbol, t_symbol *new);
 
-
 /*expand_env.c*/
 t_symbol	*expand_env(t_symbol *symbol);
 
@@ -81,7 +80,7 @@ void		set_envlst(char *key, char *value);
 /*manage_error.c*/
 void		allocat_error(void);
 int			error_msg(char *str);
-void		execute_error(char *cmd);
+void		execute_error(char *cmd_path, char **cmd_arr, char **env);
 int			open_file_error(char *file, int redirection_type);
 
 /*manage_info.c*/
@@ -161,6 +160,9 @@ int			dup_in_redirection(t_symbol *symbol);
 int			open_file(char *file, int redirection_type);
 int			read_here_doc(char *limiter);
 void		close_all_pipefd(int *fd, int error_case);
+
+/* execute_pipe_line_io_utils.c */
+int			task_here_doc(t_symbol *symbol, int *fd);
 
 /* make_env.c */
 char		**make_env(void);

@@ -2,7 +2,7 @@
 
 static int	env_cnt(void)
 {
-	int	i;
+	int			i;
 	t_envlst	*env;
 
 	i = 0;
@@ -28,7 +28,7 @@ char	**make_env(void)
 	i = 0;
 	while (env)
 	{
-		str[i] = ft_strjoin(ft_strjoin(env->key, "="), env->value);
+		str[i] = ft_strjoin_free(ft_strjoin(env->key, "="), env->value);
 		env = env->next;
 		i++;
 	}

@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int	execute_built_in(char **cmd_arr, int pipe_cnt)
 {
@@ -21,12 +21,14 @@ int	execute_built_in(char **cmd_arr, int pipe_cnt)
 	return (0);
 }
 
-void	execute_cmd(char **cmd_arr, int pipe_cnt)
+void	execute_cmd(t_symbol *symbol, int pipe_cnt)
 {
 	char	*path;
 	char	*cmd_path;
 	char	**env;
+	char	**cmd_arr;
 
+	cmd_arr = make_cmd_arr(symbol);
 	if (!cmd_arr)
 		exit(0);
 	path = get_env("PATH");
@@ -35,11 +37,10 @@ void	execute_cmd(char **cmd_arr, int pipe_cnt)
 	env = make_env();
 	if (execute_built_in(cmd_arr, pipe_cnt))
 		execve(cmd_path, cmd_arr, env);
-	split_free(env);
-	execute_error(cmd_arr[0]);
+	execute_error(cmd_path, cmd_arr, env);
 }
 
-pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
+pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
@@ -60,10 +61,9 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 		set_child_signal();
 		if (!dup_out_redirection(symbol) && i != pipe_cnt)
 			dup2(fd_pipe[1], STDOUT);
-		if (flag >= 0)
-			execute_cmd(cmd_arr, pipe_cnt);
-		else
+		if (flag < 0)
 			exit(errno);
+		execute_cmd(symbol, pipe_cnt);
 	}
 	close(fd_pipe[0]);
 	return (pid);
@@ -98,7 +98,6 @@ void	execute_pipe_line(t_symbol *symbol)
 	int		pipe_cnt;
 	int		i;
 	int		fd_back_up;
-	char	**cmd_arr;
 
 	fd_back_up = dup(STDIN);
 	pipe_cnt = get_pipe_cnt(symbol);
@@ -110,10 +109,7 @@ void	execute_pipe_line(t_symbol *symbol)
 	i = 0;
 	while (symbol)
 	{
-		cmd_arr = make_cmd_arr(symbol);
-		pid_lst[i] = fork_process(symbol, cmd_arr, pipe_cnt, i);
-		if (cmd_arr)
-			split_free(cmd_arr);
+		pid_lst[i] = fork_process(symbol, pipe_cnt, i);
 		while (symbol && symbol->type != T_PIPE)
 			symbol = symbol->next;
 		if (symbol)

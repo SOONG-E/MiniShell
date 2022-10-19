@@ -1,5 +1,4 @@
-#include "./include/minishell.h"
-
+#include "minishell.h"
 void	close_all_pipefd(int *fd, int error_case)
 {
 	close(fd[0]);
@@ -45,12 +44,10 @@ int	read_here_doc(char *limiter)
 	{
 		write(STDOUT, ">", 1);
 		status = get_next_line(STDIN, &line);
-		if (status == 0)
-			break ;
-		else if (status == -1)
+		if (status == -1)
 			allocat_error();
-		if (line[len_limiter] == '\n'
-			&& limiter && !ft_strncmp(line, limiter, len_limiter))
+		if (status == 0 || (line[len_limiter] == '\n'
+				&& limiter && !ft_strncmp(line, limiter, len_limiter)))
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
@@ -76,23 +73,16 @@ int	dup_in_redirection(t_symbol *symbol)
 			fd_redirection = open_file(symbol->next->str, T_IN_RID);
 			if (fd_redirection < 0)
 				return (-1);
-			dup2(fd_redirection, STDIN);
 			flag = 1;
 		}
 		else if (symbol->type == T_IN_HEREDOC)
 		{
-			if (fd_redirection != STDIN)
-				close(fd_redirection);
-			if (read_here_doc(symbol->next->str) < 0)
-				return (-1);
-			fd_redirection = open_file(".heredoc_tmp", T_IN_RID);
-			if (fd_redirection < 0)
-				return (-1);
-			dup2(fd_redirection, STDIN);
-			flag = 1;
+			flag = task_here_doc(symbol, &fd_redirection);
 		}
 		symbol = symbol->next->next;
 	}
+	if (flag == 1)
+		dup2(fd_redirection, STDIN);
 	return (flag);
 }
 

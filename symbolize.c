@@ -1,5 +1,15 @@
 #include "minishell.h"
 
+t_symbol	*find_first_cmd(t_symbol *symbol)
+{
+	while (symbol && (symbol->type == T_FILEPATH
+			|| (T_IN_RID <= symbol->type && symbol->type <= T_OUT_HEREDOC)))
+		symbol = symbol->next;
+	if (symbol)
+		symbol->type = T_CMD;
+	return (symbol->next);
+}
+
 int	classify_op(char *str)
 {
 	if (ft_strlen(str) != 1 || str[0] > 0)
@@ -26,26 +36,9 @@ int	classify_op(char *str)
 		return (-1);
 }
 
-t_symbol	*find_first_cmd(t_symbol *symbol)
-{
-	while (symbol && (symbol->type == T_FILEPATH
-			|| (T_IN_RID <= symbol->type && symbol->type <= T_OUT_HEREDOC)))
-		symbol = symbol->next;
-	if (symbol)
-		symbol->type = T_CMD;
-	return (symbol->next);
-}
-
 t_symbol	*classify_type(t_symbol *symbol)
 {
 	symbol = find_first_cmd(symbol);
-	while (symbol && !(T_PIPE <= symbol->type && symbol->type <= T_RBRACE)
-		&& !ft_strcmp(symbol->str, "-n"))
-	{
-		if (symbol->type < 0)
-			symbol->type = T_OPTION;
-		symbol = symbol->next;
-	}
 	while (symbol && !(T_PIPE <= symbol->type && symbol->type <= T_RBRACE))
 	{
 		if (symbol->type < 0)

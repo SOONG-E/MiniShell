@@ -1,4 +1,3 @@
-
 #include "minishell.h"
 
 void	replace_back_wild_card(char **str)

@@ -13,11 +13,14 @@ int	error_msg(char *str)
 	return (0);
 }
 
-void	execute_error(char *cmd)
+void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 {
 	ft_putstr_fd("minihell: command not found: ", STDERR);
-	ft_putstr_fd(cmd, STDERR);
+	ft_putstr_fd(cmd_arr[0], STDERR);
 	ft_putstr_fd("\n", STDERR);
+	free(cmd_path);
+	split_free(cmd_arr);
+	split_free(env);
 	exit(127);
 }
 

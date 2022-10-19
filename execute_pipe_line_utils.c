@@ -1,4 +1,4 @@
-#include "./include/minishell.h"
+#include "minishell.h"
 
 void	wait_process(pid_t *pid, int pipe_cnt)
 {
@@ -12,6 +12,7 @@ void	wait_process(pid_t *pid, int pipe_cnt)
 		i++;
 	}
 	exit_code = (exit_code >> 8 & 0x000000ff);
+	free(pid);
 	set_exit_code(exit_code);
 }
 

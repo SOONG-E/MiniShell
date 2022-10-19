@@ -55,5 +55,7 @@ t_symbol	*make_symbol_lst(char **temp)
 		i++;
 	}
 	free(temp);
+	if (i == 0)
+		symbol_lst = new_symbol("");
 	return (symbol_lst);
 }

@@ -25,41 +25,47 @@ int	is_need_expand(char *str)
 	return (0);
 }
 
-static int	name_check(char *filename, char *wild, char **wild_card)
+static int	word_compare(char **filename, char *wild, int *idx)
 {
-	int	file_name_len;
-	int	i;
-
-	file_name_len = ft_strlen(filename);
-	i = 0;
-	while (wild_card[i])
+	while (**filename && wild[*idx] && wild[*idx] != '*')
 	{
-		filename = ft_strnstr(filename, wild_card[i], file_name_len);
-		if (!filename)
+		if (wild[*idx] == **filename)
+		{
+			++(*idx);
+			++(*filename);	
+		}
+		else
 			return (0);
-		i++;
 	}
-	if (*(filename + ft_strlen(wild_card[i - 1]))
-		&& wild[ft_strlen(wild) - 1] != '*')
-		i = 0;
-	else
-		i = 1;
-	return (i);
+	if (!wild[*idx] && **filename)
+		return (0);
+	return (1);
 }
 
 int	cmp_wild_card(char *filename, char *wild)
 {
-	char	**wild_cards;
+	int	idx;
+	int	i;
 
-	wild_cards = ft_split(wild, "*");
-	if (wild_cards[0] == NULL)
-		return (1);
-	replace_back_wild_card(wild_cards);
-	if (wild[0] != '*'
-		&& ft_strncmp(filename, wild_cards[0], ft_strlen(wild_cards[0])) != 0)
-		return (0);
-	if (name_check(filename, wild, wild_cards) == 0)
-		return (0);
+	idx = 0;
+	while (wild[idx])
+	{
+		if (wild[idx] == '*')
+		{
+			i = ft_strichr(filename, wild[idx + 1]);
+			while (i >= 0)
+			{
+				if (cmp_wild_card(&filename[i], &wild[idx + 1]))
+					return (1);
+				++filename;
+				i = ft_strichr(&filename[i], wild[idx + 1]);
+			}
+			++idx;
+		}
+		else
+			if (!word_compare(&filename, wild, &idx))
+				return (0);
+	}
 	return (1);
 }
 

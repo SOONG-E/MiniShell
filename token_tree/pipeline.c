@@ -1,4 +1,4 @@
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_symbol	*find_last(t_symbol *symbol)
 {
@@ -36,11 +36,11 @@ void	sort_redirection(t_symbol *symbol)
 	symbol = find_last(symbol);
 	while (symbol && symbol->type != T_PIPE)
 	{
-		if (symbol->type == T_CMD || symbol->type == T_OPTION || symbol->type == T_ARG)
+		if (symbol->type == T_CMD || symbol->type == T_ARG)
 		{
 			temp = symbol;
 			while (temp->next && temp->next->type != T_PIPE && \
-			temp->next->type != T_CMD && temp->next->type != T_ARG && temp->next->type != T_OPTION)
+			temp->next->type != T_CMD && temp->next->type != T_ARG)
 			{
 				swap_symbol(temp);
 				temp = temp->next;

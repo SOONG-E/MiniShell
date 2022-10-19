@@ -1,5 +1,19 @@
 #include "../include/minishell.h"
 
+static int	recognize_echo_option(char *str)
+{
+	if (*str != '-')
+		return (0);
+	++str;
+	while (*str)
+	{
+		if (*str != 'n')
+			return (0);
+		++str;
+	}
+	return (1);
+}
+
 void	ft_echo(char **arg, int pipe_cnt)
 {
 	int		idx;
@@ -12,7 +26,7 @@ void	ft_echo(char **arg, int pipe_cnt)
 	(void)pipe_cnt;
 	new_line = 1;
 	idx = 1;
-	while (arg[idx] && !ft_strcmp(arg[idx], "-n"))
+	while (arg[idx] && recognize_echo_option(arg[idx]))
 		++idx;
 	if (idx == 1)
 		new_line = 0;
