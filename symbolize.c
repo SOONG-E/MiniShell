@@ -39,13 +39,14 @@ t_symbol	*find_first_cmd(t_symbol *symbol)
 t_symbol	*classify_type(t_symbol *symbol)
 {
 	symbol = find_first_cmd(symbol);
-	while (symbol && symbol->type != T_PIPE && !ft_strcmp(symbol->str, "-n"))
+	while (symbol && !(T_PIPE <= symbol->type && symbol->type <= T_RBRACE)
+		&& !ft_strcmp(symbol->str, "-n"))
 	{
 		if (symbol->type < 0)
 			symbol->type = T_OPTION;
 		symbol = symbol->next;
 	}
-	while (symbol && symbol->type != T_PIPE)
+	while (symbol && !(T_PIPE <= symbol->type && symbol->type <= T_RBRACE))
 	{
 		if (symbol->type < 0)
 			symbol->type = T_ARG;

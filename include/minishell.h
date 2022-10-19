@@ -92,6 +92,7 @@ void		set_exit_code(int code);
 void		split_free(char **str);
 void		free_symbol(t_symbol *symbols);
 void		free_symbols(t_symbol *symbols);
+void		free_tree(t_token *tree);
 
 /*manage_signal.c*/
 void		set_child_signal(void);
@@ -99,13 +100,10 @@ void		block_signal(void);
 void		set_signal(void);
 
 /*manage_symbol.c*/
-// void		lst_symbol_add_back(t_symbol **head, t_symbol *new);
 void		add_back_symbol(t_symbol **head, t_symbol *new);
 t_symbol	*get_last_symbol(t_symbol *symbol);
-// t_symbol	*ft_new_symbol(char	*str);
 t_symbol	*make_symbol_lst(char **temp);
 t_symbol	*new_symbol(char *str);
-// t_symbol	*lst_symbol_add_middle(t_symbol *symbol, t_symbol *new);
 
 /*parse_line.c*/
 t_token		*parse_line(char *str);

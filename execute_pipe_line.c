@@ -69,18 +69,21 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 	return (pid);
 }
 
-int	execute_single_commend(t_symbol *symbol, int pipe_cnt)
+int	execute_single_command(t_symbol *symbol, int pipe_cnt)
 {
 	char	**cmd_arr;
+	int		fd_back_up;
 
 	if (!pipe_cnt)
 	{
 		cmd_arr = make_cmd_arr(symbol);
 		if (is_built_in(cmd_arr))
 		{
+			fd_back_up = dup(STDOUT);
 			dup_out_redirection(symbol);
 			execute_built_in(cmd_arr, pipe_cnt);
 			split_free(cmd_arr);
+			dup2(fd_back_up, STDOUT);
 			return (1);
 		}
 		if (cmd_arr)
@@ -99,7 +102,7 @@ void	execute_pipe_line(t_symbol *symbol)
 
 	fd_back_up = dup(STDIN);
 	pipe_cnt = get_pipe_cnt(symbol);
-	if (execute_single_commend(symbol, pipe_cnt))
+	if (execute_single_command(symbol, pipe_cnt))
 		return ;
 	pid_lst = (pid_t *)malloc(sizeof(pid_t) * (pipe_cnt + 1));
 	if (!pid_lst)
@@ -119,4 +122,4 @@ void	execute_pipe_line(t_symbol *symbol)
 	}
 	wait_process(pid_lst, pipe_cnt + 1);
 	dup2(fd_back_up, STDIN);
-}////< main.c cat | wc -l (50%확률로 성공??) //명령어 없을때 redirection segfault
+}

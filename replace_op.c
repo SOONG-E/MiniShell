@@ -26,7 +26,10 @@ char	*replace_op(char *line)
 			i += 2;
 		}
 		else
+		{
 			i++;
+			free(op);
+		}
 	}
 	return (line);
 }

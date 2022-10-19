@@ -21,7 +21,7 @@ void	free_tree(t_token *tree)
 		return ;
 	if (tree->left)
 		free_tree(tree->left);
-	free(tree->symbol);
+	free_symbol(tree->symbol);
 	right_tree = tree->right;
 	free(tree);
 	if (right_tree)
@@ -30,14 +30,16 @@ void	free_tree(t_token *tree)
 
 void	free_symbol(t_symbol *symbol)
 {
+	t_symbol	*temp;
 	if (!symbol)
 		return ;
-	if (symbol->pre)
-		symbol->pre->next = NULL;
-	if (symbol->next)
-		symbol->next->pre = NULL;
-	free(symbol->str);
-	free(symbol);
+	while (symbol)
+	{
+		free(symbol->str);
+		temp = symbol->next;
+		free(symbol);
+		symbol = temp;
+	}
 }
 
 void	free_symbols(t_symbol *symbols)

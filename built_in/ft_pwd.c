@@ -6,7 +6,7 @@ void	ft_pwd(char **arg, int pipe_cnt)
 
 	(void)arg;
 	pwd = get_env("PWD");
-	if (pwd)
+	if (*pwd)
 	{
 		write(1, pwd, ft_strlen(pwd));
 		write(1, "\n", 1);
