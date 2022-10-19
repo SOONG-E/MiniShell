@@ -63,6 +63,7 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i)
 			dup2(fd_pipe[1], STDOUT);
 		if (flag < 0)
 			exit(errno);
+		close(fd_pipe[1]);
 		execute_cmd(symbol, pipe_cnt);
 	}
 	close(fd_pipe[0]);
@@ -84,6 +85,7 @@ int	execute_single_command(t_symbol *symbol, int pipe_cnt)
 			execute_built_in(cmd_arr, pipe_cnt);
 			split_free(cmd_arr);
 			dup2(fd_back_up, STDOUT);
+			close(fd_back_up);
 			return (1);
 		}
 		if (cmd_arr)

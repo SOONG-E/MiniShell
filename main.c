@@ -13,6 +13,7 @@ void	init_shell(char **env)
 		write(1, &img, 1);
 		usleep(600);
 	}
+	close(shell_img);
 	init_info(env);
 }
 
