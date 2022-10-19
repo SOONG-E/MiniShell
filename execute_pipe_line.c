@@ -52,7 +52,9 @@ pid_t	fork_process(t_symbol *symbol, char **cmd_arr, int pipe_cnt, int i)
 	{
 		block_signal();
 		close(fd_pipe[1]);
-		if (flag != 1)
+		if (i == 1)
+			close(fd_pipe[0]);
+		else
 			dup2(fd_pipe[0], STDIN);
 	}
 	else
@@ -83,7 +85,8 @@ int	execute_single_commend(t_symbol *symbol, int pipe_cnt)
 			split_free(cmd_arr);
 			return (1);
 		}
-		split_free(cmd_arr);
+		if (cmd_arr)
+			split_free(cmd_arr);
 	}
 	return (0);
 }
@@ -108,7 +111,8 @@ void	execute_pipe_line(t_symbol *symbol)
 	{
 		cmd_arr = make_cmd_arr(symbol);
 		pid_lst[i] = fork_process(symbol, cmd_arr, pipe_cnt, i);
-		split_free(cmd_arr);
+		if (cmd_arr)
+			split_free(cmd_arr);
 		while (symbol && symbol->type != T_PIPE)
 			symbol = symbol->next;
 		if (symbol)
@@ -117,4 +121,4 @@ void	execute_pipe_line(t_symbol *symbol)
 	}
 	wait_process(pid_lst, pipe_cnt + 1);
 	dup2(fd_back_up, STDIN);
-}////< main.c cat | wc -l (50%확률로 성공??)
+}////< main.c cat | wc -l (50%확률로 성공??) //명령어 없을때 redirection segfault

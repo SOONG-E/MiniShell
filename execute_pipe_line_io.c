@@ -67,7 +67,7 @@ int	dup_in_redirection(t_symbol *symbol)
 
 	fd_redirection = STDIN;
 	flag = 0;
-	while (symbol->type != T_CMD)
+	while (symbol && symbol->type != T_CMD)
 	{
 		if (symbol->type == T_IN_RID)
 		{
