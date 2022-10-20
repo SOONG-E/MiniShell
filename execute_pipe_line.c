@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "./include/minishell.h"
 
 int	execute_built_in(char **cmd_arr, int pipe_cnt)
 {
@@ -40,58 +40,30 @@ void	execute_cmd(t_symbol *symbol, int pipe_cnt)
 	execute_error(cmd_path, cmd_arr, env);
 }
 
-pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i)
+pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 {
 	pid_t	pid;
 	int		fd_pipe[2];
 	int		flag;
+	int		stdout_backup;
 
+	stdout_backup = dup(STDOUT);
+	flag = dup_redirection(symbol, stdin_backup);
 	pipe(fd_pipe);
-	flag = dup_in_redirection(symbol);
 	pid = fork();
 	if (pid > 0)
 	{
 		block_signal();
-		close(fd_pipe[1]);
-		dup2(fd_pipe[0], STDIN);
+		dup_parant_pipe(fd_pipe, stdout_backup);
 	}
 	else
 	{
-		close(fd_pipe[0]);
 		set_child_signal();
-		if (!dup_out_redirection(symbol) && i != pipe_cnt)
-			dup2(fd_pipe[1], STDOUT);
-		if (flag < 0)
-			exit(errno);
-		close(fd_pipe[1]);
+		dup_child_pipe(fd_pipe, flag, pipe_cnt, i); 
 		execute_cmd(symbol, pipe_cnt);
 	}
 	close(fd_pipe[0]);
 	return (pid);
-}
-
-int	execute_single_command(t_symbol *symbol, int pipe_cnt)
-{
-	char	**cmd_arr;
-	int		fd_back_up;
-
-	if (!pipe_cnt)
-	{
-		cmd_arr = make_cmd_arr(symbol);
-		if (is_built_in(cmd_arr))
-		{
-			fd_back_up = dup(STDOUT);
-			dup_out_redirection(symbol);
-			execute_built_in(cmd_arr, pipe_cnt);
-			split_free(cmd_arr);
-			dup2(fd_back_up, STDOUT);
-			close(fd_back_up);
-			return (1);
-		}
-		if (cmd_arr)
-			split_free(cmd_arr);
-	}
-	return (0);
 }
 
 void	execute_pipe_line(t_symbol *symbol)
@@ -99,11 +71,11 @@ void	execute_pipe_line(t_symbol *symbol)
 	pid_t	*pid_lst;
 	int		pipe_cnt;
 	int		i;
-	int		fd_back_up;
+	int		stdin_backup;
 
-	fd_back_up = dup(STDIN);
+	stdin_backup = dup(STDIN);
 	pipe_cnt = get_pipe_cnt(symbol);
-	if (execute_single_command(symbol, pipe_cnt))
+	if (execute_single_command(symbol, pipe_cnt, stdin_backup))
 		return ;
 	pid_lst = (pid_t *)malloc(sizeof(pid_t) * (pipe_cnt + 1));
 	if (!pid_lst)
@@ -111,7 +83,7 @@ void	execute_pipe_line(t_symbol *symbol)
 	i = 0;
 	while (symbol)
 	{
-		pid_lst[i] = fork_process(symbol, pipe_cnt, i);
+		pid_lst[i] = fork_process(symbol, pipe_cnt, i, stdin_backup);
 		while (symbol && symbol->type != T_PIPE)
 			symbol = symbol->next;
 		if (symbol)
@@ -119,5 +91,6 @@ void	execute_pipe_line(t_symbol *symbol)
 		i++;
 	}
 	wait_process(pid_lst, pipe_cnt + 1);
-	dup2(fd_back_up, STDIN);
+	dup2(stdin_backup, STDIN);
+	close(stdin_backup);
 }

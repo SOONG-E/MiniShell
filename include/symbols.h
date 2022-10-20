@@ -34,4 +34,9 @@
 # define STDIN			0
 # define STDOUT			1
 # define STDERR			2
+
+# define NONE_RID		0
+# define DID_IN_RID		1
+# define DID_OUT_RID	2
+# define DID_BOTH_RID	3
 #endif

@@ -52,7 +52,8 @@ void	sort_redirection(t_symbol *symbol)
 
 t_token	*pipeline(t_symbol *symbol)
 {
-	t_token	*token;
+	t_token		*token;
+	t_symbol	*tmp;
 
 	if (!symbol)
 		return (NULL);
@@ -61,7 +62,15 @@ t_token	*pipeline(t_symbol *symbol)
 	else
 	{
 		token = make_token(symbol);
-		sort_redirection(token->symbol);
+		tmp = token->symbol;
+		while (tmp)
+		{
+			sort_redirection(tmp);
+			tmp = tmp->next;
+			while (tmp && tmp->type != T_PIPE)
+				tmp = tmp->next;
+		}
+		
 		return (token);
 	}
 }

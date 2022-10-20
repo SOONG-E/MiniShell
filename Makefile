@@ -4,8 +4,8 @@ NAME		=	minishell
 
 RM			=	rm -rf
 CFLAGS		=	-Wall -Werror -Wextra -MMD -MP -g
-CPPFLAGS	=	-I./include -I$(HOME)/.brew/opt/readline/include
-LDFLAGS		=	-L./libft -L$(HOME)/.brew/opt/readline/lib
+CPPFLAGS	=	-I./include -I$(HOME)/homebrew/opt/readline/include
+LDFLAGS		=	-L./libft -L$(HOME)/homebrew/opt/readline/lib
 LDLIBS		=	-lft -lreadline
 
 OUTDIR		=	out/
@@ -28,6 +28,7 @@ SRCS		= 	main.c							\
 				preprocess_line.c				\
 				check_cmd.c						\
 				validate.c						\
+				validate_utils.c				\
 				manage_info.c					\
 				expand_filename.c				\
 				delete_quote.c					\
@@ -41,6 +42,7 @@ SRCS		= 	main.c							\
 				execute_pipe_line_utils.c		\
 				execute_pipe_line_io.c			\
 				execute_pipe_line_io_utils.c	\
+				execute_single_commend.c		\
 				replace_wild_card.c				\
 				make_env.c						\
 				built_in/ft_cd.c				\

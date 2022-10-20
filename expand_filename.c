@@ -32,7 +32,7 @@ static int	word_compare(char **filename, char *wild, int *idx)
 		if (wild[*idx] == **filename)
 		{
 			++(*idx);
-			++(*filename);	
+			++(*filename);
 		}
 		else
 			return (0);
@@ -97,13 +97,11 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 
 void	expand_filename(t_symbol *symbol)
 {
-	t_symbol	*ret_symbol;
 	t_symbol	*file_lst;
 
-	ret_symbol = symbol;
 	while (symbol)
 	{
-		if (symbol->type == T_FILEPATH || symbol->type == T_ARG || symbol->type == T_CMD)
+		if (symbol->type == 1 || symbol->type == 3 || symbol->type == 0)
 		{
 			if (is_need_expand(symbol->str) && symbol->type != T_CMD)
 			{
