@@ -45,21 +45,26 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i)
 	pid_t	pid;
 	int		fd_pipe[2];
 	int		flag;
+	int		fd_back_up;
 
+	fd_back_up = dup(STDOUT);
 	pipe(fd_pipe);
-	flag = dup_in_redirection(symbol);
+	flag = dup_redirection(symbol);
 	pid = fork();
 	if (pid > 0)
 	{
 		block_signal();
+		dup_pipe(fd_pipe, fd_back_up);
 		close(fd_pipe[1]);
 		dup2(fd_pipe[0], STDIN);
+		dup2(fd_back_up, STDOUT);
+		close(fd_back_up);
 	}
 	else
 	{
 		close(fd_pipe[0]);
 		set_child_signal();
-		if (!dup_out_redirection(symbol) && i != pipe_cnt)
+		if (flag <= 1 && i != pipe_cnt)
 			dup2(fd_pipe[1], STDOUT);
 		if (flag < 0)
 			exit(errno);
@@ -80,7 +85,13 @@ int	execute_single_command(t_symbol *symbol, int pipe_cnt)
 		if (is_built_in(cmd_arr))
 		{
 			fd_back_up = dup(STDOUT);
-			dup_out_redirection(symbol);
+			if (dup_redirection(symbol) < 0)
+			{
+				split_free(cmd_arr);
+				dup2(fd_back_up, STDOUT);
+				close(fd_back_up);
+				return (1);
+			}
 			execute_built_in(cmd_arr, pipe_cnt);
 			split_free(cmd_arr);
 			dup2(fd_back_up, STDOUT);
@@ -104,6 +115,7 @@ void	execute_pipe_line(t_symbol *symbol)
 	pipe_cnt = get_pipe_cnt(symbol);
 	if (execute_single_command(symbol, pipe_cnt))
 	{
+		dup2(fd_back_up, STDIN);
 		close(fd_back_up);
 		return ;
 	}

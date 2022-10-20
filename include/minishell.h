@@ -81,7 +81,7 @@ void		set_envlst(char *key, char *value);
 void		allocat_error(void);
 int			error_msg(char *str);
 void		execute_error(char *cmd_path, char **cmd_arr, char **env);
-int			open_file_error(char *file, int redirection_type);
+int			open_file_error(char *file);
 
 /*manage_info.c*/
 void		init_info(char **env);
@@ -128,6 +128,13 @@ int			classify_op(char *str);
 /*validate.c*/
 int			validate(t_symbol *symbol_lst);
 int			syntax_error_token(char *str);
+char		*get_origin_op(int type);
+
+/*validate_utils.c*/
+int			lbrace_case(t_symbol *symbol_lst);
+int			rbrace_case(t_symbol *symbol_lst);
+int			pipe_andif_orif_case(t_symbol *symbol_lst);
+int			direction_case(t_symbol *symbol_lst);
 
 /* functions for built_in */
 t_cd		*ft_init_cd_info(int pipe_cnt, char *arg);
@@ -155,14 +162,16 @@ int			get_pipe_cnt(t_symbol *symbol);
 void		wait_process(pid_t *pid, int pipe_cnt);
 
 /* execute_pipe_line_io.c */
-int			dup_out_redirection(t_symbol *symbol);
-int			dup_in_redirection(t_symbol *symbol);
+int			dup_redirection(t_symbol *symbol);
+int			dup_out_redirection(t_symbol *symbol, int type_rid);
+int			dup_in_redirection(t_symbol *symbol, int type_rid);
 int			open_file(char *file, int redirection_type);
 int			read_here_doc(char *limiter);
 void		close_all_pipefd(int *fd, int error_case);
 
 /* execute_pipe_line_io_utils.c */
 int			task_here_doc(t_symbol *symbol, int *fd);
+int			count_after_rid(t_symbol *symbol);
 
 /* make_env.c */
 char		**make_env(void);

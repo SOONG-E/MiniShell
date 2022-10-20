@@ -24,15 +24,12 @@ void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 	exit(127);
 }
 
-int	open_file_error(char *file, int redirection_type)
+int	open_file_error(char *file)
 {
 	ft_putstr_fd("minihell: ", STDERR);
 	ft_putstr_fd(file, STDERR);
 	ft_putstr_fd(": ", STDERR);
 	ft_putstr_fd(strerror(errno), STDERR);
 	ft_putstr_fd("\n", STDERR);
-	if (redirection_type == T_OUT_HEREDOC || redirection_type == T_OUT_RID)
-		exit(errno);
-	else
-		return (-1);
+	return (-1);
 }

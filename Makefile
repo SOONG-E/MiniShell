@@ -28,6 +28,7 @@ SRCS		= 	main.c							\
 				preprocess_line.c				\
 				check_cmd.c						\
 				validate.c						\
+				validate_utils.c				\
 				manage_info.c					\
 				expand_filename.c				\
 				delete_quote.c					\

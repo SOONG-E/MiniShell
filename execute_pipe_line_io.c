@@ -1,12 +1,4 @@
 #include "minishell.h"
-void	close_all_pipefd(int *fd, int error_case)
-{
-	close(fd[0]);
-	close(fd[1]);
-	if (error_case == 1)
-		ft_putstr_fd("pipex: Here_doc allocate error!\n", STDERR);
-	exit(error_case);
-}
 
 int	open_file(char *file, int redirection_type)
 {
@@ -25,7 +17,7 @@ int	open_file(char *file, int redirection_type)
 		fd = open(file, O_RDWR | O_CREAT | O_APPEND,
 				S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd < 0)
-		return (open_file_error(file, redirection_type));
+		return (open_file_error(file));
 	return (fd);
 }
 
@@ -57,31 +49,23 @@ int	read_here_doc(char *limiter)
 	return (0);
 }
 
-int	dup_in_redirection(t_symbol *symbol)
+int	dup_in_redirection(t_symbol *symbol, int type_rid)
 {
 	int	fd_redirection;
 	int	flag;
 
 	fd_redirection = STDIN;
 	flag = 0;
-	while (symbol && symbol->type != T_CMD)
+	if (type_rid == T_IN_RID)
 	{
-		if (symbol->type == T_IN_RID)
-		{
-			if (fd_redirection != STDIN)
-				close(fd_redirection);
-			fd_redirection = open_file(symbol->next->str, T_IN_RID);
-			if (fd_redirection < 0)
-				return (-1);
-			flag = 1;
-		}
-		else if (symbol->type == T_IN_HEREDOC)
-		{
-			flag = task_here_doc(symbol, &fd_redirection);
-		}
-		symbol = symbol->next->next;
+		fd_redirection = open_file(symbol->next->str, T_IN_RID);
+		if (fd_redirection < 0)
+			return (-1);
+		flag = DID_IN_RID;
 	}
-	if (flag == 1)
+	else if (type_rid == T_IN_HEREDOC)
+		flag = task_here_doc(symbol, &fd_redirection);
+	if (flag == DID_IN_RID && !count_after_rid(symbol))
 	{
 		dup2(fd_redirection, STDIN);
 		close(fd_redirection);
@@ -89,26 +73,43 @@ int	dup_in_redirection(t_symbol *symbol)
 	return (flag);
 }
 
-int	dup_out_redirection(t_symbol *symbol)
+int	dup_out_redirection(t_symbol *symbol, int type_rid)
 {
-	int			type_redirection;
 	int			fd_redirection;
-	int			flag;
 
 	fd_redirection = STDOUT;
-	flag = 0;
-	while (symbol->type != T_CMD)
+	fd_redirection = open_file(symbol->next->str, type_rid);
+	if (fd_redirection < 0)
+		return (-1);
+	dup2(fd_redirection, STDOUT);
+	close(fd_redirection);
+	return (DID_OUT_RID);
+}
+
+int	dup_redirection(t_symbol *symbol)
+{
+	int	in_flag;
+	int	out_flag;
+	int	type_rid;
+
+	in_flag = 0;
+	out_flag = 0;
+	while (symbol && symbol->type != T_CMD)
 	{
-		type_redirection = symbol->type;
-		if (symbol->type == T_OUT_RID || symbol->type == T_OUT_HEREDOC)
+		type_rid = symbol->type;
+		if (type_rid == T_IN_RID || type_rid == T_IN_HEREDOC)
 		{
-			if (fd_redirection != STDOUT)
-				close(fd_redirection);
-			fd_redirection = open_file(symbol->next->str, type_redirection);
-			dup2(fd_redirection, STDOUT);
-			flag = 1;
+			in_flag = dup_in_redirection(symbol, type_rid);
+			if (in_flag < 0)
+				return (-1);
+		}
+		else if (type_rid == T_OUT_RID || type_rid == T_OUT_HEREDOC)
+		{
+			out_flag = dup_out_redirection(symbol, type_rid);
+			if (out_flag < 0)
+				return (-1);
 		}
 		symbol = symbol->next->next;
 	}
-	return (flag);
+	return (in_flag + out_flag);
 }

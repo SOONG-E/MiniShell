@@ -31,7 +31,7 @@ void	free_tree(t_token *tree)
 void	free_symbol(t_symbol *symbol)
 {
 	t_symbol	*temp;
-	////////////////////////////norminate!
+
 	if (!symbol)
 		return ;
 	while (symbol)
