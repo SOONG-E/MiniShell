@@ -84,6 +84,7 @@ int	execute_single_command(t_symbol *symbol, int pipe_cnt)
 			execute_built_in(cmd_arr, pipe_cnt);
 			split_free(cmd_arr);
 			dup2(fd_back_up, STDOUT);
+			close(fd_back_up);
 			return (1);
 		}
 		if (cmd_arr)
@@ -102,7 +103,10 @@ void	execute_pipe_line(t_symbol *symbol)
 	fd_back_up = dup(STDIN);
 	pipe_cnt = get_pipe_cnt(symbol);
 	if (execute_single_command(symbol, pipe_cnt))
+	{
+		close(fd_back_up);
 		return ;
+	}
 	pid_lst = (pid_t *)malloc(sizeof(pid_t) * (pipe_cnt + 1));
 	if (!pid_lst)
 		exit(1);
@@ -118,4 +122,5 @@ void	execute_pipe_line(t_symbol *symbol)
 	}
 	wait_process(pid_lst, pipe_cnt + 1);
 	dup2(fd_back_up, STDIN);
+	close(fd_back_up);
 }

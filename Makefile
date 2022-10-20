@@ -4,8 +4,8 @@ NAME		=	minishell
 
 RM			=	rm -rf
 CFLAGS		=	-Wall -Werror -Wextra -MMD -MP -g
-CPPFLAGS	=	-I./include -I$(HOME)/.brew/opt/readline/include
-LDFLAGS		=	-L./libft -L$(HOME)/.brew/opt/readline/lib
+CPPFLAGS	=	-I./include -I$(HOME)/homebrew/opt/readline/include
+LDFLAGS		=	-L./libft -L$(HOME)/homebrew/opt/readline/lib
 LDLIBS		=	-lft -lreadline
 
 OUTDIR		=	out/

@@ -82,7 +82,10 @@ int	dup_in_redirection(t_symbol *symbol)
 		symbol = symbol->next->next;
 	}
 	if (flag == 1)
+	{
 		dup2(fd_redirection, STDIN);
+		close(fd_redirection);
+	}
 	return (flag);
 }
 

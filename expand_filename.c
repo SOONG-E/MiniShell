@@ -103,9 +103,9 @@ void	expand_filename(t_symbol *symbol)
 	ret_symbol = symbol;
 	while (symbol)
 	{
-		if (symbol->type == T_FILEPATH || symbol->type == T_ARG)
+		if (symbol->type == T_FILEPATH || symbol->type == T_ARG || symbol->type == T_CMD)
 		{
-			if (is_need_expand(symbol->str))
+			if (is_need_expand(symbol->str) && symbol->type != T_CMD)
 			{
 				replace_wild_card(symbol->str);
 				delete_quote(symbol);
