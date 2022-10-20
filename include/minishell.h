@@ -153,6 +153,7 @@ void		ft_env(char **arg, int pipe_cnt);
 
 /* execute_pipe_line.c */
 void		execute_pipe_line(t_symbol *symbol);
+int			execute_built_in(char **cmd_arr, int pipe_cnt);
 
 /* execute_pipe_line_utils.c */
 int			is_built_in(char **cmd_arr);
@@ -162,18 +163,21 @@ int			get_pipe_cnt(t_symbol *symbol);
 void		wait_process(pid_t *pid, int pipe_cnt);
 
 /* execute_pipe_line_io.c */
-int			dup_redirection(t_symbol *symbol);
+int			dup_redirection(t_symbol *symbol, int stdin_backup);
 int			dup_out_redirection(t_symbol *symbol, int type_rid);
-int			dup_in_redirection(t_symbol *symbol, int type_rid);
+int			dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup);
 int			open_file(char *file, int redirection_type);
-int			read_here_doc(char *limiter);
-void		close_all_pipefd(int *fd, int error_case);
+int			read_here_doc(char *limiter, int stdin_backup);
 
 /* execute_pipe_line_io_utils.c */
-int			task_here_doc(t_symbol *symbol, int *fd);
+int			task_here_doc(t_symbol *symbol, int *fd, int stdin_backup);
 int			count_after_rid(t_symbol *symbol);
-void		dup_parant_pipe(int *fd_pipe, int fd_back_up);
+void		dup_parant_pipe(int *fd_pipe, int stdout_backup);
 void		dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt, int i);
+
+/* execute_single_commend.c */
+int			execute_single_command(t_symbol *symbol, \
+			int pipe_cnt, int stdin_backup);
 
 /* make_env.c */
 char		**make_env(void);

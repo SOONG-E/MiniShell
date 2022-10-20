@@ -20,7 +20,7 @@ char	*get_cmd_path(char *cmd, char *path)
 			path += ft_strlen(path);
 	}
 	if (stat(cmd, &sb) >= 0)
-		return (cmd);
+		return ft_strdup(cmd);
 	return (NULL);
 }
 

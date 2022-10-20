@@ -21,7 +21,7 @@ int	open_file(char *file, int redirection_type)
 	return (fd);
 }
 
-int	read_here_doc(char *limiter)
+int	read_here_doc(char *limiter, int stdin_backup)
 {
 	size_t	len_limiter;
 	char	*line;
@@ -35,7 +35,7 @@ int	read_here_doc(char *limiter)
 	while (1)
 	{
 		write(STDOUT, ">", 1);
-		status = get_next_line(STDIN, &line);
+		status = get_next_line(stdin_backup, &line);
 		if (status == -1)
 			allocat_error();
 		if (status == 0 || (line[len_limiter] == '\n'
@@ -49,7 +49,7 @@ int	read_here_doc(char *limiter)
 	return (0);
 }
 
-int	dup_in_redirection(t_symbol *symbol, int type_rid)
+int	dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup)
 {
 	int	fd_redirection;
 	int	flag;
@@ -61,10 +61,12 @@ int	dup_in_redirection(t_symbol *symbol, int type_rid)
 		fd_redirection = open_file(symbol->next->str, T_IN_RID);
 		if (fd_redirection < 0)
 			return (-1);
+		if (count_after_rid(symbol))
+			close(fd_redirection);
 		flag = DID_IN_RID;
 	}
 	else if (type_rid == T_IN_HEREDOC)
-		flag = task_here_doc(symbol, &fd_redirection);
+		flag = task_here_doc(symbol, &fd_redirection, stdin_backup);
 	if (flag == DID_IN_RID && !count_after_rid(symbol))
 	{
 		dup2(fd_redirection, STDIN);
@@ -86,7 +88,7 @@ int	dup_out_redirection(t_symbol *symbol, int type_rid)
 	return (DID_OUT_RID);
 }
 
-int	dup_redirection(t_symbol *symbol)
+int	dup_redirection(t_symbol *symbol, int stdin_backup)
 {
 	int	in_flag;
 	int	out_flag;
@@ -99,7 +101,7 @@ int	dup_redirection(t_symbol *symbol)
 		type_rid = symbol->type;
 		if (type_rid == T_IN_RID || type_rid == T_IN_HEREDOC)
 		{
-			in_flag = dup_in_redirection(symbol, type_rid);
+			in_flag = dup_in_redirection(symbol, type_rid, stdin_backup);
 			if (in_flag < 0)
 				return (-1);
 		}

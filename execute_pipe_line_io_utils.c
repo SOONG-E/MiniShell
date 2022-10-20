@@ -15,9 +15,9 @@ int	count_after_rid(t_symbol *symbol)
 	return (cnt);
 }
 
-int	task_here_doc(t_symbol *symbol, int *fd)
+int	task_here_doc(t_symbol *symbol, int *fd, int stdin_backup)
 {
-	if (read_here_doc(symbol->next->str) < 0)
+	if (read_here_doc(symbol->next->str, stdin_backup) < 0)
 		return (-1);
 	if (count_after_rid(symbol))
 		return (0);
@@ -30,12 +30,12 @@ int	task_here_doc(t_symbol *symbol, int *fd)
 	}
 }
 
-void	dup_parant_pipe(int *fd_pipe, int fd_back_up)
+void	dup_parant_pipe(int *fd_pipe, int stdout_backup)
 {
 	close(fd_pipe[1]);
 	dup2(fd_pipe[0], STDIN);
-	dup2(fd_back_up, STDOUT);
-	close(fd_back_up);
+	dup2(stdout_backup, STDOUT);
+	close(stdout_backup);
 }
 
 void	dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt, int i)
