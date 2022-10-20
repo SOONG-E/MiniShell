@@ -11,7 +11,6 @@ void	wait_process(pid_t *pid, int pipe_cnt)
 		waitpid(pid[i], &exit_code, 0);
 		i++;
 	}
-	exit_code = (exit_code >> 8 & 0x000000ff);
 	free(pid);
 	set_exit_code(exit_code);
 }
