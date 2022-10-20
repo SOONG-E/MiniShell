@@ -54,20 +54,11 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i)
 	if (pid > 0)
 	{
 		block_signal();
-		dup_pipe(fd_pipe, fd_back_up);
-		close(fd_pipe[1]);
-		dup2(fd_pipe[0], STDIN);
-		dup2(fd_back_up, STDOUT);
-		close(fd_back_up);
+		dup_parant_pipe(fd_pipe, fd_back_up);
 	}
 	else
 	{
-		close(fd_pipe[0]);
 		set_child_signal();
-		if (flag <= 1 && i != pipe_cnt)
-			dup2(fd_pipe[1], STDOUT);
-		if (flag < 0)
-			exit(errno);
 		execute_cmd(symbol, pipe_cnt);
 	}
 	close(fd_pipe[0]);

@@ -30,4 +30,19 @@ int	task_here_doc(t_symbol *symbol, int *fd)
 	}
 }
 
+void	dup_parant_pipe(int *fd_pipe, int fd_back_up)
+{
+	close(fd_pipe[1]);
+	dup2(fd_pipe[0], STDIN);
+	dup2(fd_back_up, STDOUT);
+	close(fd_back_up);
+}
 
+void	dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt)
+{
+	close(fd_pipe[0]);
+	if (flag <= 1 && i != pipe_cnt)
+		dup2(fd_pipe[1], STDOUT);
+	if (flag < 0)
+		exit(errno);
+}
