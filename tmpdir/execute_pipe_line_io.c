@@ -34,7 +34,7 @@ int	read_here_doc(char *limiter, int stdin_backup)
 	len_limiter = ft_strlen(limiter);
 	while (1)
 	{
-		write(2, ">", 1);
+		write(STDOUT, ">", 1);
 		status = get_next_line(stdin_backup, &line);
 		if (status == -1)
 			allocat_error();

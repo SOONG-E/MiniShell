@@ -44,5 +44,5 @@ void	dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt, int i)
 	if (flag <= 1 && i != pipe_cnt)
 		dup2(fd_pipe[1], STDOUT);
 	if (flag < 0)
-		exit(1);
+		exit(errno);
 }
