@@ -59,6 +59,7 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i)
 	else
 	{
 		set_child_signal();
+		dup_child_pipe(fd_pipe, flag, pipe_cnt, i);
 		execute_cmd(symbol, pipe_cnt);
 	}
 	close(fd_pipe[0]);

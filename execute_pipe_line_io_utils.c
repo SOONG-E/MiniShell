@@ -38,7 +38,7 @@ void	dup_parant_pipe(int *fd_pipe, int fd_back_up)
 	close(fd_back_up);
 }
 
-void	dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt)
+void	dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt, int i)
 {
 	close(fd_pipe[0]);
 	if (flag <= 1 && i != pipe_cnt)
