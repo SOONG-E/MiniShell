@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_single_commend.c                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:22:15 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:40 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./include/minishell.h"
 
 int	free_and_close(char **cmd_arr, int stdin_backup, int stdout_backup)
@@ -21,7 +33,7 @@ int	execute_single_command(t_symbol *symbol, int pipe_cnt, int stdin_backup)
 	{
 		if (is_built_in(cmd_arr))
 		{
-			if (dup_redirection(symbol, stdin_backup) < 0)
+			if (dup_redirection(symbol, stdin_backup, 0) < 0)
 				return (free_and_close(cmd_arr, stdin_backup, stdout_backup));
 			execute_built_in(cmd_arr, pipe_cnt);
 			return (free_and_close(cmd_arr, stdin_backup, stdout_backup));

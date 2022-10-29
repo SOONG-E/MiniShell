@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:24:12 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:33:06 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
 void	ft_cd(char **arg, int pipe_cnt)
@@ -21,5 +33,6 @@ void	ft_cd(char **arg, int pipe_cnt)
 		else
 			cd_info->rv = chdir(arg[1]);
 		ft_check_rv(cd_info);
+		free(cd_info);
 	}
 }

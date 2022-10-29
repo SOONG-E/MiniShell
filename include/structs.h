@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:24:48 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:35:30 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
@@ -13,6 +25,7 @@ struct s_info
 	char			*home;
 	char			*exit_code;
 	int				oldpwd_flag;
+	int				flag;
 };
 
 struct s_envlst

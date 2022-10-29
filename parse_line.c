@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:23:37 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:33:19 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	check_pair(char *str)
@@ -34,7 +46,10 @@ t_token	*parse_line(char *str)
 		error_msg("incomplete command");
 		return (0);
 	}
-	symbol_lst = expand_env(make_symbol_lst(preprocess_line(str)));
+	symbol_lst = make_symbol_lst(preprocess_line(str));
+	if (!symbol_lst)
+		return (NULL);
+	symbol_lst = expand_env(symbol_lst);
 	if (!symbol_lst)
 		return (0);
 	symbolizing(symbol_lst);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyuki <jaehyuki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/16 16:40:21 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/07/16 16:42:34 by jaehyuki         ###   ########.fr       */
+/*   Created: 2022/07/16 16:40:21 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:37:23 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "get_next_line.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 42
+#  define BUFFER_SIZE 1
 # endif
 
 int		get_next_line(int fd, char **rv_line);

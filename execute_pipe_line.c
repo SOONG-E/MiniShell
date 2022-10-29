@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_pipe_line.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:22:13 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:05 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./include/minishell.h"
 
 int	execute_built_in(char **cmd_arr, int pipe_cnt)
@@ -48,7 +60,7 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 	int		stdout_backup;
 
 	stdout_backup = dup(STDOUT);
-	flag = dup_redirection(symbol, stdin_backup);
+	flag = dup_redirection(symbol, stdin_backup, i);
 	pipe(fd_pipe);
 	pid = fork();
 	if (pid > 0)
@@ -59,7 +71,7 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 	else
 	{
 		set_child_signal();
-		dup_child_pipe(fd_pipe, flag, pipe_cnt, i); 
+		dup_child_pipe(fd_pipe, flag, pipe_cnt, i);
 		execute_cmd(symbol, pipe_cnt);
 	}
 	close(fd_pipe[0]);

@@ -2,7 +2,8 @@
 
 NAME = libft.a
 
-CFLAG = -Wall -Wextra -Werror -MMD -MP -g
+CC = cc
+CFLAG = -Wall -Wextra -Werror -MMD -MP
 AR = ar rcu
 
 SRCS_1	= ft_strlen.c		\

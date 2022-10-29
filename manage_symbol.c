@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   manage_symbol.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:23:35 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:33:23 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_symbol	*new_symbol(char *str)
@@ -55,7 +67,5 @@ t_symbol	*make_symbol_lst(char **temp)
 		i++;
 	}
 	free(temp);
-	if (i == 0)
-		symbol_lst = new_symbol("");
 	return (symbol_lst);
 }

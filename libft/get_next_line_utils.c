@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyuki <jaehyuki@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/16 16:40:05 by jaehyuki          #+#    #+#             */
-/*   Updated: 2022/07/16 16:40:11 by jaehyuki         ###   ########.fr       */
+/*   Created: 2022/10/29 19:38:44 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:38:46 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

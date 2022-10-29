@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_pipe_line_io.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:24:35 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:29 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	open_file(char *file, int redirection_type)
@@ -21,25 +33,26 @@ int	open_file(char *file, int redirection_type)
 	return (fd);
 }
 
-int	read_here_doc(char *limiter, int stdin_backup)
+int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 {
 	size_t	len_limiter;
 	char	*line;
 	int		status;
 	int		fd;
 
-	fd = open_file(".heredoc_tmp", T_IN_HEREDOC);
+	fd = open_file(heredoc_tmp, T_IN_HEREDOC);
 	if (fd < 0)
 		return (-1);
 	len_limiter = ft_strlen(limiter);
 	while (1)
 	{
-		write(STDOUT, ">", 1);
+		write(2, ">", 1);
 		status = get_next_line(stdin_backup, &line);
 		if (status == -1)
 			allocat_error();
-		if (status == 0 || (line[len_limiter] == '\n'
-				&& limiter && !ft_strncmp(line, limiter, len_limiter)))
+		if (g_info->flag || (status == 0 || (line[ft_strlen(line) - 1] == '\n' \
+				&& limiter && !ft_strncmp (line, limiter, \
+					len_cmp(ft_strlen(line) - 1, len_limiter)))))
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
@@ -49,7 +62,7 @@ int	read_here_doc(char *limiter, int stdin_backup)
 	return (0);
 }
 
-int	dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup)
+int	dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup, int i)
 {
 	int	fd_redirection;
 	int	flag;
@@ -66,7 +79,7 @@ int	dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup)
 		flag = DID_IN_RID;
 	}
 	else if (type_rid == T_IN_HEREDOC)
-		flag = task_here_doc(symbol, &fd_redirection, stdin_backup);
+		flag = task_here_doc(symbol, &fd_redirection, stdin_backup, i);
 	if (flag == DID_IN_RID && !count_after_rid(symbol))
 	{
 		dup2(fd_redirection, STDIN);
@@ -88,7 +101,7 @@ int	dup_out_redirection(t_symbol *symbol, int type_rid)
 	return (DID_OUT_RID);
 }
 
-int	dup_redirection(t_symbol *symbol, int stdin_backup)
+int	dup_redirection(t_symbol *symbol, int stdin_backup, int i)
 {
 	int	in_flag;
 	int	out_flag;
@@ -101,7 +114,7 @@ int	dup_redirection(t_symbol *symbol, int stdin_backup)
 		type_rid = symbol->type;
 		if (type_rid == T_IN_RID || type_rid == T_IN_HEREDOC)
 		{
-			in_flag = dup_in_redirection(symbol, type_rid, stdin_backup);
+			in_flag = dup_in_redirection(symbol, type_rid, stdin_backup, i);
 			if (in_flag < 0)
 				return (-1);
 		}

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:21:51 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:10 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_symbol	*find_last(t_symbol *symbol)
@@ -18,7 +30,7 @@ t_symbol	*find_last(t_symbol *symbol)
 
 void	swap_symbol(t_symbol *symbol)
 {
-	int 	temp_type;
+	int		temp_type;
 	char	*temp_str;
 
 	temp_type = symbol->type;
@@ -70,7 +82,6 @@ t_token	*pipeline(t_symbol *symbol)
 			while (tmp && tmp->type != T_PIPE)
 				tmp = tmp->next;
 		}
-		
 		return (token);
 	}
 }

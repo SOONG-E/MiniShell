@@ -1,21 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:22:25 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:40 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-void	init_shell(char **env)
-{
-	// int		shell_img;
-	// char	img;
-
-	// shell_img = open(".daengdaeng.txt", O_RDONLY);
-	// if (shell_img < 0)
-	// 	exit(1);
-	// while (read(shell_img, &img, 1) > 0)
-	// {
-	// 	write(1, &img, 1);
-	// 	usleep(600);
-	// }
-	// close(shell_img);
-	init_info(env);
-}
 
 void	execute(char *str)
 {
@@ -32,7 +27,7 @@ int	main(int ac, char **av, char **env)
 
 	if (ac != 1 && av)
 		return (0);
-	init_shell(env);
+	init_info(env);
 	while (1)
 	{
 		set_signal();

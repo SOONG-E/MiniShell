@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_pipe_line_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:22:10 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:33 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	wait_process(pid_t *pid, int pipe_cnt)
@@ -12,7 +24,10 @@ void	wait_process(pid_t *pid, int pipe_cnt)
 		i++;
 	}
 	free(pid);
-	set_exit_code(exit_code);
+	if (WIFSIGNALED(exit_code))
+		set_exit_code(WTERMSIG(exit_code) + 128);
+	else if (WIFEXITED(exit_code))
+		set_exit_code(WEXITSTATUS(exit_code));
 }
 
 int	get_pipe_cnt(t_symbol *symbol)

@@ -1,4 +1,16 @@
-#ifndef	SYMBOLS_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   symbols.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:24:50 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:35:33 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SYMBOLS_H
 # define SYMBOLS_H
 
 # define T_CMD			0
@@ -39,4 +51,5 @@
 # define DID_IN_RID		1
 # define DID_OUT_RID	2
 # define DID_BOTH_RID	3
+
 #endif

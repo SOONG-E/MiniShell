@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:35:27 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -135,6 +147,7 @@ int			lbrace_case(t_symbol *symbol_lst);
 int			rbrace_case(t_symbol *symbol_lst);
 int			pipe_andif_orif_case(t_symbol *symbol_lst);
 int			direction_case(t_symbol *symbol_lst);
+int			check_first_type(int type);
 
 /* functions for built_in */
 t_cd		*ft_init_cd_info(int pipe_cnt, char *arg);
@@ -163,15 +176,17 @@ int			get_pipe_cnt(t_symbol *symbol);
 void		wait_process(pid_t *pid, int pipe_cnt);
 
 /* execute_pipe_line_io.c */
-int			dup_redirection(t_symbol *symbol, int stdin_backup);
+int			dup_redirection(t_symbol *symbol, int stdin_backup, int i);
 int			dup_out_redirection(t_symbol *symbol, int type_rid);
-int			dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup);
+int			dup_in_redirection(t_symbol *symbol, int type_rid,
+				int stdin_backup, int i);
 int			open_file(char *file, int redirection_type);
-int			read_here_doc(char *limiter, int stdin_backup);
+int			read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp);
 
 /* execute_pipe_line_io_utils.c */
-int			task_here_doc(t_symbol *symbol, int *fd, int stdin_backup);
+int			task_here_doc(t_symbol *symbol, int *fd, int stdin_backup, int i);
 int			count_after_rid(t_symbol *symbol);
+int			len_cmp(int a, int b);
 void		dup_parant_pipe(int *fd_pipe, int stdout_backup);
 void		dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt, int i);
 

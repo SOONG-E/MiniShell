@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:23:52 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:33:48 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_origin_op(int type)
@@ -57,19 +69,16 @@ int	check_expression_error(t_symbol *symbol)
 
 int	check_unexpected_token(t_symbol *symbol_lst)
 {
-	if (symbol_lst->type >= 1 && symbol_lst->type <= 6)
-		return (syntax_error_token(get_origin_op(symbol_lst->type)));
 	while (symbol_lst->next)
 	{
-		if (symbol_lst->type == T_LBRACE)
-			return (lbrace_case(symbol_lst));
-		else if (symbol_lst->type == T_RBRACE)
-			return (rbrace_case(symbol_lst));
-		else if (symbol_lst->type >= T_PIPE && symbol_lst->type <= T_OR_IF)
-			return (pipe_andif_orif_case(symbol_lst));
-		else if (symbol_lst->type >= T_IN_RID && \
-		symbol_lst->type <= T_OUT_HEREDOC)
-			return (direction_case(symbol_lst));
+		if (lbrace_case(symbol_lst))
+			return (1);
+		if (rbrace_case(symbol_lst))
+			return (1);
+		if (pipe_andif_orif_case(symbol_lst))
+			return (1);
+		if (direction_case(symbol_lst))
+			return (1);
 		symbol_lst = symbol_lst->next;
 	}
 	if (symbol_lst->pre && symbol_lst->pre->type == \
@@ -82,6 +91,8 @@ int	check_unexpected_token(t_symbol *symbol_lst)
 
 int	validate(t_symbol *symbol_lst)
 {
+	if (check_first_type(symbol_lst->type))
+		return (syntax_error_token(get_origin_op(symbol_lst->type)));
 	if (check_unexpected_token(symbol_lst))
 		return (1);
 	if (check_expression_error(symbol_lst))
@@ -91,15 +102,3 @@ int	validate(t_symbol *symbol_lst)
 	}
 	return (0);
 }
-
-/*
-validate rule
-
-1. lbrace
- 1-1. pre가 ||, && 아닌 경우	syntax_error_token("(")
- 1-2. next가 연산자인 경우(< << > >> 제외)		syntax_error_token(연산자)
-2. rbrace
- 2-1. next가 연산자가 아닌 경우, lbrace인 경우	syntax_error_token(next->type)
-3. 
-
-*/

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_cmd.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:19:07 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:32:34 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*get_cmd_path(char *cmd, char *path)
@@ -20,7 +32,7 @@ char	*get_cmd_path(char *cmd, char *path)
 			path += ft_strlen(path);
 	}
 	if (stat(cmd, &sb) >= 0)
-		return ft_strdup(cmd);
+		return (ft_strdup(cmd));
 	return (NULL);
 }
 

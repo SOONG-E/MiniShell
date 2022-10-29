@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   brace_group.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/24 16:21:47 by minsukan          #+#    #+#             */
+/*   Updated: 2022/10/29 19:34:02 by minsukan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_token	*brace_group(t_symbol *symbol)
 {
-	t_symbol *temp;
+	t_symbol	*temp;
 
 	symbol = symbol->next;
 	if (symbol->pre)
