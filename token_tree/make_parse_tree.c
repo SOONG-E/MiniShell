@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_parse_tree.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:21:50 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:34:05 by minsukan         ###   ########.fr       */
+/*   Created: 2022/10/24 16:21:50 by yujelee           #+#    #+#             */
+/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 

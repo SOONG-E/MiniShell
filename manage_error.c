@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 19:39:24 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:41:20 by minsukan         ###   ########.fr       */
+/*   Created: 2022/10/29 19:39:24 by yujelee           #+#    #+#             */
+/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 

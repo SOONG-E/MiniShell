@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+         #
+#    By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:22:38 by minsukan            #+#    #+#              #
 #    Updated: 2022/10/29 19:32:09 by minsukan         ###   ########.fr        #

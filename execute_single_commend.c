@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_single_commend.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:22:15 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/31 18:56:27 by minsukan         ###   ########.fr       */
+/*   Created: 2022/10/24 16:22:15 by yujelee           #+#    #+#             */
+/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
