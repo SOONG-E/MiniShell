@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:24 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:31 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:57:40 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static char	*pipe_get_name(char *arg);
 static void	pipe_print_export(void);
@@ -66,10 +66,11 @@ static void	pipe_print_export(void)
 		if (temp->value)
 		{
 			write(1, "=\"", 1);
-			write(1, temp->value, ft_strlen(temp->key));
+			write(1, temp->value, ft_strlen(temp->value));
 			write(1, "\"", 1);
 		}
 		write(1, "\n", 1);
 		temp = temp->next;
 	}
+	exit(0);
 }

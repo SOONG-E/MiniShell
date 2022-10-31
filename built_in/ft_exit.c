@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:19 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:21 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:44 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static void	error_msg_exit(char *arg, int code)
 {
@@ -47,6 +47,8 @@ void	ft_exit(char **arg, int pipe_cnt)
 	if (arg[1])
 	{
 		i = 0;
+		if (arg[1] && (arg[1][0] == '-' || arg[1][0] == '+'))
+			++i;
 		while (arg[1][i] && ft_isdigit(arg[1][i]))
 			++i;
 		if (i < (int)ft_strlen(arg[1]))

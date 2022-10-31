@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_line_io_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:06 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 20:33:07 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/10/31 14:11:54 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,11 @@ void	dup_child_pipe(int *fd_pipe, int flag, int pipe_cnt, int i)
 		dup2(fd_pipe[1], STDOUT);
 	if (flag < 0)
 		exit(1);
+}
+
+int	len_cmp(int a, int b)
+{
+	if (a > b)
+		return (a);
+	return (b);
 }

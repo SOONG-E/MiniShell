@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:15 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:34:40 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:27 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int	free_and_close(char **cmd_arr, int stdin_backup, int stdout_backup)
 {

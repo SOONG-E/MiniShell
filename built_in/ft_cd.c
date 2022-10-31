@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:12 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:06 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:58 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 void	ft_cd(char **arg, int pipe_cnt)
 {
