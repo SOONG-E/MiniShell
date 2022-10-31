@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:27 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:38 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:32 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static int	arg_vaild_check(char *str)
 {
@@ -19,7 +19,7 @@ static int	arg_vaild_check(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (ft_isalnum(str[i]) || str[i] != '_')
+		if (ft_isalnum(str[i]) || str[i] == '_')
 			i++;
 		else
 			return (1);

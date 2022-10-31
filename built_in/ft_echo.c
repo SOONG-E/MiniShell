@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:14 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:10 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:55 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static int	recognize_echo_option(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:21 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:27 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:41 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static void	set_env(char *name, char *arg);
 static void	print_export(void);

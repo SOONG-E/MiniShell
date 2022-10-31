@@ -6,11 +6,11 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:13 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:34:05 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:56:30 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int	execute_built_in(char **cmd_arr, int pipe_cnt)
 {
