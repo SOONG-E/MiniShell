@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:10 by yujelee           #+#    #+#             */
-/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/02 15:19:35 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_check_rv(t_cd *info)
 		chdir(info->cwd);
 		free(info->cwd);
 		free(info->pwd);
-		printf("%s: cd: %s: No such file or directory\n", SHELL, info->path);
+		printf("%s: cd: %s: unreachable path\n", SHELL, info->path);
 		set_exit_code(1);
 		if (info->pipe_cnt)
 			exit(1);

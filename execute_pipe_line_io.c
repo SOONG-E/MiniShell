@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:35 by yujelee           #+#    #+#             */
-/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/02 15:17:01 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	dup_redirection(t_symbol *symbol, int stdin_backup, int i)
 			if (out_flag < 0)
 				return (-1);
 		}
-		symbol = symbol->next->next;
+		symbol = symbol->next;
 	}
 	return (in_flag + out_flag);
 }

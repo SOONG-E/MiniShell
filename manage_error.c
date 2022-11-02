@@ -6,11 +6,13 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:39:24 by yujelee           #+#    #+#             */
-/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/02 15:29:40 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
+#include <string.h>
 
 void	allocat_error(void)
 {
@@ -30,9 +32,14 @@ void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 	(void)env;
 	(void)cmd_arr;
 	(void)cmd_path;
-	ft_putstr_fd("minihell: command not found: ", STDERR);
-	ft_putstr_fd(cmd_arr[0], STDERR);
-	ft_putstr_fd("\n", STDERR);
+	if (errno == 13)
+		printf("%s: %s\n", SHELL, strerror(errno));
+	else
+	{
+		ft_putstr_fd("minihell: command not found: ", STDERR);
+		ft_putstr_fd(cmd_arr[0], STDERR);
+		ft_putstr_fd("\n", STDERR);
+	}
 	if (cmd_path)
 		free(cmd_path);
 	if (cmd_arr && *cmd_arr)

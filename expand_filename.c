@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:23 by yujelee           #+#    #+#             */
-/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/02 15:10:26 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	word_compare(char **filename, char *wild, int *idx)
 		else
 			return (0);
 	}
+	if (wild[*idx] != '*' && **filename != wild[*idx])
+		return (0);
 	if (!wild[*idx] && **filename)
 		return (0);
 	return (1);
@@ -94,7 +96,7 @@ t_symbol	*get_file_lst(t_symbol *symbol)
 	file_entry = readdir(dirp);
 	file_entry = readdir(dirp);
 	while (file_entry)
-	{
+	{	
 		if (cmp_wild_card(file_entry->d_name, symbol->str))
 		{
 			file = new_symbol(file_entry->d_name);
