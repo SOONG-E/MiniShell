@@ -6,7 +6,7 @@
 #    By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/24 16:22:38 by minsukan            #+#    #+#              #
-#    Updated: 2022/10/29 19:32:09 by minsukan         ###   ########.fr        #
+#    Updated: 2022/11/04 16:10:28 by yujelee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME		=	minishell
 CFLAGS		=	-Wall -Werror -Wextra -MMD -MP
-CPPFLAGS	=	-I./include -I$(HOME)/.brew/opt/readline/include
+CPPFLAGS	=	-I./include -I./libft -I$(HOME)/.brew/opt/readline/include
 LDFLAGS		=	-L./libft -L$(HOME)/.brew/opt/readline/lib
 LDLIBS		=	-lft -lreadline
 RM			=	rm -rf

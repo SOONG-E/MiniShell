@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:45:26 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 16:08:51 by yujelee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 # include <sys/errno.h>
-# include "../../libft/libft.h"
+# include "libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 
