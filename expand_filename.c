@@ -6,7 +6,7 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:23 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:34:44 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:04:29 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static int	word_compare(char **filename, char *wild, int *idx)
 		else
 			return (0);
 	}
+	if (wild[*idx] != '*' && **filename != wild[*idx])
+		return (0);
 	if (!wild[*idx] && **filename)
 		return (0);
 	return (1);

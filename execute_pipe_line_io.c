@@ -6,7 +6,7 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:35 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:34:29 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 09:46:22 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	dup_redirection(t_symbol *symbol, int stdin_backup, int i)
 			if (out_flag < 0)
 				return (-1);
 		}
-		symbol = symbol->next->next;
+		symbol = symbol->next;
 	}
 	return (in_flag + out_flag);
 }

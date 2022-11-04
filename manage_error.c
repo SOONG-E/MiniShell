@@ -6,7 +6,7 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:39:24 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:41:20 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:01:56 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,14 @@ void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 	(void)env;
 	(void)cmd_arr;
 	(void)cmd_path;
-	ft_putstr_fd("minihell: command not found: ", STDERR);
-	ft_putstr_fd(cmd_arr[0], STDERR);
-	ft_putstr_fd("\n", STDERR);
+	if (errno == 13)
+		printf("%s: %s\n", SHELL, strerror(errno));
+	else
+	{
+		ft_putstr_fd("minihell: command not found: ", STDERR);
+		ft_putstr_fd(cmd_arr[0], STDERR);
+		ft_putstr_fd("\n", STDERR);
+	}
 	if (cmd_path)
 		free(cmd_path);
 	if (cmd_arr && *cmd_arr)

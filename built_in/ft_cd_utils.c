@@ -6,7 +6,7 @@
 /*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:10 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/31 18:57:00 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 09:46:44 by minsukan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_check_rv(t_cd *info)
 		chdir(info->cwd);
 		free(info->cwd);
 		free(info->pwd);
-		printf("%s: cd: %s: No such file or directory\n", SHELL, info->path);
+		printf("%s: cd: %s: cd error\n", SHELL, info->path);
 		set_exit_code(1);
 		if (info->pipe_cnt)
 			exit(1);
