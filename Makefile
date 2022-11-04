@@ -1,72 +1,59 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/24 16:22:38 by minsukan            #+#    #+#              #
-#    Updated: 2022/10/29 19:32:09 by minsukan         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 .DEFAULT_GOAL = all
 
 NAME		=	minishell
-CC			= 	cc
-
-RM			=	rm -rf
+BONUS	= minishell_bonus
 CFLAGS		=	-Wall -Werror -Wextra -MMD -MP
-CPPFLAGS	=	-I$(HOME)/homebrew/opt/readline/include
+CPPFLAGS	=	-I./include -I$(HOME)/homebrew/opt/readline/include
 LDFLAGS		=	-L./libft -L$(HOME)/homebrew/opt/readline/lib
 LDLIBS		=	-lft -lreadline
+RM			=	rm -rf
 
 OUTDIR		=	out/
 
 LIBFT		=	./libft/libft.a
 
-SRCS		= 	mandatory/main.c					\
+SRCS		= 	mandatory/main.c							\
 				mandatory/parse_line.c					\
-				mandatory/replace_space.c				\
+				mandatory/replace_space.c					\
 				mandatory/replace_op.c					\
 				mandatory/expand_env.c					\
-				mandatory/expand_env_utils.c			\
-				mandatory/manage_symbol.c				\
-				mandatory/manage_envlst.c				\
-				mandatory/manage_error.c				\
+				mandatory/expand_env_utils.c				\
+				mandatory/manage_symbol.c					\
+				mandatory/manage_envlst.c					\
+				mandatory/manage_error.c					\
 				mandatory/manage_env.c					\
 				mandatory/manage_mem.c					\
-				mandatory/manage_signal.c				\
-				mandatory/symbolize.c					\
+				mandatory/manage_signal.c					\
+				mandatory/symbolize.c						\
 				mandatory/preprocess_line.c				\
-				mandatory/check_cmd.c					\
-				mandatory/validate.c					\
+				mandatory/check_cmd.c						\
+				mandatory/validate.c						\
 				mandatory/validate_utils.c				\
 				mandatory/manage_info.c					\
 				mandatory/expand_filename.c				\
-				mandatory/delete_quote.c				\
+				mandatory/delete_quote.c					\
 				mandatory/execute.c						\
-				mandatory/token_tree/and_or.c			\
+				mandatory/token_tree/and_or.c				\
 				mandatory/token_tree/brace_group.c		\
 				mandatory/token_tree/make_parse_tree.c	\
 				mandatory/token_tree/pipeline.c			\
-				mandatory/token_tree/utils.c			\
-				mandatory/execute_pipe_line.c			\
+				mandatory/token_tree/utils.c				\
+				mandatory/execute_pipe_line.c				\
 				mandatory/execute_pipe_line_utils.c		\
-				mandatory/execute_pipe_line_io.c		\
+				mandatory/execute_pipe_line_io.c			\
 				mandatory/execute_pipe_line_io_utils.c	\
 				mandatory/execute_single_commend.c		\
-				mandatory/replace_wild_card.c			\
-				mandatory/make_env.c					\
+				mandatory/replace_wild_card.c				\
+				mandatory/make_env.c						\
 				mandatory/built_in/ft_cd.c				\
-				mandatory/built_in/ft_cd_utils.c		\
-				mandatory/built_in/ft_echo.c			\
+				mandatory/built_in/ft_cd_utils.c			\
+				mandatory/built_in/ft_echo.c				\
 				mandatory/built_in/ft_env.c				\
-				mandatory/built_in/ft_exit.c			\
+				mandatory/built_in/ft_exit.c				\
 				mandatory/built_in/ft_export.c			\
 				mandatory/built_in/ft_pwd.c				\
-				mandatory/built_in/ft_unset.c			\
-				mandatory/built_in/ft_pipe_export.c
+				mandatory/built_in/ft_unset.c				\
+				mandatory/built_in/ft_pipe_export.c						
 
 BONUS_SRCS		= 	bonus/main_bonus.c					\
 				bonus/parse_line_bonus.c					\
@@ -120,7 +107,9 @@ $(OUTDIR)%.o : %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-bonus :$(BONUS_OBJS) $(BONUS_SRCS)
+bonus : $(BONUS)
+
+$(BONUS) : $(BONUS_OBJS)
 	$(MAKE) -C $(dir $(LIBFT))
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
@@ -128,7 +117,7 @@ all		:
 	$(MAKE) -C $(dir $(LIBFT))
 	$(MAKE) $(NAME)
 
-$(NAME) : $(OBJS) $(SRCS)
+$(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
 
 $(OBJS) : $(LIBFT)
@@ -141,9 +130,9 @@ clean	:
 	@$(MAKE) -C $(dir $(LIBFT)) clean
 
 fclean	: clean
-	@$(RM) $(NAME) $(LIBFT)
+	@$(RM) $(NAME) $(LIBFT) $(BONUS)
 
 re		: fclean
 	$(MAKE) all
 
-.PHONY	: all clean fclean re $(dir $(LIBFT))
+.PHONY	: all clean fclean re $(dir $(LIBFT)) bonus
