@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:24:47 by yujelee           #+#    #+#             */
-/*   Updated: 2022/11/02 12:15:41 by yujelee          ###   ########seoul.kr  */
+/*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
+/*   Updated: 2022/11/04 15:45:26 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <curses.h>
 # include <string.h>
+# include <curses.h>
 # include <signal.h>
 # include <dirent.h>
 # include <termios.h>
@@ -27,7 +27,7 @@
 # include <sys/stat.h>
 # include <sys/ioctl.h>
 # include <sys/errno.h>
-# include "../libft/libft.h"
+# include "../../libft/libft.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 
@@ -91,6 +91,7 @@ void		ft_envlst_add_back(t_envlst *new);
 void		set_envlst(char *key, char *value);
 
 /*manage_error.c*/
+void		print_error(char *msg1, char *msg2, char *msg3, int type);
 void		allocat_error(void);
 int			error_msg(char *str);
 void		execute_error(char *cmd_path, char **cmd_arr, char **env);

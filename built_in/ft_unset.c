@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 16:24:27 by yujelee           #+#    #+#             */
-/*   Updated: 2022/10/31 19:03:58 by yujelee          ###   ########seoul.kr  */
+/*   Created: 2022/10/24 16:24:27 by minsukan          #+#    #+#             */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_unset(char **arg, int pipe_cnt)
 	{
 		if (arg_vaild_check(arg[i]))
 		{
-			printf("%s: unset: '%s': not a valid identiier\n", SHELL, arg[i]);
+			print_error("unset: '", arg[i], "': not a valid identiier", 2);
 			if (pipe_cnt)
 				exit(1);
 			set_exit_code(1);
