@@ -6,11 +6,11 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:16 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:36:49 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 void	ft_env(char **arg, int pipe_cnt)
 {

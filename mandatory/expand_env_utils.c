@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:18 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:01:29 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 char	*get_value(char *str, int *idx)
 {

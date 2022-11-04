@@ -3,24 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   manage_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:39:24 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:01:47 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
+
+void	print_error(char *msg1, char *msg2, char *msg3, int type)
+{
+	if (type < 0)
+		type *= -1;
+	else
+	{
+		ft_putstr_fd(SHELL, STDERR);
+		ft_putstr_fd(": ", STDERR);
+	}
+	ft_putstr_fd(msg1, STDERR);
+	if (type >= 1)
+		ft_putstr_fd(msg2, STDERR);
+	if (type >= 2)
+		ft_putstr_fd(msg3, STDERR);
+	ft_putstr_fd("\n", STDERR);
+}
 
 void	allocat_error(void)
 {
-	printf("Allocate Error!\n");
+	print_error("Allocate Error!", NULL, NULL, 0);
 	exit(errno);
 }
 
 int	error_msg(char *str)
 {
-	printf("%s: %s\n", SHELL, str);
+	print_error(str, NULL, NULL, 0);
 	set_exit_code(127);
 	return (0);
 }
@@ -31,13 +48,9 @@ void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 	(void)cmd_arr;
 	(void)cmd_path;
 	if (errno == 13)
-		printf("%s: %s\n", SHELL, strerror(errno));
+		print_error(strerror(errno), NULL, NULL, 0);
 	else
-	{
-		ft_putstr_fd("minihell: command not found: ", STDERR);
-		ft_putstr_fd(cmd_arr[0], STDERR);
-		ft_putstr_fd("\n", STDERR);
-	}
+		print_error("command not found: ", cmd_arr[0], NULL, 1);
 	if (cmd_path)
 		free(cmd_path);
 	if (cmd_arr && *cmd_arr)
@@ -49,10 +62,6 @@ void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 
 int	open_file_error(char *file)
 {
-	ft_putstr_fd("minihell: ", STDERR);
-	ft_putstr_fd(file, STDERR);
-	ft_putstr_fd(": ", STDERR);
-	ft_putstr_fd(strerror(errno), STDERR);
-	ft_putstr_fd("\n", STDERR);
+	print_error(file, ": ", strerror(errno), 2);
 	return (-1);
 }

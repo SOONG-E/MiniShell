@@ -6,11 +6,11 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:23:52 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:36:39 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 15:53:15 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 char	*get_origin_op(int type)
 {
@@ -33,10 +33,7 @@ int	syntax_error_token(char *str)
 {
 	if (str[0] < 0)
 		str = get_origin_op(classify_op(str));
-	ft_putstr_fd(SHELL, STDERR);
-	ft_putstr_fd(": syntax error near unexpected token \'", STDERR);
-	ft_putstr_fd(str, STDERR);
-	ft_putstr_fd("\'\n", STDERR);
+	print_error("syntax error near unexpected token '", str, "'", 2);
 	set_exit_code(127);
 	return (1);
 }

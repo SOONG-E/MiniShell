@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:21 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:00:33 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static void	set_env(char *name, char *arg);
 static void	print_export(void);
@@ -32,8 +32,7 @@ void	ft_export(char **arg, int pipe_cnt)
 		name = get_name(arg[idx]);
 		if (!name)
 		{
-			printf("%s: export: `%s': not a valid identifier\n", \
-			SHELL, arg[idx]);
+			print_error("export: `", arg[idx], "': not a valid identifier", 2);
 			set_exit_code(127);
 			return ;
 		}

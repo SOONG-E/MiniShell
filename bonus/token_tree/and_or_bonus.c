@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   and_or_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:21:42 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:02:22 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 t_token	*and_or(t_symbol *symbol)
 {

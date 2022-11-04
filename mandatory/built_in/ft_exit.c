@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:19 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:00:28 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 static void	error_msg_exit(char *arg, int code)
 {
 	if (arg)
 	{
-		printf("%s: exit: %s: numeric argument required\n", SHELL, arg);
+		print_error("exit: ", arg, ": numeric argument required", 2);
 		exit(code);
 	}
 	else
-		printf("%s: exit: too many arguments\n", SHELL);
+		print_error("exit: too many arguments", NULL, NULL, 0);
 }
 
 static void	exit_with_exit(int code, int pipe_cnt, char *arg, int error)

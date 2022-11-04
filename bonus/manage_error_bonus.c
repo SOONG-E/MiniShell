@@ -6,11 +6,11 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 19:39:24 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:23:29 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 15:53:15 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 void	print_error(char *msg1, char *msg2, char *msg3, int type)
 {
@@ -62,11 +62,6 @@ void	execute_error(char *cmd_path, char **cmd_arr, char **env)
 
 int	open_file_error(char *file)
 {
-	print_error(file, strerror(errno), NULL, 1);
-	// ft_putstr_fd("minihell: ", STDERR);
-	// ft_putstr_fd(file, STDERR);
-	// ft_putstr_fd(": ", STDERR);
-	// ft_putstr_fd(strerror(errno), STDERR);
-	// ft_putstr_fd("\n", STDERR);
+	print_error(file, ": ", strerror(errno), 2);
 	return (-1);
 }

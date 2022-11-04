@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   replace_op.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:23:42 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:02:02 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 static char	*combine_str(char *s1, char *s2, char *s3, int *i);
 static char	*get_op(char *str);

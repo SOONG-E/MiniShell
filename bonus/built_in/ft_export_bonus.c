@@ -6,11 +6,11 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:21 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:37:04 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 static void	set_env(char *name, char *arg);
 static void	print_export(void);

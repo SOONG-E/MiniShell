@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   replace_wild_card_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:23:46 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:01:49 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:15 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 void	replace_back_wild_card(char **str)
 {

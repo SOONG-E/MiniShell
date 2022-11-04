@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validate_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:23:50 by minsukan          #+#    #+#             */
-/*   Updated: 2022/10/29 19:33:01 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int	check_first_type(int type)
 {

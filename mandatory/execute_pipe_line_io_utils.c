@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execute_pipe_line_io_utils.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:06 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:01:15 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 int	count_after_rid(t_symbol *symbol)
 {

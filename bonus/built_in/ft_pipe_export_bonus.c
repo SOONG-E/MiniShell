@@ -6,11 +6,11 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:24 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:37:07 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell_bonus.h"
+#include "minishell_bonus.h"
 
 static char	*pipe_get_name(char *arg);
 static void	pipe_print_export(void);

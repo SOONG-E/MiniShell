@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 14:11:29 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/04 15:45:26 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void		ft_envlst_add_back(t_envlst *new);
 void		set_envlst(char *key, char *value);
 
 /*manage_error.c*/
+void		print_error(char *msg1, char *msg2, char *msg3, int type);
 void		allocat_error(void);
 int			error_msg(char *str);
 void		execute_error(char *cmd_path, char **cmd_arr, char **env);

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validate.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:23:52 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:02:13 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./include/minishell.h"
+#include "minishell.h"
 
 char	*get_origin_op(int type)
 {
@@ -33,7 +33,7 @@ int	syntax_error_token(char *str)
 {
 	if (str[0] < 0)
 		str = get_origin_op(classify_op(str));
-	printf("%s: syntax error near unexpected token \'%s\'\n", SHELL, str);
+	print_error("syntax error near unexpected token '", str, "'", 2);
 	set_exit_code(127);
 	return (1);
 }
