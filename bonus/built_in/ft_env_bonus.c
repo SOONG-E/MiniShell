@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:16 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:02:05 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:36:49 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_env(char **arg, int pipe_cnt)
 	tmp = g_info->envlst;
 	if (arg[1])
 	{
-		printf("env: %s: No such file or directory\n", arg[1]);
+		print_error("env: ", arg[1], ": No such file or directory", -2);
 		if (pipe_cnt)
 			exit(127);
 		set_exit_code(127);

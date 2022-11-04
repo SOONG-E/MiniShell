@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:21 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:02:10 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:37:04 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void	ft_export(char **arg, int pipe_cnt)
 		name = get_name(arg[idx]);
 		if (!name)
 		{
-			printf("%s: export: `%s': not a valid identifier\n", \
-			SHELL, arg[idx]);
+			print_error("export: `", arg[idx], "': not a valid identifier", 2);
 			set_exit_code(127);
 			return ;
 		}

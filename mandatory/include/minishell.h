@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 10:49:39 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:11:29 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 # include <curses.h>
 # include <signal.h>
 # include <dirent.h>

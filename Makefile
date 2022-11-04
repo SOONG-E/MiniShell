@@ -1,105 +1,67 @@
 .DEFAULT_GOAL = all
 
 NAME		=	minishell
-BONUS	= minishell_bonus
 CFLAGS		=	-Wall -Werror -Wextra -MMD -MP
-CPPFLAGS	=	-I./include -I$(HOME)/homebrew/opt/readline/include
-LDFLAGS		=	-L./libft -L$(HOME)/homebrew/opt/readline/lib
+CPPFLAGS	=	-I./include -I$(HOME)/.brew/opt/readline/include
+LDFLAGS		=	-L./libft -L$(HOME)/.brew/opt/readline/lib
 LDLIBS		=	-lft -lreadline
 RM			=	rm -rf
 
 OUTDIR		=	out/
 
+DIR = mandatory/
+TAIL = 
+ifdef bonus
+	DIR = bonus/
+	TAIL = _bonus
+endif
+
 LIBFT		=	./libft/libft.a
 
-SRCS		= 	mandatory/main.c							\
-				mandatory/parse_line.c					\
-				mandatory/replace_space.c					\
-				mandatory/replace_op.c					\
-				mandatory/expand_env.c					\
-				mandatory/expand_env_utils.c				\
-				mandatory/manage_symbol.c					\
-				mandatory/manage_envlst.c					\
-				mandatory/manage_error.c					\
-				mandatory/manage_env.c					\
-				mandatory/manage_mem.c					\
-				mandatory/manage_signal.c					\
-				mandatory/symbolize.c						\
-				mandatory/preprocess_line.c				\
-				mandatory/check_cmd.c						\
-				mandatory/validate.c						\
-				mandatory/validate_utils.c				\
-				mandatory/manage_info.c					\
-				mandatory/expand_filename.c				\
-				mandatory/delete_quote.c					\
-				mandatory/execute.c						\
-				mandatory/token_tree/and_or.c				\
-				mandatory/token_tree/brace_group.c		\
-				mandatory/token_tree/make_parse_tree.c	\
-				mandatory/token_tree/pipeline.c			\
-				mandatory/token_tree/utils.c				\
-				mandatory/execute_pipe_line.c				\
-				mandatory/execute_pipe_line_utils.c		\
-				mandatory/execute_pipe_line_io.c			\
-				mandatory/execute_pipe_line_io_utils.c	\
-				mandatory/execute_single_commend.c		\
-				mandatory/replace_wild_card.c				\
-				mandatory/make_env.c						\
-				mandatory/built_in/ft_cd.c				\
-				mandatory/built_in/ft_cd_utils.c			\
-				mandatory/built_in/ft_echo.c				\
-				mandatory/built_in/ft_env.c				\
-				mandatory/built_in/ft_exit.c				\
-				mandatory/built_in/ft_export.c			\
-				mandatory/built_in/ft_pwd.c				\
-				mandatory/built_in/ft_unset.c				\
-				mandatory/built_in/ft_pipe_export.c						
-
-BONUS_SRCS		= 	bonus/main_bonus.c					\
-				bonus/parse_line_bonus.c					\
-				bonus/replace_space_bonus.c				\
-				bonus/replace_op_bonus.c					\
-				bonus/expand_env_bonus.c					\
-				bonus/expand_env_utils_bonus.c			\
-				bonus/manage_symbol_bonus.c				\
-				bonus/manage_envlst_bonus.c				\
-				bonus/manage_error_bonus.c				\
-				bonus/manage_env_bonus.c					\
-				bonus/manage_mem_bonus.c					\
-				bonus/manage_signal_bonus.c				\
-				bonus/symbolize_bonus.c					\
-				bonus/preprocess_line_bonus.c				\
-				bonus/check_cmd_bonus.c					\
-				bonus/validate_bonus.c					\
-				bonus/validate_utils_bonus.c				\
-				bonus/manage_info_bonus.c					\
-				bonus/expand_filename_bonus.c				\
-				bonus/delete_quote_bonus.c				\
-				bonus/execute_bonus.c						\
-				bonus/token_tree/and_or_bonus.c			\
-				bonus/token_tree/brace_group_bonus.c		\
-				bonus/token_tree/make_parse_tree_bonus.c	\
-				bonus/token_tree/pipeline_bonus.c			\
-				bonus/token_tree/utils_bonus.c			\
-				bonus/execute_pipe_line_bonus.c			\
-				bonus/execute_pipe_line_utils_bonus.c		\
-				bonus/execute_pipe_line_io_bonus.c		\
-				bonus/execute_pipe_line_io_utils_bonus.c	\
-				bonus/execute_single_commend_bonus.c		\
-				bonus/replace_wild_card_bonus.c			\
-				bonus/make_env_bonus.c					\
-				bonus/built_in/ft_cd_bonus.c				\
-				bonus/built_in/ft_cd_utils_bonus.c		\
-				bonus/built_in/ft_echo_bonus.c			\
-				bonus/built_in/ft_env_bonus.c				\
-				bonus/built_in/ft_exit_bonus.c			\
-				bonus/built_in/ft_export_bonus.c			\
-				bonus/built_in/ft_pwd_bonus.c				\
-				bonus/built_in/ft_unset_bonus.c			\
-				bonus/built_in/ft_pipe_export_bonus.c
+SRCS		= 	$(DIR)main$(TAIL).c							\
+				$(DIR)parse_line$(TAIL).c					\
+				$(DIR)replace_space$(TAIL).c					\
+				$(DIR)replace_op$(TAIL).c					\
+				$(DIR)expand_env$(TAIL).c					\
+				$(DIR)expand_env_utils$(TAIL).c				\
+				$(DIR)manage_symbol$(TAIL).c					\
+				$(DIR)manage_envlst$(TAIL).c					\
+				$(DIR)manage_error$(TAIL).c					\
+				$(DIR)manage_env$(TAIL).c					\
+				$(DIR)manage_mem$(TAIL).c					\
+				$(DIR)manage_signal$(TAIL).c					\
+				$(DIR)symbolize$(TAIL).c						\
+				$(DIR)preprocess_line$(TAIL).c				\
+				$(DIR)check_cmd$(TAIL).c						\
+				$(DIR)validate$(TAIL).c						\
+				$(DIR)validate_utils$(TAIL).c				\
+				$(DIR)manage_info$(TAIL).c					\
+				$(DIR)expand_filename$(TAIL).c				\
+				$(DIR)delete_quote$(TAIL).c					\
+				$(DIR)execute$(TAIL).c						\
+				$(DIR)token_tree/and_or$(TAIL).c				\
+				$(DIR)token_tree/brace_group$(TAIL).c		\
+				$(DIR)token_tree/make_parse_tree$(TAIL).c	\
+				$(DIR)token_tree/pipeline$(TAIL).c			\
+				$(DIR)token_tree/utils$(TAIL).c				\
+				$(DIR)execute_pipe_line$(TAIL).c				\
+				$(DIR)execute_pipe_line_utils$(TAIL).c		\
+				$(DIR)execute_pipe_line_io$(TAIL).c			\
+				$(DIR)execute_pipe_line_io_utils$(TAIL).c	\
+				$(DIR)execute_single_commend$(TAIL).c		\
+				$(DIR)replace_wild_card$(TAIL).c				\
+				$(DIR)make_env$(TAIL).c						\
+				$(DIR)built_in/ft_cd$(TAIL).c				\
+				$(DIR)built_in/ft_cd_utils$(TAIL).c			\
+				$(DIR)built_in/ft_echo$(TAIL).c				\
+				$(DIR)built_in/ft_env$(TAIL).c				\
+				$(DIR)built_in/ft_exit$(TAIL).c				\
+				$(DIR)built_in/ft_export$(TAIL).c			\
+				$(DIR)built_in/ft_pwd$(TAIL).c				\
+				$(DIR)built_in/ft_unset$(TAIL).c				\
+				$(DIR)built_in/ft_pipe_export$(TAIL).c	
 
 OBJS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.o))
-BONUS_OBJS		=	$(addprefix $(OUTDIR),$(BONUS_SRCS:%.c=%.o))
 DEPS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.d))
 -include $(DEPS)
 
@@ -107,11 +69,8 @@ $(OUTDIR)%.o : %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
-bonus : $(BONUS)
-
-$(BONUS) : $(BONUS_OBJS)
-	$(MAKE) -C $(dir $(LIBFT))
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) $^ -o $@ $(LDLIBS)
+bonus : 
+	$(MAKE) bonus=1 
 
 all		:
 	$(MAKE) -C $(dir $(LIBFT))

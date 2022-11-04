@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_bonus.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:12:01 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:18:08 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <string.h>
 # include <curses.h>
 # include <signal.h>
 # include <dirent.h>
@@ -90,6 +91,7 @@ void		ft_envlst_add_back(t_envlst *new);
 void		set_envlst(char *key, char *value);
 
 /*manage_error.c*/
+void		print_error(char *msg1, char *msg2, char *msg3, int type);
 void		allocat_error(void);
 int			error_msg(char *str);
 void		execute_error(char *cmd_path, char **cmd_arr, char **env);

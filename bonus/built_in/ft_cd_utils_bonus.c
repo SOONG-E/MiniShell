@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:10 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:02:01 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:36:45 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_check_rv(t_cd *info)
 		chdir(info->cwd);
 		free(info->cwd);
 		free(info->pwd);
-		printf("%s: cd: %s: cd error\n", SHELL, info->path);
+		print_error("cd: ", info->path, ": cd error", 2);
 		set_exit_code(1);
 		if (info->pipe_cnt)
 			exit(1);
@@ -63,7 +63,7 @@ void	ft_cd_home(int pipe_cnt)
 	home = get_env("HOME");
 	if (!*home)
 	{
-		printf("%s: cd: HOME not set\n", SHELL);
+		print_error("cd: ", "HOME not set", NULL, 1);
 		set_exit_code(1);
 		if (pipe_cnt)
 			exit(1);

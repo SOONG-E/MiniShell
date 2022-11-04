@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minsukan <minsukan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:23:52 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 11:01:48 by minsukan         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:36:39 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ int	syntax_error_token(char *str)
 {
 	if (str[0] < 0)
 		str = get_origin_op(classify_op(str));
-	printf("%s: syntax error near unexpected token \'%s\'\n", SHELL, str);
+	ft_putstr_fd(SHELL, STDERR);
+	ft_putstr_fd(": syntax error near unexpected token \'", STDERR);
+	ft_putstr_fd(str, STDERR);
+	ft_putstr_fd("\'\n", STDERR);
 	set_exit_code(127);
 	return (1);
 }
