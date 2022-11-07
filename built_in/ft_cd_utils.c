@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:10 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:52:47 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/07 17:10:51 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_cd_home(int pipe_cnt)
 	home = get_env("HOME");
 	if (!*home)
 	{
-		print_error("cd: HOME not set", NULL,  NULL, 0);
+		print_error("cd: HOME not set", NULL, NULL, 0);
 		set_exit_code(1);
 		if (pipe_cnt)
 			exit(1);
