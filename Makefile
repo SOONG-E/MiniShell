@@ -23,7 +23,13 @@ OUTDIR		=	out/
 
 LIBFT		=	./libft/libft.a
 
-SRCS		= 	main.c							\
+MAIN = main.c
+
+ifdef bonus
+	MAIN = main_bonus.c
+endif
+
+SRCS		= 	$(MAIN)							\
 				parse_line.c					\
 				replace_space.c					\
 				replace_op.c					\
@@ -73,7 +79,10 @@ DEPS		=	$(addprefix $(OUTDIR),$(SRCS:%.c=%.d))
 $(OUTDIR)%.o : %.c
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-	
+
+bonus : 
+	$(MAKE) bonus=1 
+
 all		:
 	$(MAKE) -C $(dir $(LIBFT))
 	$(MAKE) $(NAME)
@@ -96,4 +105,4 @@ fclean	: clean
 re		: fclean
 	$(MAKE) all
 
-.PHONY	: all clean fclean re $(dir $(LIBFT))
+.PHONY	: all clean fclean re $(dir $(LIBFT)) bonus
