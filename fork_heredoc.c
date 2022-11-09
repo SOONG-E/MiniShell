@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 15:43:09 by yujelee           #+#    #+#             */
-/*   Updated: 2022/11/09 15:46:10 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 17:32:36 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	fork_heredoc(char *limiter, int stdin_backup, char *heredoc_tmp)
 		if (WIFSIGNALED(exitcode) && WTERMSIG(exitcode) == 2)
 		{
 			g_info->flag = 1;
+			set_exit_code(1);
 			set_signal();
 			return (-1);
 		}

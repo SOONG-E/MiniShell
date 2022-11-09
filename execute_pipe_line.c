@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:13 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/09 17:19:43 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 17:30:08 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 	stdout_backup = dup(STDOUT);
 	flag = dup_redirection(symbol, stdin_backup, i);
 	if (flag == -1)
-		close_fd(stdout_backup);
+		return (close_fd(stdout_backup));
 	pipe(fd_pipe);
 	pid = fork();
 	if (pid > 0)
