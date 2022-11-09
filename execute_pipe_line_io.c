@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:35 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/09 14:36:37 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 15:43:54 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	open_file(char *file, int redirection_type)
 	return (fd);
 }
 
-
-
 int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 {
 	size_t	len_limiter;
@@ -52,7 +50,7 @@ int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 		status = get_next_line(stdin_backup, &line);
 		if (status == -1)
 			allocat_error();
-		if (g_info->flag ||(status == 0 || (line[ft_strlen(line) - 1] == '\n' \
+		if (g_info->flag || (status == 0 || (line[ft_strlen(line) - 1] == '\n'\
 				&& limiter && !ft_strncmp (line, limiter, \
 					len_cmp(ft_strlen(line) - 1, len_limiter)))))
 			break ;

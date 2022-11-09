@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fork_heredoc.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/09 15:43:09 by yujelee           #+#    #+#             */
+/*   Updated: 2022/11/09 15:46:10 by yujelee          ###   ########seoul.kr  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	fork_heredoc(char *limiter, int stdin_backup, char *heredoc_tmp)
 {
-	int pid;
+	int	pid;
 	int	exitcode;
 
 	pid = fork();

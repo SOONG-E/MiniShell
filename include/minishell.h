@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 16:08:51 by yujelee          ###   ########.fr       */
+/*   Updated: 2022/11/09 15:42:50 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,6 @@ int			execute_single_command(t_symbol *symbol, \
 char		**make_env(void);
 
 /*fork_heredoc.c*/
-int	fork_heredoc(char *limiter, int stdin_backup, char *heredoc_tmp);
+int			fork_heredoc(char *limiter, int stdin_backup, char *heredoc_tmp);
 
 #endif
