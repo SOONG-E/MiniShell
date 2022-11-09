@@ -61,6 +61,8 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 
 	stdout_backup = dup(STDOUT);
 	flag = dup_redirection(symbol, stdin_backup, i);
+	if (flag == -1)
+		return (-1);
 	pipe(fd_pipe);
 	pid = fork();
 	if (pid > 0)
@@ -96,6 +98,8 @@ void	execute_pipe_line(t_symbol *symbol)
 	while (symbol)
 	{
 		pid_lst[i] = fork_process(symbol, pipe_cnt, i, stdin_backup);
+		if (pid_lst[i] < 0)
+			break ;
 		while (symbol && symbol->type != T_PIPE)
 			symbol = symbol->next;
 		if (symbol)

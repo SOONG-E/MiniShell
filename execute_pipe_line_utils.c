@@ -25,7 +25,12 @@ void	wait_process(pid_t *pid, int pipe_cnt)
 	}
 	free(pid);
 	if (WIFSIGNALED(exit_code))
-		set_exit_code(WTERMSIG(exit_code) + 128);
+	{
+		if (g_info->flag == 1)
+			set_exit_code(1);
+		else
+			set_exit_code(WTERMSIG(exit_code) + 128);
+	}
 	else if (WIFEXITED(exit_code))
 		set_exit_code(WEXITSTATUS(exit_code));
 }

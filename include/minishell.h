@@ -199,4 +199,7 @@ int			execute_single_command(t_symbol *symbol, \
 /* make_env.c */
 char		**make_env(void);
 
+/*fork_heredoc.c*/
+int	fork_heredoc(char *limiter, int stdin_backup, char *heredoc_tmp);
+
 #endif

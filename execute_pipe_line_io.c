@@ -35,7 +35,7 @@ int	open_file(char *file, int redirection_type)
 
 
 
-int	read_here_doc11(char *limiter, int stdin_backup, char *heredoc_tmp)
+int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 {
 	size_t	len_limiter;
 	char	*line;
@@ -62,27 +62,6 @@ int	read_here_doc11(char *limiter, int stdin_backup, char *heredoc_tmp)
 	free(line);
 	close(fd);
 	exit(0);
-}
-
-int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
-{
-	int pid;
-	int	exitcode;
-
-	pid = fork();
-	if (pid == 0)
-	{
-		set_child_signal();
-		read_here_doc11(limiter, stdin_backup, heredoc_tmp);
-	}
-	else{
-		block_signal();
-		waitpid(pid, &exitcode, 0);
-		if (exitcode == 1)
-			printf("exitcode %d\n", exitcode);
-	}
-	set_signal();
-	return (0);
 }
 
 int	dup_in_redirection(t_symbol *symbol, int type_rid, int stdin_backup, int i)

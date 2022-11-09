@@ -60,6 +60,7 @@ SRCS		= 	$(MAIN)							\
 				execute_pipe_line_io.c			\
 				execute_pipe_line_io_utils.c	\
 				execute_single_commend.c		\
+				fork_heredoc.c					\
 				replace_wild_card.c				\
 				make_env.c						\
 				built_in/ft_cd.c				\

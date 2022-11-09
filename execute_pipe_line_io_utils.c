@@ -37,7 +37,7 @@ int	task_here_doc(t_symbol *symbol, int *fd, int stdin_backup, int i)
 	heredoc_tmp = ft_strjoin("./tmp/", no_ps);
 	free(no_ps);
 	g_info->flag = 0;
-	if (read_here_doc(symbol->next->str, stdin_backup, heredoc_tmp) < 0)
+	if (fork_heredoc(symbol->next->str, stdin_backup, heredoc_tmp) < 0)
 	{
 		free(heredoc_tmp);
 		return (-1);
