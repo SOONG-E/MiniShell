@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:06 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/09 15:56:50 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 16:25:29 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ int	task_here_doc(t_symbol *symbol, int *fd, int stdin_backup, int i)
 	char	*no_ps;
 	char	*heredoc_tmp;
 
-	no_ps = ft_itoa(i);
-	heredoc_tmp = ft_strjoin("hm...", no_ps);
+	no_ps = ft_strjoin("/", ft_itoa(i));
+	heredoc_tmp = ft_strjoin(g_info->home, no_ps);
 	free(no_ps);
-	g_info->flag = 0;
 	if (fork_heredoc(symbol->next->str, stdin_backup, heredoc_tmp) < 0)
 	{
 		free(heredoc_tmp);
@@ -52,6 +51,7 @@ int	task_here_doc(t_symbol *symbol, int *fd, int stdin_backup, int i)
 		else
 			rv = DID_IN_RID;
 	}
+	unlink(heredoc_tmp);
 	free(heredoc_tmp);
 	return (rv);
 }

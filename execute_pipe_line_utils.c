@@ -6,13 +6,13 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:10 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 17:18:02 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	wait_process(pid_t *pid, int pipe_cnt)
+void	wait_process(pid_t *pid, int pipe_cnt, int stdin_backup)
 {
 	int	exit_code;
 	int	i;
@@ -33,6 +33,7 @@ void	wait_process(pid_t *pid, int pipe_cnt)
 	}
 	else if (WIFEXITED(exit_code))
 		set_exit_code(WEXITSTATUS(exit_code));
+	dup2(stdin_backup, STDIN);
 }
 
 int	get_pipe_cnt(t_symbol *symbol)

@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:35 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/09 15:43:54 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 17:25:53 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 		status = get_next_line(stdin_backup, &line);
 		if (status == -1)
 			allocat_error();
-		if (g_info->flag || (status == 0 || (line[ft_strlen(line) - 1] == '\n'\
+		if (status == 0 || (line[ft_strlen(line) - 1] == '\n'\
 				&& limiter && !ft_strncmp (line, limiter, \
-					len_cmp(ft_strlen(line) - 1, len_limiter)))))
+					len_cmp(ft_strlen(line) - 1, len_limiter))))
 			break ;
 		ft_putstr_fd(line, fd);
 		free(line);
@@ -112,18 +112,14 @@ int	dup_redirection(t_symbol *symbol, int stdin_backup, int i)
 	while (symbol && symbol->type != T_CMD)
 	{
 		type_rid = symbol->type;
+		if (type_rid == T_PIPE)
+			break ;
 		if (type_rid == T_IN_RID || type_rid == T_IN_HEREDOC)
-		{
 			in_flag = dup_in_redirection(symbol, type_rid, stdin_backup, i);
-			if (in_flag < 0)
-				return (-1);
-		}
 		else if (type_rid == T_OUT_RID || type_rid == T_OUT_HEREDOC)
-		{
 			out_flag = dup_out_redirection(symbol, type_rid);
-			if (out_flag < 0)
-				return (-1);
-		}
+		if (in_flag < 0 || out_flag < 0)
+			return (-1);
 		symbol = symbol->next;
 	}
 	return (in_flag + out_flag);

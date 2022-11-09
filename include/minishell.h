@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:47 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/09 15:42:50 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 17:17:41 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int			is_built_in(char **cmd_arr);
 char		**make_cmd_arr(t_symbol *symbol);
 int			count_until_pipe(t_symbol *symbol);
 int			get_pipe_cnt(t_symbol *symbol);
-void		wait_process(pid_t *pid, int pipe_cnt);
+void		wait_process(pid_t *pid, int pipe_cnt, int stdin_backup);
 
 /* execute_pipe_line_io.c */
 int			dup_redirection(t_symbol *symbol, int stdin_backup, int i);

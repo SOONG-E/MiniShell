@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:22:13 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 17:19:43 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ void	execute_cmd(t_symbol *symbol, int pipe_cnt)
 	execute_error(cmd_path, cmd_arr, env);
 }
 
+static int	close_fd(int fd)
+{
+	close(fd);
+	return (-1);
+}
+
 pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 {
 	pid_t	pid;
@@ -62,7 +68,7 @@ pid_t	fork_process(t_symbol *symbol, int pipe_cnt, int i, int stdin_backup)
 	stdout_backup = dup(STDOUT);
 	flag = dup_redirection(symbol, stdin_backup, i);
 	if (flag == -1)
-		return (-1);
+		close_fd(stdout_backup);
 	pipe(fd_pipe);
 	pid = fork();
 	if (pid > 0)
@@ -98,15 +104,13 @@ void	execute_pipe_line(t_symbol *symbol)
 	while (symbol)
 	{
 		pid_lst[i] = fork_process(symbol, pipe_cnt, i, stdin_backup);
-		if (pid_lst[i] < 0)
+		if (pid_lst[i++] < 0)
 			break ;
 		while (symbol && symbol->type != T_PIPE)
 			symbol = symbol->next;
 		if (symbol)
 			symbol = symbol->next;
-		i++;
 	}
-	wait_process(pid_lst, pipe_cnt + 1);
-	dup2(stdin_backup, STDIN);
+	wait_process(pid_lst, pipe_cnt + 1, stdin_backup);
 	close(stdin_backup);
 }
