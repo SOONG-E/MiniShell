@@ -6,7 +6,7 @@
 /*   By: yujelee <yujelee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:24:35 by minsukan          #+#    #+#             */
-/*   Updated: 2022/11/04 15:53:10 by yujelee          ###   ########seoul.kr  */
+/*   Updated: 2022/11/09 14:36:37 by yujelee          ###   ########seoul.kr  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ int	open_file(char *file, int redirection_type)
 	return (fd);
 }
 
-int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
+
+
+int	read_here_doc11(char *limiter, int stdin_backup, char *heredoc_tmp)
 {
 	size_t	len_limiter;
 	char	*line;
@@ -50,7 +52,7 @@ int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 		status = get_next_line(stdin_backup, &line);
 		if (status == -1)
 			allocat_error();
-		if (g_info->flag || (status == 0 || (line[ft_strlen(line) - 1] == '\n' \
+		if (g_info->flag ||(status == 0 || (line[ft_strlen(line) - 1] == '\n' \
 				&& limiter && !ft_strncmp (line, limiter, \
 					len_cmp(ft_strlen(line) - 1, len_limiter)))))
 			break ;
@@ -59,6 +61,27 @@ int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
 	}
 	free(line);
 	close(fd);
+	exit(0);
+}
+
+int	read_here_doc(char *limiter, int stdin_backup, char *heredoc_tmp)
+{
+	int pid;
+	int	exitcode;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		set_child_signal();
+		read_here_doc11(limiter, stdin_backup, heredoc_tmp);
+	}
+	else{
+		block_signal();
+		waitpid(pid, &exitcode, 0);
+		if (exitcode == 1)
+			printf("exitcode %d\n", exitcode);
+	}
+	set_signal();
 	return (0);
 }
 
